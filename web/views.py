@@ -27,6 +27,10 @@ class MyView(View):
     def reviewreg(self, request):
         return render(request, 'reviewreg.html');
 
+    @request_mapping("/regiRest", method="get")
+    def regiRest(self, request):
+        return render(request, 'regiRest.html');
+
     @request_mapping("/list", method="get")
     def list(self, request):
         return render(request, 'list.html');
