@@ -30,10 +30,12 @@ class Rest(models.Model):
     reg_num = models.CharField(unique=True, max_length=10)
     host_name = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
+    restindex = models.CharField(max_length=1000, blank=True, null=True)
     phone = models.CharField(max_length=13, blank=True, null=True)
     openhour = models.CharField(max_length=100, blank=True, null=True)
     breakhour = models.CharField(max_length=100, blank=True, null=True)
     restimg = models.CharField(max_length=100, blank=True, null=True)
+
 
     class Meta:
         db_table = 'db_rest'
