@@ -23,6 +23,10 @@ class MyView(View):
     def restDetail(self, request):
         return render(request, 'restDetail.html');
 
+    @request_mapping("/regiRest", method="get")
+    def regiRest(self, request):
+        return render(request, 'regiRest.html');
+
     @request_mapping("/list", method="get")
     def list(self, request):
         return render(request, 'list.html');
