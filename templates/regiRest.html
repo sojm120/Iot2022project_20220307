@@ -68,66 +68,44 @@
                         <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest2.jpg' %}" alt="..." /></a></div>
                         <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest3.jpg' %}" alt="..." /></a></div>
                         <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest.jpg' %}" alt="..." /></a></div>
+                        <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><button style="color: white; background-color: rgba(100,100,100,0.8);width:150px; height:150px; border-radius:30px;">사진 추가</button></div>
                     </div>
                     <div class="row gx-1 align-items-start justify-content-center">
                         <div class="col-lg-8 col-xl-7 col-xxl-2">
                             <div class="my-1 text-center text-xl-start">
                                 <!-- 요약 -->
-                                <h1 class="lead fw-normal fs-5 text-white-50 mb-4">음식점 이름</h1>
-                                <input type="text" name="rest_name" value="{{obj.restname}}"><br>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">전화번호</h1>
-                                <input type="text" name="phone" value="{{obj.phone}}"><br>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">요식업 종류</h1>
-                                <input type="text" name="cate_id" value="{{obj.cate_id}}"><br>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">오픈/휴식시간</h1>
-                                <input type="text" name="openhour" value="{{obj.openhour}}"><br>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">사업자</h1>
-                                <input type="text" name="hostname" value="{{obj.host_name}}"><br>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                    <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">서비스</h1><br>
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star"></div>
-                                    </div>
-                                </div>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                    <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">음식</h1><br>
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                    <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">가격</h1><br>
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-half"></div>
-                                        <div class="bi-star"></div>
-                                        <div class="bi-star"></div>
-                                    </div>
-                                </div>
+                                <h1 class="lead fw-normal fs-5 text-white-50 mb-1">음식점 이름</h1>
+                                <input class="mb-3" type="text" name="rest_name" value="{{obj.restname}}"><br>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-1">전화번호</h1>
+                                <input class="mb-3"type="text" name="phone" value="{{obj.phone}}"><br>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-1">요식업 종류</h1>
+                                <input class="mb-3"type="text" name="cate_id" value="{{obj.cate_id}}"><br>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-1">오픈/휴식시간</h1>
+                                <input class="mb-3"type="text" name="openhour" value="{{obj.openhour}}"><br>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-1">사업자</h1>
+                                <input class="mb-3"type="text" name="hostname" value="{{obj.host_name}}" readonly><br>
                             </div>
                         </div>
                         <div class="col-lg-8 col-xl-7 col-xxl-10">
+<!--                            index-->
                             <div class="border" style="width:500px; height:200px; margin: 10px; padding:10px; float:left">
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">10년 경력의 신라호텔쉐프가 운영하는 모던 비스트로입니다. 매장통화불가시 직통번호 안내 : 010 3038 8856</p>
+                                <input class="mb-3" style="width:480px; height:180px;" type="text" name="rest_index" value="{{obj.rest_index}}"><br>
                             </div>
+<!--                            menu-->
                             <div class="border" style="width:500px; height:200px; margin: 10px; padding:10px; float:left">
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 스파게티 120000</p>
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 돼지국밥 12000000</p>
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 돈까스 1200000000</p>
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 피자 120000000000</p>
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_name" value="{{obj.menu_name}}">
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_price" value="{{obj.menu_price}}"><br>
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_name" value="{{obj.menu_name}}">
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_price" value="{{obj.menu_price}}"><br>
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_name" value="{{obj.menu_name}}">
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_price" value="{{obj.menu_price}}"><br>
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_name" value="{{obj.menu_name}}">
+                                <input class="mb-3 float-start" style="width:200px;" type="text" name="menu_price" value="{{obj.menu_price}}"><br>
                             </div>
+<!--                            address-->
                             <div class="my-4 mx-4 col-xxl-5 border float-start">
                                 <div id="map" style="height:200px;" ></div>
-                                <p class="lead fw-normal text-white-50 text-center mb-1 fs-6">경기 수원시 영통구 센트럴파크로127번길 159</p>
+                                <input class="mb-1" style="width:450px;" type="text" name="address" value="{{obj.address}}"><br>
                             </div>
                             <div class="my-5 mx-4 col-xxl-5 float-start">
                                 <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#주차가능</a></div>
@@ -140,7 +118,10 @@
                                 <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#etc</a></div>
                             </div>
                             <!-- review edit button-->
-                            <div class="text-center mb-4" style="width:100; height:100;"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></div>
+                            <div class="text-center mb-4" style="width:100; height:100; clear:both">
+                                <button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button>
+                                <button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 등록</button>
+                            </div>
                         </div>
                     </div>
                 </div>
