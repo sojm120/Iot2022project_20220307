@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+    <head>
+        <meta charset="utf-8" />
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />-->
+        <meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Shop Homepage - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{%static 'assets/favicon.ico'%}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <span class="badge bg-dark text-white ms-1 rounded-pill">프로필 사진</span>
+<!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register">회원가입</a></li>
+                    </ul>
+                    <ul style="width:40rem"></ul>
+                    <form class="d-flex">
+                        <a class="navbar-brand" href="/index">로고</a>
+                    </form>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">고객센터</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">자주 묻는 질문</a></li>
+                                <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
+                                <li><a class="dropdown-item" href="#!">고객 상담 게시판</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <div>
+                        <input style="width:50rem" type="text" placeholder="검색어 또는 태그 입력">
+                        <button>Search</button>
+                    </div>
+<!--                    음식점 태그-->
+                    <p class="lead fw-normal text-white-50 mb-0">
+                        <a class="text-white-50 mb-0" href="#!">#tag</a>
+                        <a class="text-white-50 mb-0" href="#!">#tag</a>
+                        <a class="text-white-50 mb-0" href="#!">#tag</a>
+                        <a class="text-white-50 mb-0" href="#!">#tag</a>
+                        <a class="text-white-50 mb-0" href="#!">#tag</a>
+                    </p>
+                </div>
+            </div>
+        </header>
+
+<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
+    <section class="p-5">
+        <div class="m-5">
+            <header class="container" style="text-align:center;">
+                <h3>"Register Page"</h3>
+            </header>
+            <form action="" method="POST" style="text-align:center;">
+                <div class="justify-content-center" style="position:absolute; left:50%; transform:translateX(-50%); width:80%;">
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>아이디</th>
+                            <input type="text" name="id">
+                            <span class="errorbox"></span>
+                        </tr>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>비밀번호</th>
+                            <input type="text" name="password">입력
+                        </tr>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>비밀번호 확인</th>
+                            <input type="text" name="password">입력
+                            <span class="errorbox"></span>
+                        </tr>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>이름</th>
+                            <input type="text" name="custname">입력</input>
+                        </tr>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <ul style="list-style:none;">
+                                <li>생년월일</li>
+                                <li class="bday">
+                                    <input type="date">
+                                </li>
+                            </ul>
+                        </tr>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>성별</th>
+                            <body>
+                                <form>
+                                    <input type="radio" name="gender" value="male" style="width:12pt; height:12pt; border:1pt;">male
+                                    <input type="radio" name="gender" value="female" style="width:12pt; height:12pt; border:1pt;">female
+                                </form>
+                            </body>
+                        </tr>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>이메일</th>
+                            <input type="text" name="email">@
+                            <input type="text" name="email_dns">
+                                <select name="emailaddr">
+                                    <option value="">직접입력</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="msn.com">msn.com</option>
+                                    <option value="nate.com">nate.com</option>
+                                </select>
+                        </tr>
+                    </div>
+                    <div style="margin:3px; ">
+                        <table align="center";>
+                                <tr>
+                                    <th>도로명주소</th>
+                                    <td><input type="text" id="roadAddrPart1" style="width:85%"></td>
+                                </tr>
+                                <tr>
+                                    <th>상세주소</th>
+                                    <td>
+                                        <input type="text" id="addrDetail" style="width:40%" value="">
+                                        <input type="text" id="roadAddrPart2"  style="width:40%" value="">
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div style="margin:3px;">
+                        <script type="javascript">
+                            function readImage(input) {
+                                // 인풋 태그에 파일이 있는 경우
+                                if(input.files && input.files[0]) {
+                                    // 이미지 파일인지 검사 (생략)
+                                    // FileReader 인스턴스 생성
+                                    const reader = new FileReader()
+                                    // 이미지가 로드가 된 경우
+                                    reader.onload = e => {
+                                        const previewImage = document.getElementById("preview-image")
+                                        previewImage.src = e.target.result
+                                    }
+                                    // reader가 이미지 읽도록 하기
+                                    reader.readAsDataURL(input.files[0])
+                                }
+                            }
+                            // input file에 change 이벤트 부여
+                            const inputImage = document.getElementById("input-image")
+                            inputImage.addEventListener("change", e => {
+                                readImage(e.target)
+                            })
+                        </script>
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="fileContainer">
+                                <div class="image-container">
+                                    <img style="width: 100px;" id="preview-image" src="http://picsum.photos/100">
+                                    <input style="display: block;" type="file" id="input-image">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div style="margin:3px;">
+                        <tr>
+                            <th>가게사장님으로 가입 여부</th>
+                                <div>
+                                    <marquee behavior="scroll" scrollamount="50">가게사장님으로 가입 여부</marquee>
+                                    <marquee behavior="alternate" scrollamount="30">업종</marquee>
+                                    <marquee behavior="alternate" scrollamount="30">상호명</marquee>
+                                    <marquee behavior="alternate" scrollamount="30">사업자등록번호</marquee>
+                                    <marquee behavior="alternate" scrollamount="30">대표자명</marquee>
+                                    <marquee behavior="alternate" scrollamount="30">가게주소</marquee>
+                                </div>
+                            </th>
+                        </tr>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    </body>
+</html>
