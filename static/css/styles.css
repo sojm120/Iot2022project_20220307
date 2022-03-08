@@ -11380,7 +11380,7 @@ input[type=submit]{
     padding:20px 0px 5px 0px;
     font-size:14px;
     width:100%;
-
+}
 .input-box > h1{
     margin-top: 20px;
     width: 20%;
@@ -11458,7 +11458,7 @@ input[type=submit]{
   color: #FFA722;
 }
 
-.rating label input:focus:not(:checked) ~ .icon:last-child {
+.rating .rating_label input:focus:not(:checked) ~ .icon:last-child {
   color: #000;
   text-shadow: 0 0 5px #09f;
 }
