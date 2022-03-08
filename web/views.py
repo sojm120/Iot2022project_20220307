@@ -38,3 +38,7 @@ class MyView(View):
     @request_mapping("/edit", method="get")
     def edit(self, request):
         return render(request, 'edit.html');
+
+    @request_mapping("/register", method="get")
+    def register(self, request):
+        return render(request, 'register.html');

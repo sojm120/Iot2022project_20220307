@@ -14,6 +14,28 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script language="javascript">
+        // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
+        //document.domain = "abc.go.kr";
+
+        function goPopup(){
+            // 호출된 페이지(jusoPopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+            var pop = window.open("/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+
+            // 모바일 웹인 경우, 호출된 페이지(jusoPopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+            //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
+        }
+        /** API 서비스 제공항목 확대 (2017.02) **/
+        function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+                                , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+            // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+            document.form.roadAddrPart1.value = roadAddrPart1;
+            document.form.roadAddrPart2.value = roadAddrPart2;
+            document.form.addrDetail.value = addrDetail;
+            document.form.zipNo.value = zipNo;
+        }
+        </script>
     </head>
     <body>
         <!-- Navigation-->
@@ -65,77 +87,105 @@
         </header>
 
 <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
-    <section class="p-5">
-        <div class="m-5">
-            <header class="container" style="text-align:center;">
-                <h3>"Register Page"</h3>
-            </header>
-            <form action="" method="POST" style="text-align:center;">
-                <div class="justify-content-center" style="position:absolute; left:50%; transform:translateX(-50%); width:80%;">
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>아이디</th>
-                            <input type="text" name="id">
-                            <span class="errorbox"></span>
-                        </tr>
+        <section class="p-5">
+            <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:50%;">
+                <header class="container p-5" style="text-align:center;">
+                    <h2>회원가입</h2>
+                </header>
+                <form name="registerform" enctype="multipart/form-data" action="./register" method="POST" style="text-align:center;">
+                    <div class="labelfield">
+                        <label for="userId">아이디</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>비밀번호</th>
-                            <input type="text" name="password">입력
-                        </tr>
+                    <div class="formfield">
+                        <input type="text" id="userId" name="userId" maxlength="20" value="">
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>비밀번호 확인</th>
-                            <input type="text" name="password">입력
-                            <span class="errorbox"></span>
-                        </tr>
+                    <div class="labelfield">
+                        <label for="userPw">패스워드</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>이름</th>
-                            <input type="text" name="custname">입력</input>
-                        </tr>
+                    <div class="formfield">
+                        <input type="password" id="userPw" name="userpPw" maxlength="20" value="" autocomplete="off" onchange="isSame()">
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <ul style="list-style:none;">
-                                <li>생년월일</li>
-                                <li class="bday">
-                                    <input type="date">
-                                </li>
-                            </ul>
-                        </tr>
+                    <div class="labelfield">
+                        <label for="userPwCheck">패스워드확인</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>성별</th>
-                            <body>
-                                <form>
-                                    <input type="radio" name="gender" value="male" style="width:12pt; height:12pt; border:1pt;">male
-                                    <input type="radio" name="gender" value="female" style="width:12pt; height:12pt; border:1pt;">female
-                                </form>
-                            </body>
-                        </tr>
+                    <div class="formfield">
+                    <input type="password" id="userPwCheck" name="userPwCheck" maxlength="20" value="" autocomplete="off" onchange="isSame()">&nbsp;&nbsp;<span id="same"></span>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>이메일</th>
-                            <input type="text" name="email">@
-                            <input type="text" name="email_dns">
-                                <select name="emailaddr">
-                                    <option value="">직접입력</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                    <option value="daum.net">daum.net</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="msn.com">msn.com</option>
-                                    <option value="nate.com">nate.com</option>
-                                </select>
-                        </tr>
+                    <div class="labelfield">
+                        <label for="userName">이름</label>
                     </div>
-                    <div style="margin:3px; ">
-                        <table align="center";>
+                    <div class="formfield">
+                        <input type="text" id="userName" name="userName" value="">
+                    </div>
+                    <div class="labelfield">
+                        <label for="userBday">생년월일</label>
+                    </div>
+                    <div class="formfield">
+                        <input type="date" id="userBday" name="userBday">
+                    </div>
+                    <div class="labelfield">
+                        <label>성별</label>
+                    </div>
+                    <div class="formfield">
+                        <input type="radio" name="Gender" value="남" alt="남자" checked>남자
+                        <input type="radio" name="Gender" value="여" alt="여자" >여자
+                    </div>
+                    <div class="labelfield">
+                        <label for="email01">이메일</label>
+                    </div>
+                    <div class="formfield">
+                        <input type="text" id="email01" name="email01" size="20" maxlength="20" value="" autocomplete="off">
+                        <span>@</span>
+                        <input id="email02" name="email02" list="domains" placeholder="도메인입력/선택">
+                        <datalist id="domains">
+                            <option value="naver.com">
+                            <option value="daum.net">
+                            <option value="gmail.com">
+                            <option value="yahoo.co.kr">
+                            <option value="msn.com">
+                        </datalist>
+                    </div>
+                    <div class="labelfield">
+                        <label for="mPhone1">연락처</label>
+                    </div>
+                    <div class="formfield">
+                        <select id="mPhone1" name="mPhone1">
+                            <option value="010" selected>010</option>
+                            <option value="011">011</option>
+                            <option value="016">017</option>
+                            <option value="018">018</option>
+                            <option value="019">019</option>
+                        </select>-
+                        <input id="mPhone2" name="mPhone2" type="number" value="" size="4" maxlength="4" autocomplete="off">-
+                        <input id="mPhone3" name="mPhone3" type="number" value="" size="4" maxlength="4" autocomplete="off">
+                    </div>
+                    <div class="labelfield">
+                        <label for="profile">
+                            프로필사진
+                        </label>
+                    </div>
+                    <div class="formfield">
+                        <input type="file" id="profile" name="profile">
+                    </div>
+                    <div class="labelfield">
+                        <label for="userAddr">
+                            주소
+                        </label>
+                    </div>
+                    <div class="formfield">
+                        <table >
+                            <colgroup>
+                                <col style="width:20%"><col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>우편번호</th>
+                                    <td>
+                                        <input type="hidden" id="confmKey" name="confmKey" value="devU01TX0FVVEgyMDIyMDMwODE3MzcwNjExMjMyNTU="  >
+                                        <input type="text" id="zipNo" name="zipNo" readonly style="width:100px">
+                                        <input type="button"  value="주소검색" onclick="goPopup();">
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th>도로명주소</th>
                                     <td><input type="text" id="roadAddrPart1" style="width:85%"></td>
@@ -147,58 +197,19 @@
                                         <input type="text" id="roadAddrPart2"  style="width:40%" value="">
                                     </td>
                                 </tr>
+                            </tbody>
                         </table>
                     </div>
-                    <div style="margin:3px;">
-                        <script type="javascript">
-                            function readImage(input) {
-                                // 인풋 태그에 파일이 있는 경우
-                                if(input.files && input.files[0]) {
-                                    // 이미지 파일인지 검사 (생략)
-                                    // FileReader 인스턴스 생성
-                                    const reader = new FileReader()
-                                    // 이미지가 로드가 된 경우
-                                    reader.onload = e => {
-                                        const previewImage = document.getElementById("preview-image")
-                                        previewImage.src = e.target.result
-                                    }
-                                    // reader가 이미지 읽도록 하기
-                                    reader.readAsDataURL(input.files[0])
-                                }
-                            }
-                            // input file에 change 이벤트 부여
-                            const inputImage = document.getElementById("input-image")
-                            inputImage.addEventListener("change", e => {
-                                readImage(e.target)
-                            })
-                        </script>
-                        <form method="post" enctype="multipart/form-data">
-                            <div class="fileContainer">
-                                <div class="image-container">
-                                    <img style="width: 100px;" id="preview-image" src="http://picsum.photos/100">
-                                    <input style="display: block;" type="file" id="input-image">
-                                </div>
-                            </div>
+                    <div class="formfield">
+                        <input type="text" id="userAddr" name="userAddr">
+                    </div>
+                    <div class="btnfield">
+                        <input type="submit" value="회원가입">
+                    </div>
 
-                        </form>
-                    </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>가게사장님으로 가입 여부</th>
-                                <div>
-                                    <marquee behavior="scroll" scrollamount="50">가게사장님으로 가입 여부</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">업종</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">상호명</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">사업자등록번호</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">대표자명</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">가게주소</marquee>
-                                </div>
-                            </th>
-                        </tr>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
+                </form>
+            </div>
+
+        </section>
     </body>
 </html>

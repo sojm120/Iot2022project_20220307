@@ -13,7 +13,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+        <link href="{%static 'css/loginstyle.css'%}" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -74,7 +74,7 @@
                 <div class="input-box">
                     <input id="username" type="text" name="username" placeholder="아이디" autocomplete="off">
                     <label for="username">아이디</label>
-                    <span class="errorbox_id"></span>
+                    <span class="errorbox"></span>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotid" style="text-align:right; width:85px;">아이디찾기</button>
                     </div>
@@ -82,7 +82,7 @@
                 <div class="input-box">
                     <input id="password" type="password" name="password" placeholder="비밀번호" autocomplete="off">
                     <label for="password">비밀번호</label>
-                    <span class="errorbox_password"></span>
+                    <span class="errorbox"></span>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotpw" style="text-align:right; width:85px;">비밀번호찾기</button>
                     </div>
