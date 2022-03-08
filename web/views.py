@@ -19,6 +19,10 @@ class MyView(View):
     def login(self, request):
         return render(request, 'login.html');
 
+    @request_mapping("/register", method="get")
+    def register(self, request):
+        return render(request, 'register.html');
+
     @request_mapping("/restDetail", method="get")
     def restDetail(self, request):
         return render(request, 'restDetail.html');

@@ -19,7 +19,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <span class="badge bg-dark text-white ms-1 rounded-pill">프로필 사진</span>
+                <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/" style="color:white; text-decoration:none">프로필 사진</a></span>
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -29,7 +29,7 @@
                     </ul>
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
-                        <a class="navbar-brand" href="/index">로고</a>
+                        <a class="navbar-brand" href="/">로고</a>
                     </form>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item dropdown">
@@ -37,7 +37,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#!">자주 묻는 질문</a></li>
                                 <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
-                                <li><a class="dropdown-item" href="#!">고객 상담 게시판</a></li>
+                                <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -48,17 +48,19 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <div>
-                        <input style="width:50rem" type="text" placeholder="검색어 또는 태그 입력">
-                        <button>Search</button>
-                    </div>
+                    <form class = "input-box" action="http://127.0.0.1/search" method="GET">
+<!--                        차후 데이터와 검색 연동 진행-->
+                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력">
+                        <button class="forgot-main" type="submit">Search</button>
+<!--                        <a href="/search" style="font:bold; color:white; text-decoration:none"></a>-->
+                    </form>
 <!--                    음식점 태그-->
                     <p class="lead fw-normal text-white-50 mb-0">
-                        <a class="text-white-50 mb-0" href="#!">#tag</a>
-                        <a class="text-white-50 mb-0" href="#!">#tag</a>
-                        <a class="text-white-50 mb-0" href="#!">#tag</a>
-                        <a class="text-white-50 mb-0" href="#!">#tag</a>
-                        <a class="text-white-50 mb-0" href="#!">#tag</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
                     </p>
                 </div>
             </div>
