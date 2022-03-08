@@ -11291,11 +11291,10 @@ textarea.form-control-lg {
 
 
 .input-box{
-    position:center;
+    position:relative;
     margin:10px 0;
     width:100%
 }
-
 
 .input-box > input{
     background:transparent;
@@ -11303,17 +11302,13 @@ textarea.form-control-lg {
     border-bottom:solid 1px #ccc;
     padding:20px 0px 5px 0px;
     font-size:14px;
-    width:100%;
-
-
+    width:100%
 }
-
-
 input::placeholder{
         color:transparent
 }
 input:placeholder-shown + label{
-    color:black;
+    color:#aaa;
     font-size:14pt;
     top:16px;
 }
@@ -11387,4 +11382,3 @@ input[type=submit]{
     width:100%;
 
 }
-
