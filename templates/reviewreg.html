@@ -33,7 +33,66 @@
                 });
             });
         </script>
+        <!-- Image Preview JavaScript-->
+        <script>
+            $(document).ready(function(){
+                function readURL1(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                        $('#previewHolder1').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    } else {
+                        $('#previewHolder1').attr('src', "{% static 'img/emptyImage.png' %}");
+                    }
+                }
 
+                $("#filePhoto1").change(function() {
+                    readURL1(this);
+                });
+
+                function readURL2(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                        $('#previewHolder2').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    } else {
+                        $('#previewHolder2').attr('src', "{% static 'img/emptyImage.png' %}");
+                    }
+                }
+
+                $("#filePhoto2").change(function() {
+                    readURL2(this);
+                });
+            });
+        </script>
+        <!--Image Delete JavaScript-->
+        <script>
+            $(document).ready(function(){
+                $('#delete_img1').click(function(){
+                    $('#previewHolder1').attr('src', "{% static 'img/emptyImage.png' %}");
+                    $('#filePhoto1').val(null);
+                });
+                $('#delete_img2').click(function(){
+                    $('#previewHolder2').attr('src', "{% static 'img/emptyImage.png' %}");
+                    $('#filePhoto2').val(null);
+                });
+            });
+        </script>
+        <!--Review Register Cancel-->
+        <script>
+            $(document).ready(function(){
+                $('#reviewreg_cancel').click(function(){
+                    c = confirm('주의!!\n입력한 내용이 삭제됩니다. \n정말로 리뷰 등록을 취소하시겠습니까?');
+                    if(c == true){
+                        location.href='/restDetail';
+                    }
+                });
+            });
+        </script>
     </head>
     <body class="d-flex flex-column h-100">
         <!-- Navigation-->
@@ -156,13 +215,21 @@
                         <input id="title" type="text" name="title" placeholder="제목" autocomplete="off" required>
                         <label id="label-title" for="title">제목</label>
                     </div>
-                    <div class="input-box">
-                        <span>사진1 : </span>
-                        <input class="img" type="file" name="img">
-                    </div>
-                    <div class="input-box">
-                        <span>사진2 : </span>
-                        <input class="img" type="file" name="img">
+                    <div style="border-radius:20px;border:3px solid #FFA722; padding:10px;">
+                        <img id="previewHolder1" alt="사진을 넣어주세요." width="49%" src="{% static 'img/emptyImage.png'%}"/>
+                        <img id="previewHolder2" alt="사진을 넣어주세요." width="49%" src="{% static 'img/emptyImage.png'%}"/>
+                        <div style="display:grid;grid-template-columns: 1fr 1fr;">
+                            <div>
+                                <button class="button_add" type="button" onclick="$('#filePhoto1').click()">추가</button>
+                                <input id="filePhoto1" class="img" type="file" name="img" style="display:none;">
+                                <button id="delete_img1" class="button_delete" type="button">삭제</button>
+                            </div>
+                            <div>
+                                <button class="button_add" type="button" onclick="$('#filePhoto2').click()">추가</button>
+                                <input id="filePhoto2" class="img" type="file" name="img" style="display:none;">
+                                <button id="delete_img2" class="button_delete" type="button">삭제</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="input-box">
                         <div class="rating-name">
@@ -299,7 +366,8 @@
                     </div>
 
                     <div class="p-2" style="position:absolute; left:50%; transform:translateX(-50%); width:100%;">
-                        <input type="submit" value="등록" style="width: 100%">
+                        <input type="submit" value="리뷰 등록하기" style="width: 75%">
+                        <button id="reviewreg_cancel" type="button">등록 취소</button>
                     </div>
                 </form>
             </div>

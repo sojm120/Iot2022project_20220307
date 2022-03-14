@@ -11389,10 +11389,11 @@ input[type=submit]{
 .input-box > #content{
     width:100%;
     border: 1px solid #FFA722;
+    border-radius: 10px;
 }
 
 .input-box > .img{
-    width:80%;
+    width:100%;
     border-bottom: none;
 }
 
@@ -11467,6 +11468,39 @@ input[type=submit]{
 #reviewreg > #required {
     color: red;
     text-align: right;
+}
+
+#reviewreg > #id {
+    display: none;
+}
+
+#reviewreg .button_delete {
+    font-size: 20px;
+    color: white;
+    background-color: #FFA722;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#reviewreg .button_add {
+    font-size: 20px;
+    color: white;
+    background-color: #FFA722;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#reviewreg #reviewreg_cancel,#reviewupdate_cancel {
+    background-color: #fadfb6;
+    border: none;
+    color: #945e03;
+    border-radius: 7px;
+    width: 23%;
+    height: 45px;
+    font-size: 10pt;
+    line-height: 200%;
 }
 
 .input-box > .asterisk {
