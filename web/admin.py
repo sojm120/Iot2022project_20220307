@@ -19,7 +19,7 @@ admin.site.register(Cate, CateAdmin)
 
 class RestAdmin(admin.ModelAdmin):
     list_display = ('id', 'cust_id', 'cate_id', 'rest_name', 'reg_num', 'host_name', 'address',
-                    'phone', 'openhour', 'breakhour', 'restimg')
+                    'restindex', 'phone', 'openhour', 'breakhour', 'restimg')
 
 
 admin.site.register(Rest, RestAdmin)
@@ -27,7 +27,7 @@ admin.site.register(Rest, RestAdmin)
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'rest_id', 'cust_id', 'title', 'content', 'regdate',
-                    's_rating', 'm_rating', 'p_rating')
+                    's_rating', 'm_rating', 'p_rating', 'menu', 'number', 'purpose')
 
 
 admin.site.register(Review, ReviewAdmin)

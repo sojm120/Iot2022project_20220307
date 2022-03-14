@@ -25,7 +25,6 @@
                 var map = new kakao.maps.Map(mapContainer, mapOption);
             });
         </script>
-
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
@@ -75,10 +74,10 @@
                             <div class="my-1 text-center text-xl-start">
                                 <!-- 요약 -->
                                 <h1 class="lead fw-normal fs-5 text-white-50 mb-4">음식점 이름</h1>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">상호명</h1>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">전화번호</h1>
                                 <h1 class="lead fw-normal fs-6 text-white-50 mb-4">요식업 종류</h1>
                                 <h1 class="lead fw-normal fs-6 text-white-50 mb-4">오픈/휴식시간</h1>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">휴무일</h1>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">사업자</h1>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                     <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">서비스</h1><br>
                                     <div class="d-flex justify-content-center small text-warning mb-2">
@@ -136,7 +135,10 @@
                                 <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#etc</a></div>
                             </div>
                             <!-- review edit button-->
-                            <div class="text-center mb-4" style="width:100; height:100;"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></div>
+                            <div class="text-center mb-4" style="width:100; height:100; clear:both;">
+                              <a href="/regiRest"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
+                              <a href="/reviewreg"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">리뷰 등록</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
