@@ -1,7 +1,9 @@
+from django.db.models import Avg
 from django.shortcuts import render
 from django.views import View
 from django_request_mapping import request_mapping
 
+from web.models import Rest, Review, Menu
 
 
 @request_mapping("")
@@ -21,7 +23,18 @@ class MyView(View):
 
     @request_mapping("/restDetail", method="get")
     def restDetail(self, request):
-        return render(request, 'restDetail.html');
+        # home에서 클릭한 id 가져오기
+        rest = Rest.objects.get(id=1);
+        star_avg = Review.objects.filter(rest=1).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'), p_avg=Avg('p_rating'));
+        menu = Menu.objects.filter(rest=1);
+        review = Review.objects.filter(rest=1);
+        context = {
+            'rest': rest,
+            'star_avg': star_avg,
+            'menu': menu,
+            'review': review
+        };
+        return render(request, 'restDetail.html', context);
 
     @request_mapping("/reviewreg", method="get")
     def reviewreg(self, request):
