@@ -146,48 +146,54 @@
         <section class="p-5">
             <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:50%;">
                 <header class="container" style="text-align:center; width:100%;">
-                    <h3 style="white-space:nowrap;">리뷰 등록</h3>
+                    <h3 style="white-space:nowrap; font-weight: bold;">리뷰 등록</h3>
                 </header>
-                <form action="" method="GET">
+                <form id="reviewreg" action="/review/i" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h6 id="required">*필수입력사항</h6>
                     <div class="input-box">
-                        <input id="title" type="text" name="title" placeholder="제목" autocomplete="off">
-                        <label for="title">제목</label>
+                        <span class="asterisk">*</span>
+                        <input id="title" type="text" name="title" placeholder="제목" autocomplete="off" required>
+                        <label id="label-title" for="title">제목</label>
                     </div>
                     <div class="input-box">
-                        <span>사진1</span>
-                        <input class="img" type="file" name="img1">
+                        <span>사진1 : </span>
+                        <input class="img" type="file" name="img">
                     </div>
                     <div class="input-box">
-                        <span>사진2</span>
-                        <input class="img" type="file" name="img2">
+                        <span>사진2 : </span>
+                        <input class="img" type="file" name="img">
                     </div>
                     <div class="input-box">
-                        <h1 class="lead fw-normal text-black mb-1 fs-6 float-start text-center">서비스</h1>
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>서비스</span>
+                        </div>
                         <div class="rating">
                             <label class="rating_label">
-                                <input type="radio" name="s_rating" value="1" />
+                                <input type="radio" name="s_rating" value="1" required/>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="s_rating" value="2" />
-                                <span class="icon">★</span>
-                                <span class="icon">★</span>
-                            </label>
-                            <label class="rating_label">
-                                <input type="radio" name="s_rating" value="3" />
-                                <span class="icon">★</span>
+                                <input type="radio" name="s_rating" value="2" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="s_rating" value="4" />
-                                <span class="icon">★</span>
+                                <input type="radio" name="s_rating" value="3" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="s_rating" value="5" />
+                                <input type="radio" name="s_rating" value="4" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input type="radio" name="s_rating" value="5" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
@@ -197,32 +203,35 @@
                         </div>
                     </div>
                     <div class="input-box">
-                        <h1 class="lead fw-normal text-black mb-1 fs-6 float-start text-center">음식</h1>
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>음식</span>
+                        </div>
                         <div class="rating">
                             <label class="rating_label">
-                                <input type="radio" name="m_rating" value="1" />
+                                <input type="radio" name="m_rating" value="1" required/>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="m_rating" value="2" />
-                                <span class="icon">★</span>
-                                <span class="icon">★</span>
-                            </label>
-                            <label class="rating_label">
-                                <input type="radio" name="m_rating" value="3" />
-                                <span class="icon">★</span>
+                                <input type="radio" name="m_rating" value="2" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="m_rating" value="4" />
-                                <span class="icon">★</span>
+                                <input type="radio" name="m_rating" value="3" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="m_rating" value="5" />
+                                <input type="radio" name="m_rating" value="4" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input type="radio" name="m_rating" value="5" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
@@ -232,32 +241,35 @@
                         </div>
                     </div>
                     <div class="input-box">
-                        <h1 class="lead fw-normal text-black mb-1 fs-6 float-start text-center">가격</h1>
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>가격</span>
+                        </div>
                         <div class="rating">
                             <label class="rating_label">
-                                <input type="radio" name="p_rating" value="1" />
+                                <input type="radio" name="p_rating" value="1" required/>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="p_rating" value="2" />
-                                <span class="icon">★</span>
-                                <span class="icon">★</span>
-                            </label>
-                            <label class="rating_label">
-                                <input type="radio" name="p_rating" value="3" />
-                                <span class="icon">★</span>
+                                <input type="radio" name="p_rating" value="2" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="p_rating" value="4" />
-                                <span class="icon">★</span>
+                                <input type="radio" name="p_rating" value="3" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                             </label>
                             <label class="rating_label">
-                                <input type="radio" name="p_rating" value="5" />
+                                <input type="radio" name="p_rating" value="4" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input type="radio" name="p_rating" value="5" required/>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
                                 <span class="icon">★</span>
@@ -271,7 +283,7 @@
                         <label for="menu">주문 메뉴</label>
                     </div>
                     <div class="input-box">
-                        <input id="number" type="number" name="nubmer" placeholder="인원수" autocomplete="off">
+                        <input id="number" type="number" name="number" placeholder="인원수" autocomplete="off">
                         <label for="number">인원수</label>
                     </div>
                     <div class="input-box">
@@ -279,11 +291,15 @@
                         <label for="purpose">방문 목적</label>
                     </div>
                     <div class="input-box">
-                        <textarea id="content" name="content" rows="10" cols="80" placeholder="리뷰 상세 내용"></textarea>
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>내용</span>
+                        </div>
+                        <textarea id="content" name="content" rows="10" cols="80" placeholder="리뷰 상세 내용" required></textarea>
                     </div>
 
                     <div class="p-2" style="position:absolute; left:50%; transform:translateX(-50%); width:100%;">
-                        <input type="submit" value="등록">
+                        <input type="submit" value="등록" style="width: 100%">
                     </div>
                 </form>
             </div>

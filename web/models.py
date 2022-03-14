@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Cust(models.Model):
     id = models.CharField(primary_key=True, max_length=20)
     pwd = models.CharField(max_length=20)
@@ -13,6 +14,7 @@ class Cust(models.Model):
 
     class Meta:
         db_table = 'db_cust'
+
 
 class Cate(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -36,7 +38,6 @@ class Rest(models.Model):
     breakhour = models.CharField(max_length=100, blank=True, null=True)
     restimg = models.CharField(max_length=100, blank=True, null=True)
 
-
     class Meta:
         db_table = 'db_rest'
 
@@ -51,6 +52,9 @@ class Review(models.Model):
     s_rating = models.IntegerField()
     m_rating = models.IntegerField()
     p_rating = models.IntegerField()
+    menu = models.CharField(max_length=100, blank=True, null=True)
+    number = models.IntegerField(blank=True, null=True)
+    purpose = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         db_table = 'db_review'

@@ -27,7 +27,7 @@ admin.site.register(Rest, RestAdmin)
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'rest_id', 'cust_id', 'title', 'content', 'regdate',
-                    's_rating', 'm_rating', 'p_rating')
+                    's_rating', 'm_rating', 'p_rating', 'menu', 'number', 'purpose')
 
 
 admin.site.register(Review, ReviewAdmin)

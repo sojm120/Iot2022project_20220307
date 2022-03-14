@@ -11388,6 +11388,7 @@ input[type=submit]{
 
 .input-box > #content{
     width:100%;
+    border: 1px solid #FFA722;
 }
 
 .input-box > .img{
@@ -11461,4 +11462,33 @@ input[type=submit]{
 .rating .rating_label input:focus:not(:checked) ~ .icon:last-child {
   color: #000;
   text-shadow: 0 0 5px #09f;
+}
+
+#reviewreg > #required {
+    color: red;
+    text-align: right;
+}
+
+.input-box > .asterisk {
+    color: red;
+    font-size: 25px;
+}
+
+.input-box > #title {
+    width: 90%;
+}
+
+.input-box > #label-title {
+    width: 80%;
+    left: 20px;
+}
+
+.input-box > .rating-name > .asterisk {
+    color: red;
+}
+
+.input-box > .rating-name {
+    display: inline-block;
+    width: 25%;
+    font-size: 25px;
 }
