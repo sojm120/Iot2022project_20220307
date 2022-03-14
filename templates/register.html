@@ -14,28 +14,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+        <link href="{%static 'css/loginstyle.css'%}" rel="stylesheet" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script language="javascript">
-        // opener관련 오류가 발생하는 경우 아래 주석을 해지하고, 사용자의 도메인정보를 입력합니다. ("팝업API 호출 소스"도 동일하게 적용시켜야 합니다.)
-        //document.domain = "abc.go.kr";
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-        function goPopup(){
-            // 호출된 페이지(jusoPopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
-            var pop = window.open("/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-
-            // 모바일 웹인 경우, 호출된 페이지(jusoPopup.jsp)에서 실제 주소검색URL(https://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-            //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes");
-        }
-        /** API 서비스 제공항목 확대 (2017.02) **/
-        function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
-                                , detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
-            // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-            document.form.roadAddrPart1.value = roadAddrPart1;
-            document.form.roadAddrPart2.value = roadAddrPart2;
-            document.form.addrDetail.value = addrDetail;
-            document.form.zipNo.value = zipNo;
-        }
-        </script>
     </head>
     <body>
         <!-- Navigation-->
@@ -88,125 +70,135 @@
 
 <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
         <section class="p-5">
-            <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:50%;">
-                <header class="container p-5" style="text-align:center;">
-                    <h2>회원가입</h2>
+            <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:35%;">
+                <header class="container p-3" style="text-align:center; width:100%;">
+                    <h3 style="white-space:nowrap;">회원가입</h3>
                 </header>
-                <form name="registerform" enctype="multipart/form-data" action="./register" method="POST" style="text-align:center;">
-                    <div class="labelfield">
-                        <label for="userId">아이디</label>
+                <form id="register_box" action="./register" method="POST" style="text-align:left;">
+                    <div class="input-box">
+                        <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
+                        <label for="custid">아이디</label>
                     </div>
-                    <div class="formfield">
-                        <input type="text" id="userId" name="userId" maxlength="20" value="">
+                    <div class="input-box">
+                        <input id="custpw" type="text" name="custpw" placeholder="비밀번호" autocomplete="off">
+                        <label for="custpw">비밀번호</label>
                     </div>
-                    <div class="labelfield">
-                        <label for="userPw">패스워드</label>
+                    <div class="input-box">
+                        <input id="custpwcheck" type="text" name="custpwcheck" placeholder="비밀번호확인" autocomplete="off">
+                        <label for="custpwcheck">비밀번호확인</label>
                     </div>
-                    <div class="formfield">
-                        <input type="password" id="userPw" name="userpPw" maxlength="20" value="" autocomplete="off" onchange="isSame()">
+                    <div class="input-box">
+                        <input id="custname" type="text" name="custname" placeholder="이름" autocomplete="off">
+                        <label for="custname">이름</label>
                     </div>
-                    <div class="labelfield">
-                        <label for="userPwCheck">패스워드확인</label>
+                    <div class="input-box">
+                        <input id="custbday" type="date" name="custbday" placeholder="생년월일" autocomplete="off">
+                        <label for="custbday">생년월일</label>
                     </div>
-                    <div class="formfield">
-                    <input type="password" id="userPwCheck" name="userPwCheck" maxlength="20" value="" autocomplete="off" onchange="isSame()">&nbsp;&nbsp;<span id="same"></span>
+                    <div>
+                        <div class="box-radio-input">
+                            <input id="man" type="radio" name="gender" value="1" style="width:15px; height:15px;">
+                            <span>남자</span>
+                            <input id="woman" type="radio" name="gender" value="2" style="width:15px; height:15px;">
+                            <span>여자</span>
+                        </div>
                     </div>
-                    <div class="labelfield">
-                        <label for="userName">이름</label>
+                    <div class="input-box">
+                        <input id="custemail" type="text" name="custemail" placeholder="이메일" autocomplete="off">
+                        <label for="custemail">email</label>
                     </div>
-                    <div class="formfield">
-                        <input type="text" id="userName" name="userName" value="">
+                    <div class="input-box">
+                        <input id="custphone" type="text" name="custphone" placeholder="휴대폰번호" autocomplete="off">
+                        <label for="custphone">휴대폰번호</label>
                     </div>
-                    <div class="labelfield">
-                        <label for="userBday">생년월일</label>
+                    <div class="input-box">
+                        <span style="font-size:0.8em;">프로필사진
+                        <input type="file" id="custimg" name="custimg" accept="image/*"></span>
                     </div>
-                    <div class="formfield">
-                        <input type="date" id="userBday" name="userBday">
-                    </div>
-                    <div class="labelfield">
-                        <label>성별</label>
-                    </div>
-                    <div class="formfield">
-                        <input type="radio" name="Gender" value="남" alt="남자" checked>남자
-                        <input type="radio" name="Gender" value="여" alt="여자" >여자
-                    </div>
-                    <div class="labelfield">
-                        <label for="email01">이메일</label>
-                    </div>
-                    <div class="formfield">
-                        <input type="text" id="email01" name="email01" size="20" maxlength="20" value="" autocomplete="off">
-                        <span>@</span>
-                        <input id="email02" name="email02" list="domains" placeholder="도메인입력/선택">
-                        <datalist id="domains">
-                            <option value="naver.com">
-                            <option value="daum.net">
-                            <option value="gmail.com">
-                            <option value="yahoo.co.kr">
-                            <option value="msn.com">
-                        </datalist>
-                    </div>
-                    <div class="labelfield">
-                        <label for="mPhone1">연락처</label>
-                    </div>
-                    <div class="formfield">
-                        <select id="mPhone1" name="mPhone1">
-                            <option value="010" selected>010</option>
-                            <option value="011">011</option>
-                            <option value="016">017</option>
-                            <option value="018">018</option>
-                            <option value="019">019</option>
-                        </select>-
-                        <input id="mPhone2" name="mPhone2" type="number" value="" size="4" maxlength="4" autocomplete="off">-
-                        <input id="mPhone3" name="mPhone3" type="number" value="" size="4" maxlength="4" autocomplete="off">
-                    </div>
-                    <div class="labelfield">
-                        <label for="profile">
-                            프로필사진
-                        </label>
-                    </div>
-                    <div class="formfield">
-                        <input type="file" id="profile" name="profile">
-                    </div>
-                    <div class="labelfield">
-                        <label for="userAddr">
-                            주소
-                        </label>
-                    </div>
-                    <div class="formfield">
-                        <table >
-                            <colgroup>
-                                <col style="width:20%"><col>
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th>우편번호</th>
-                                    <td>
-                                        <input type="hidden" id="confmKey" name="confmKey" value="devU01TX0FVVEgyMDIyMDMwODE3MzcwNjExMjMyNTU="  >
-                                        <input type="text" id="zipNo" name="zipNo" readonly style="width:100px">
-                                        <input type="button"  value="주소검색" onclick="goPopup();">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>도로명주소</th>
-                                    <td><input type="text" id="roadAddrPart1" style="width:85%"></td>
-                                </tr>
-                                <tr>
-                                    <th>상세주소</th>
-                                    <td>
-                                        <input type="text" id="addrDetail" style="width:40%" value="">
-                                        <input type="text" id="roadAddrPart2"  style="width:40%" value="">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="formfield">
-                        <input type="text" id="userAddr" name="userAddr">
-                    </div>
-                    <div class="btnfield">
-                        <input type="submit" value="회원가입">
-                    </div>
+                    <div class="formfield m-1">
 
+                        <div>
+                            <input type="text" id="sample4_postcode" placeholder="우편번호">
+                            <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
+                            <br>
+                            <input type="text" id="sample4_roadAddress" placeholder="도로명주소" style="width:40%">
+                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width:40%">
+                            <br>
+                            <span id="guide" style="color:#999;display:none"></span>
+                            <span style="font-size:0.8em;">상세주소</span>
+                            <input type="text" id="sample4_detailAddress" placeholder="상세주소" style="width:30%">
+                            <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="width:30%">
+
+                            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                            <script>
+                                //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+                                function sample4_execDaumPostcode() {
+                                    new daum.Postcode({
+                                        oncomplete: function(data) {
+                                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                                            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                            var roadAddr = data.roadAddress; // 도로명 주소 변수
+                                            var extraRoadAddr = ''; // 참고 항목 변수
+
+                                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                                extraRoadAddr += data.bname;
+                                            }
+                                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                                            if(data.buildingName !== '' && data.apartment === 'Y'){
+                                               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                            }
+                                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                            if(extraRoadAddr !== ''){
+                                                extraRoadAddr = ' (' + extraRoadAddr + ')';
+                                            }
+
+                                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                            document.getElementById('sample4_postcode').value = data.zonecode;
+                                            document.getElementById("sample4_roadAddress").value = roadAddr;
+                                            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+                                            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                                            if(roadAddr !== ''){
+                                                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                                            } else {
+                                                document.getElementById("sample4_extraAddress").value = '';
+                                            }
+
+                                            var guideTextBox = document.getElementById("guide");
+                                            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                                            if(data.autoRoadAddress) {
+                                                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                                                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                                                guideTextBox.style.display = 'block';
+
+                                            } else if(data.autoJibunAddress) {
+                                                var expJibunAddr = data.autoJibunAddress;
+                                                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                                                guideTextBox.style.display = 'block';
+                                            } else {
+                                                guideTextBox.innerHTML = '';
+                                                guideTextBox.style.display = 'none';
+                                            }
+                                        }
+                                    }).open();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="formfield">
+
+                    </div>
+                    <br>
+                    <div class="btnfield" style="text-align:center">
+                        <input type="submit" value="회원가입" style="width:80%">
+                    </div>
+                    <br>
+                    <br>
+                    <br>
                 </form>
             </div>
 
