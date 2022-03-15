@@ -16,6 +16,7 @@
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94ded692846518f0b425f06ff651c6a5&libraries=services"></script>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
             function star(rate){
                 var result = '';
@@ -112,7 +113,6 @@
                     result += '" alt="..." /></a></div>';
                     $('#mainimg').append(result);
                 }
-                alert({{imgpath.}});
             });
         </script>
     </head>
@@ -204,7 +204,7 @@
                             </div>
                             <!-- review edit button-->
                             <div class="text-center mb-4" style="width:100; height:100; clear:both;">
-                              <a href="/regiRest"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
+                              <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
                               <a href="/reviewreg"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">리뷰 등록</button></a>
                             </div>
                         </div>
