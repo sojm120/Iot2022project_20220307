@@ -164,3 +164,15 @@ class MyView(View):
     @request_mapping("/register", method="get")
     def register(self, request):
         return render(request, 'register.html');
+
+    @request_mapping("/profile", method="get")
+    def profile(self, request):
+        return render(request, 'profile.html');
+
+    @request_mapping("/profileupdate", method="get")
+    def profileupdate(self, request):
+        return render(request, 'profileupdate.html');
+
+    @request_mapping("/ownerupdate", method="get")
+    def ownerupdate(self, request):
+        return render(request, 'ownerupdate.html');
