@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from django_request_mapping import request_mapping
 
-from web.models import Rest, Review, Menu
+from web.models import Rest, Review, Menu, Imgpath
 
 
 @request_mapping("")
@@ -28,11 +28,13 @@ class MyView(View):
         star_avg = Review.objects.filter(rest=1).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'), p_avg=Avg('p_rating'));
         menu = Menu.objects.filter(rest=1);
         review = Review.objects.filter(rest=1);
+        imgpath = Imgpath.objects.all();
         context = {
             'rest': rest,
             'star_avg': star_avg,
             'menu': menu,
-            'review': review
+            'review': review,
+            'imgpath': imgpath
         };
         return render(request, 'restDetail.html', context);
 
