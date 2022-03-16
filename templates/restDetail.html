@@ -58,11 +58,6 @@
                  return result;
             };
 
-            function make_list(restimg){
-                var list = restimg.split(' ');
-                return list;
-            };
-
             $(document).ready(function(){
                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                     mapOption = {
@@ -104,6 +99,7 @@
                  $('#p_rating').html(result);
             });
 
+<!--            식당 이미지-->
             $(document).ready(function(){
                 list = make_list('{{rest.restimg}}');
                 for(var i = 0; i < list.length; i++){
@@ -114,6 +110,11 @@
                     $('#mainimg').append(result);
                 }
             });
+
+            function make_list(restimg){
+                var list = restimg.split(' ');
+                return list;
+            };
         </script>
     </head>
     <body class="d-flex flex-column h-100">
@@ -204,8 +205,8 @@
                             </div>
                             <!-- review edit button-->
                             <div class="text-center mb-4" style="width:100; height:100; clear:both;">
-                              <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
-                              <a href="/reviewreg"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">리뷰 등록</button></a>
+                              <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,167,34); border-radius: 10px; color:white">음식점 수정</button></a>
+                              <a href="/reviewreg"><button style="background-color: rgb(256,167,34); border-radius: 10px; color:white">리뷰 등록</button></a>
                             </div>
                         </div>
                     </div>

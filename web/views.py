@@ -46,108 +46,6 @@ class MyView(View):
     def reviewreg(self, request):
         return render(request, 'reviewreg.html');
 
-    @request_mapping("/restEdit/<int:pk>", method="get")
-    def restEdit(self, request, pk):
-        rest = Rest.objects.get(id=pk);
-        menu = Menu.objects.filter(rest=1);
-        context = {
-            'rest': rest,
-            'menu': menu
-        };
-        return render(request, 'restEdit.html', context);
-
-    @request_mapping("/restEdit/u", method="get")
-    def restEditU(self, request):
-        id = request.GET['id'];
-        rest_name = request.GET['rest_name'];
-        phone = request.GET['phone'];
-        cate_id = request.GET['cate_id'];
-        openhour = request.GET['openhour'];
-        breakhour = request.GET['breakhour'];
-        restindex = request.GET['restindex'];
-        address = request.GET['address'];
-
-        rest = Rest.objects.get(id=id);
-        rest.rest_name = rest_name;
-        rest.phone = phone;
-        rest.cate_id = cate_id;
-        rest.openhour = openhour;
-        rest.breakhour = breakhour;
-        rest.restindex = restindex;
-        rest.address = address;
-        rest.save()
-
-        # menu = Menu.objects.filter(rest=1, );
-        # menu_name = request.GET['menu_name'];
-        # menu_price = request.GET['menu_price'];
-        #
-        # if 'img' in request.FILES:
-        #     for img in request.FILES.getlist('img'):
-        #         imgname = img._name
-        #
-        #         f = open('%s/%s' % (UPLOAD_DIR, imgname), 'wb')
-        #         for chunk in img.chunks():
-        #             f.write(chunk)
-        #             f.close()
-        #
-        #         obj2 = Imgpath(review=obj1, path=imgname)
-        #         obj2.save()
-        return redirect('/restDetail')
-
-    @request_mapping("/restEdit/menu/<int:pk>", method="get")
-    def menu(self, request, pk):
-        menu = Menu.objects.get(id=pk);
-        context = {
-            'menu': menu
-        };
-        return render(request, 'menu.html', context);
-
-    @request_mapping("/restEdit/menu/d/<int:pk>", method="get")
-    def menudelete(self, request, pk):
-        obj = Menu.objects.get(id=pk);
-        rest = obj.rest.id
-        obj.delete();
-        return redirect('/restEdit/'+str(rest));
-
-    @request_mapping("/restEdit/menu/uv/<int:pk>", method="get")
-    def menuUpdateveiw(self, request, pk):
-        menu = Menu.objects.get(id=pk);
-        context = {
-            'center': 'guest/update.html',
-            'menu': menu
-        };
-        return render(request, 'menuUpdate.html', context);
-
-    @request_mapping("/restEdit/menu/u", method="get")
-    def menuUpdate(self, request):
-        name = request.GET['name'];
-        price = request.GET['price'];
-        id = request.GET['id'];
-        obj = Menu.objects.get(id=id);
-        rest = obj.rest.id
-        obj.name = name;
-        obj.price = price;
-        obj.save();
-        return redirect('/restEdit/'+str(rest));
-
-    @request_mapping("/restEdit/menu/iv/<int:pk>", method="get")
-    def menuInsertview(self, request, pk):
-        rest = Rest.objects.get(id=pk);
-        context = {
-            'rest': rest
-        };
-        return render(request, 'menuInsert.html', context);
-
-    @request_mapping("/restEdit/menu/i/<int:pk>", method="get")
-    def menuInsert(self, request, pk):
-        name = request.GET['name'];
-        price = request.GET['price'];
-        obj = Menu.objects.get(id=pk);
-        rest = obj.rest.id
-        obj = Menu(name=name, price=price, rest=obj.rest);
-        obj.save();
-        return redirect('/restEdit/'+str(rest));
-
     @request_mapping("/list", method="get")
     def list(self, request):
         return render(request, 'list.html');
@@ -203,3 +101,7 @@ class MyView(View):
             context['center'] = 'registerok.html';
             context['rname'] = name;
         return render(request, 'home.html', context);
+
+    @request_mapping("/faq", method="get")
+    def faq(self, request):
+        return render(request, 'faq.html');
