@@ -14,17 +14,6 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94ded692846518f0b425f06ff651c6a5"></script>
-        <script>
-             $(document).ready(function(){
-                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                    mapOption = {
-                        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                        level: 3 // 지도의 확대 레벨
-                    };
-                var map = new kakao.maps.Map(mapContainer, mapOption);
-            });
-        </script>
         <!-- Star Rating JavaScript-->
         <script>
             $(document).ready(function(){
@@ -119,7 +108,7 @@
                 });
             });
         </script>
-        <!--Review Register Cancel-->
+        <!--Review Update Cancel-->
         <script>
             $(document).ready(function(){
                 $('#reviewupdate_cancel').click(function(){
@@ -160,84 +149,7 @@
                 </div>
             </div>
         </nav>
-        <!-- Header-->
-        <header class="bg-dark py-0">
-            <div class="container px-1">
-                <div class="row gx-1 align-items-center justify-content-start">
-                    <!-- main img-->
-                    <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest2.jpg' %}" alt="..." /></a></div>
-                    <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest3.jpg' %}" alt="..." /></a></div>
-                    <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest.jpg' %}" alt="..." /></a></div>
-                </div>
-                <div class="row gx-1 align-items-start justify-content-center">
-                    <div class="col-lg-8 col-xl-7 col-xxl-2">
-                        <div class="my-1 text-center text-xl-start">
-                            <!-- 요약 -->
-                            <h1 class="lead fw-normal fs-5 text-white-50 mb-4">음식점 이름</h1>
-                            <h1 class="lead fw-normal fs-6 text-white-50 mb-4">상호명</h1>
-                            <h1 class="lead fw-normal fs-6 text-white-50 mb-4">요식업 종류</h1>
-                            <h1 class="lead fw-normal fs-6 text-white-50 mb-4">오픈/휴식시간</h1>
-                            <h1 class="lead fw-normal fs-6 text-white-50 mb-4">휴무일</h1>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">서비스</h1><br>
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star"></div>
-                                </div>
-                            </div>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">음식</h1><br>
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div>
-                            </div>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">가격</h1><br>
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-half"></div>
-                                    <div class="bi-star"></div>
-                                    <div class="bi-star"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-xl-7 col-xxl-10">
-                        <div class="border" style="width:500px; height:200px; margin: 10px; padding:10px; float:left">
-                            <p class="lead fw-normal text-white-50 mb-4 fs-6">10년 경력의 신라호텔쉐프가 운영하는 모던 비스트로입니다. 매장통화불가시 직통번호 안내 : 010 3038 8856</p>
-                        </div>
-                        <div class="border" style="width:500px; height:200px; margin: 10px; padding:10px; float:left">
-                            <p class="lead fw-normal text-white-50 mb-4 fs-6">* 스파게티 120000</p>
-                            <p class="lead fw-normal text-white-50 mb-4 fs-6">* 돼지국밥 12000000</p>
-                            <p class="lead fw-normal text-white-50 mb-4 fs-6">* 돈까스 1200000000</p>
-                            <p class="lead fw-normal text-white-50 mb-4 fs-6">* 피자 120000000000</p>
-                        </div>
-                        <div class="my-4 mx-4 col-xxl-5 border float-start">
-                            <div id="map" style="height:200px;" ></div>
-                            <p class="lead fw-normal text-white-50 text-center mb-1 fs-6">경기 수원시 영통구 센트럴파크로127번길 159</p>
-                        </div>
-                        <div class="my-5 mx-4 col-xxl-5 float-start">
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#주차가능</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#애완동물</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#룸 시설</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#흡연가능</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#포장가능</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#예약가능</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#....</a></div>
-                            <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#etc</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+
         <!-- review register section-->
         <section class="p-5">
             <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:50%;">
