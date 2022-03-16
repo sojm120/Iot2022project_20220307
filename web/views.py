@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views import View
 from django_request_mapping import request_mapping
 
+from web.models import Cust
+
 
 
 @request_mapping("")
@@ -62,3 +64,27 @@ class MyView(View):
     @request_mapping("/ownerupdate", method="get")
     def ownerupdate(self, request):
         return render(request, 'ownerupdate.html');
+
+    @request_mapping("/registerimpl", method="post")
+    def registerimpl(self, request):
+        id = request.POST['custid'];
+        pwd = request.POST['custpw'];
+        name = request.POST['custname'];
+        birth = request.POST['birth'];
+        gender = request.POST['gender'];
+        email = request.POST['custemail'];
+        address1 = request.POST['address1'];
+        address2 = request.POST['address2'];
+        phone = request.POST['custphone'];
+        host_flag = int(request.POST['host_flag']);
+
+        print(id,pwd,name,birth,gender,email,address1+address2,phone,host_flag);
+        context = {};
+        try:
+            Cust.objects.get(id = id);
+            context['center'] = 'registerfail.html';
+        except:
+            Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1+address2, phone=phone, host_flag=host_flag).save();
+            context['center'] = 'registerok.html';
+            context['rname'] = name;
+        return render(request, 'home.html', context);
