@@ -9,17 +9,24 @@ from web.models import Review, Imgpath
 @request_mapping("/review")
 class ReviewView(View):
 
-    @request_mapping("/i", method="post")
-    def insert(self, request):
-        rest = 1
-        cust = "id01"
+    @request_mapping("/iv/<int:rest_pk>", method="get")
+    def insertview(self, request, rest_pk):
+        context = {
+            'rest_id': rest_pk
+        }
+        return render(request, 'reviewreg.html', context)
+
+    @request_mapping("/i/<int:rest_pk>", method="post")
+    def insert(self, request, rest_pk):
+        rest = rest_pk
+        cust = 'id02'   # 로그인 기능 추가시 sessionid로 변경
         title = request.POST['title']
         content = request.POST['content']
         s_rating = request.POST['s_rating']
         m_rating = request.POST['m_rating']
         p_rating = request.POST['p_rating']
         menu = request.POST['menu']
-        if request.POST['number'] is not '':
+        if request.POST['number'] != '':
             number = request.POST['number']
         else:
             number = 0
@@ -42,10 +49,13 @@ class ReviewView(View):
                 obj2.save()
         return redirect('/restDetail')
 
-    @request_mapping("/uv/", method="get")
-    def updateview(self, request):
-        # 추후에 url에 id 받아서 데이터 받는 것으로 수정
-        obj1 = Review.objects.get(id=20)
+    @request_mapping("/uv/<int:pk>", method="get")
+    def updateview(self, request, pk):
+        # 해당 리뷰가 로그인된 사람이 쓴 것일 경우에만 페이지 띄우기
+        try:
+            obj1 = Review.objects.get(id=pk, cust='id02')   # 로그인 기능 추가시 sessionid로 변경
+        except:
+            return redirect('/restDetail')
         obj2 = []
         for obj in Imgpath.objects.filter(review=obj1):
             obj2.append(obj)
@@ -56,22 +66,21 @@ class ReviewView(View):
         }
         return render(request, 'reviewupdate.html', context)
 
-    @request_mapping("/u", method="post")
-    def update(self, request):
-        id = request.POST['id']
+    @request_mapping("/u/<int:pk>", method="post")
+    def update(self, request, pk):
         title = request.POST['title']
         content = request.POST['content']
         s_rating = request.POST['s_rating']
         m_rating = request.POST['m_rating']
         p_rating = request.POST['p_rating']
         menu = request.POST['menu']
-        if request.POST['number'] is not '':
+        if request.POST['number'] != '':
             number = request.POST['number']
         else:
             number = 0
         purpose = request.POST['purpose']
 
-        obj1 = Review.objects.get(id=id)
+        obj1 = Review.objects.get(id=pk)
         obj1.title = title
         obj1.content = content
         obj1.s_rating = s_rating
@@ -109,7 +118,7 @@ class ReviewView(View):
                     obj2 = Imgpath(review=obj1, path=img1name)
                 obj2.save()
         elif img1_flag == '0':
-            if imgpath_id1:
+            if imgpath_id1 != '0':
                 obj2 = Imgpath.objects.get(id=imgpath_id1)
                 obj2.delete()
 
@@ -117,7 +126,6 @@ class ReviewView(View):
         imgpath_id2 = request.POST['imgpath_id2']
         if img2_flag == '1':
             if 'img2' in request.FILES:
-                print("img2 exists")
                 img2 = request.FILES['img2']
                 img2name = img2._name
 
@@ -133,7 +141,17 @@ class ReviewView(View):
                     obj2 = Imgpath(review=obj1, path=img2name)
                 obj2.save()
         elif img2_flag == '0':
-            if imgpath_id2:
+            if imgpath_id2 != '0':
                 obj2 = Imgpath.objects.get(id=imgpath_id2)
                 obj2.delete()
+        return redirect('/restDetail')
+
+    @request_mapping("/d/<int:pk>", method="get")
+    def delete(self, request, pk):
+        # 해당 리뷰가 로그인된 사람이 쓴 것일 경우에만 삭제 실행
+        try:
+            obj = Review.objects.get(id=pk, cust='id02')    # 로그인 기능 추가시 sessionid로 변경
+        except:
+            return redirect('/restDetail')
+        obj.delete()
         return redirect('/restDetail')
