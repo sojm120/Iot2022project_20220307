@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {%load static%}
+{% load mathfilters %}
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -14,15 +15,104 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94ded692846518f0b425f06ff651c6a5"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94ded692846518f0b425f06ff651c6a5&libraries=services"></script>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
-             $(document).ready(function(){
-                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            function star(rate){
+                var result = '';
+                 switch (rate) {
+                    case 0:
+                        result = '<div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 0.5:
+                        result = '<div class="bi-star-half"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 1:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 1.5:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-half"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 2:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 2.5:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-half"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 3:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star"></div><div class="bi-star"></div>';
+                        break;
+                    case 3.5:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-half"></div><div class="bi-star"></div>';
+                        break;
+                    case 4:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star"></div>';
+                        break;
+                    case 4.5:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-half"></div>';
+                        break;
+                    case 5:
+                        result = '<div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div><div class="bi-star-fill"></div>';
+                        break;
+                 }
+                 return result;
+            };
+
+            function make_list(restimg){
+                var list = restimg.split(' ');
+                return list;
+            };
+
+            $(document).ready(function(){
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                     mapOption = {
                         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                         level: 3 // 지도의 확대 레벨
                     };
                 var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                var geocoder = new kakao.maps.services.Geocoder();
+                geocoder.addressSearch('{{rest.address}}', function(result, status) {
+                    // 정상적으로 검색이 완료됐으면
+                     if (status === kakao.maps.services.Status.OK) {
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                        // 결과값으로 받은 위치를 마커로 표시합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">{{rest.rest_name}}</div>'
+                        });
+                        infowindow.open(map, marker);
+
+                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                        map.setCenter(coords);
+                    }
+                });
+            });
+
+<!--            별점 함수-->
+            $(document).ready(function(){
+                var result = '';
+                result = star(Math.round({{star_avg.s_avg}}*2)/2);
+                 $('#s_rating').html(result);
+                 result = star(Math.round({{star_avg.m_avg}}*2)/2);
+                 $('#m_rating').html(result);
+                 result = star(Math.round({{star_avg.p_avg}}*2)/2);
+                 $('#p_rating').html(result);
+            });
+
+            $(document).ready(function(){
+                list = make_list('{{rest.restimg}}');
+                for(var i = 0; i < list.length; i++){
+                    var result = '';
+                    result += '<div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="/static/img/';
+                    result += list[i];
+                    result += '" alt="..." /></a></div>';
+                    $('#mainimg').append(result);
+                }
             });
         </script>
     </head>
@@ -63,66 +153,44 @@
             <!-- Header-->
             <header class="bg-dark py-0">
                 <div class="container px-1">
-                    <div class="row gx-1 align-items-center justify-content-start">
+                    <div class="row gx-1 align-items-center justify-content-start" id="mainimg">
                         <!-- main img-->
-                        <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest2.jpg' %}" alt="..." /></a></div>
-                        <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest3.jpg' %}" alt="..." /></a></div>
-                        <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="{% static 'img/rest.jpg' %}" alt="..." /></a></div>
                     </div>
                     <div class="row gx-1 align-items-start justify-content-center">
                         <div class="col-lg-8 col-xl-7 col-xxl-2">
                             <div class="my-1 text-center text-xl-start">
                                 <!-- 요약 -->
-                                <h1 class="lead fw-normal fs-5 text-white-50 mb-4">음식점 이름</h1>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">전화번호</h1>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">요식업 종류</h1>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">오픈/휴식시간</h1>
-                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">사업자</h1>
+                                <h1 class="lead fw-normal fs-5 text-white-50 mb-4">{{rest.rest_name}}</h1>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">{{rest.phone}}</h1>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">{{rest.cate.name}}</h1>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">{{rest.openhour}} <br> {{rest.breakhour}}</h1>
+                                <h1 class="lead fw-normal fs-6 text-white-50 mb-4">{{rest.host_name}}</h1>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                     <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">서비스</h1><br>
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star"></div>
-                                    </div>
+                                    <div class="d-flex justify-content-center small text-warning mb-2" id="s_rating"></div>
                                 </div>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                     <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">음식</h1><br>
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
+                                    <div class="d-flex justify-content-center small text-warning mb-2" id="m_rating"></div>
                                 </div>
                                 <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                     <h1 class="lead fw-normal text-white-50 mb-4 fs-6" style="width:4rem">가격</h1><br>
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-half"></div>
-                                        <div class="bi-star"></div>
-                                        <div class="bi-star"></div>
-                                    </div>
+                                    <div class="d-flex justify-content-center small text-warning mb-2" id="p_rating"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8 col-xl-7 col-xxl-10">
                             <div class="border" style="width:500px; height:200px; margin: 10px; padding:10px; float:left">
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">10년 경력의 신라호텔쉐프가 운영하는 모던 비스트로입니다. 매장통화불가시 직통번호 안내 : 010 3038 8856</p>
+                                <p class="lead fw-normal text-white-50 mb-4 fs-6">{{rest.restindex}}</p>
                             </div>
                             <div class="border" style="width:500px; height:200px; margin: 10px; padding:10px; float:left">
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 스파게티 120000</p>
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 돼지국밥 12000000</p>
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 돈까스 1200000000</p>
-                                <p class="lead fw-normal text-white-50 mb-4 fs-6">* 피자 120000000000</p>
+                                {% for m in menu %}
+                                    <p class="lead fw-normal text-white-50 mb-2 fs-6">* {{m.name}} {{m.price}}</p>
+                                {% endfor%}
                             </div>
                             <div class="my-4 mx-4 col-xxl-5 border float-start">
                                 <div id="map" style="height:200px;" ></div>
-                                <p class="lead fw-normal text-white-50 text-center mb-1 fs-6">경기 수원시 영통구 센트럴파크로127번길 159</p>
+                                <p class="lead fw-normal text-white-50 text-center mb-1 fs-6"> {{rest.address}} </p>
                             </div>
                             <div class="my-5 mx-4 col-xxl-5 float-start">
                                 <div class="mx-2 my-2 float-start"><a class="mx-2 my-2 text-white-50 mb-0 fs-5" href="#!">#주차가능</a></div>
@@ -136,7 +204,7 @@
                             </div>
                             <!-- review edit button-->
                             <div class="text-center mb-4" style="width:100; height:100; clear:both;">
-                              <a href="/regiRest"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
+                              <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
                               <a href="/reviewreg"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">리뷰 등록</button></a>
                             </div>
                         </div>
@@ -144,102 +212,66 @@
                 </div>
             </header>
             <!-- review section-->
+            {% for r in review %}
             <section class="" id="review">
                 <div class="container px-5 my-5" style="border:3px solid rgba(255, 0, 0, .5); border-radius:10px">
-                    <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">사용자 아이디</span>
-                    <span class="nav-item" style="opacity: 0.5">작성 날짜</span>
-                    <span class="nav-item" style="display: inline-block; width:830px; opacity: 0.5"></span>
+                    <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">{{r.cust.id}}</span>
+                    <span class="nav-item" style="opacity: 0.5">{{r.regdate}}</span>
+                    <span class="nav-item" style="display: inline-block; width:800px; opacity: 0.5"></span>
                     <!-- review edit delete-->
-                    <span class="nav-item text-decoration-underline" style="display: inline-block; width:50px; opacity: 0.5"><a href="#">수정</a></span>
+                    <span class="nav-item text-decoration-underline" style="display: inline-block; width:50px; opacity: 0.5"><a href="/review/uv">수정</a></span>
                     <span class="nav-item text-decoration-underline" style="opacity: 0.5"><a href="#">삭제</a></span>
-                    <h1 class="lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">서비스</h1>
+                    <h1 class="lead fw-normal text-black mb-1 fs-6 text-center float-start" style="border:1px solid; width:4rem">서비스</h1>
                         <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star"></div>
-                            <div class="bi-star"></div>
+                            {% for i in "x"|rjust:r.s_rating %}
+                                <div class="bi-star-fill"></div>
+                            {% endfor %}
+                            {% with tmp=5|sub:r.s_rating %}
+                            {% for i in "x"|rjust:tmp %}
+                                <div class="bi-star"></div>
+                            {% endfor %}
+                            {% endwith %}
                         </div>
                     <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">음식</h1>
                         <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-half"></div>
-                            <div class="bi-star"></div>
-                            <div class="bi-star"></div>
+                            {% for i in "x"|rjust:r.m_rating %}
+                                <div class="bi-star-fill"></div>
+                            {% endfor %}
+                            {% with tmp=5|sub:r.m_rating %}
+                            {% for i in "x"|rjust:tmp %}
+                                <div class="bi-star"></div>
+                            {% endfor %}
+                            {% endwith %}
                         </div>
                     <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">가격</h1>
                         <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-half"></div>
-                            <div class="bi-star"></div>
-                            <div class="bi-star"></div>
+                            {% for i in "x"|rjust:r.p_rating %}
+                                <div class="bi-star-fill"></div>
+                            {% endfor %}
+                            {% with tmp=5|sub:r.p_rating %}
+                            {% for i in "x"|rjust:tmp %}
+                                <div class="bi-star"></div>
+                            {% endfor %}
+                            {% endwith %}
                         </div>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:4rem">메뉴</h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:4rem">인원</h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:4rem">목적</h1>
+                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:80px"></h1>
+                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">메뉴: {{r.menu}}</h1>
+                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">인원: {{r.number}}</h1>
+                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">목적: {{r.purpose}}</h1>
                     <!-- review photo title content-->
-                    <div class="" style="clear:both">
+                    <div class="" style="clear:both" id="reviewimg">
                         <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><a href="#"><img class="img-fluid rounded-3 my-1" src="{% static 'img/food1.jpg' %}" alt="..." /></a></div>
                         <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><a href="#"><img class="img-fluid rounded-3 my-1" src="{% static 'img/food2.jpg' %}" alt="..." /></a></div>
                     </div>
                     <div style="clear:both">
-                        <div class="my-3"><h2 class="h3">review title title title</h2></div>
+                        <div class="my-3"><h2 class="h3"style="text-overflow:ellipsis;overflow:hidden;width=240px">{{r.title}}</h2></div>
                         <div class="col-lg-8">
-                            <p class="mb-0">예약 할 때 요청사항을 절 맞춰주셔서 일단 들어가면서부터 너무 맘에 들었구요. 음식도 맛있는데 심지어 양도 많기까지! 주차가 조금 어렵지만 이 주변 주차가 다 그러니까 그건 어디든 마찬가지 일거예요.예약 할 때 요청사항을 절 맞춰주셔서 일단 들어가면서부터 너무 맘에 들었구요. 음식도 맛있는데 심지어 양도 많기까지! 주차가 조금 어렵지만 이 주변 주차가 다 그러니까 그건 어디든 마찬가지 일거예요.예약 할 때 요청사항을 절 맞춰주셔서 일단 들어가면서부터 너무 맘에 들었구요. 음식도 맛있는데 심지어 양도 많기까지! 주차가 조금 어렵지만 이 주변 주차가 다 그러니까 그건 어디든 마찬가지 일거예요.</p>
+                            <p class="mb-0" style="word-break:break-all">{{r.content}}</p>
                         </div>
                     </div>
                 </div>
             </section>
-            <section class="" id="review2">
-                <div class="container px-5 my-1" style="border:1px solid; border-radius:10px">
-                    <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">사용자 아이디</span>
-                    <span class="nav-item" style="opacity: 0.5">작성 날짜</span>
-                    <span class="nav-item" style="display: inline-block; width:830px; opacity: 0.5"></span>
-                    <!-- review edit delete-->
-                    <span class="nav-item text-decoration-underline" style="display: inline-block; width:50px; opacity: 0.5"><a href="#">수정</a></span>
-                    <span class="nav-item text-decoration-underline" style="opacity: 0.5"><a href="#">삭제</a></span>
-                    <h1 class="lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">서비스</h1>
-                        <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                        </div>
-                    <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">음식</h1>
-                        <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star"></div>
-                        </div>
-                    <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">가격</h1>
-                        <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-half"></div>
-                        </div>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:4rem">메뉴</h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:4rem">인원</h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:4rem">목적</h1>
-                    <!-- review photo title content-->
-                    <div class="" style="clear:both">
-                        <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><a href="#"><img class="img-fluid rounded-3 my-1" src="{% static 'img/food1.jpg' %}" alt="..." /></a></div>
-                        <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><a href="#"><img class="img-fluid rounded-3 my-1" src="{% static 'img/food2.jpg' %}" alt="..." /></a></div>
-                    </div>
-                    <div style="clear:both">
-                        <div class="my-3"><h2 class="h3">review title title title</h2></div>
-                        <div class="col-lg-8">
-                            <p class="mb-0">예약 할 때 요청사항을 절 맞춰주셔서 일단 들어가면서부터 너무 맘에 들었구요. 음식도 맛있는데 심지어 양도 많기까지! 주차가 조금 어렵지만 이 주변 주차가 다 그러니까 그건 어디든 마찬가지 일거예요.예약 할 때 요청사항을 절 맞춰주셔서 일단 들어가면서부터 너무 맘에 들었구요. 음식도 맛있는데 심지어 양도 많기까지! 주차가 조금 어렵지만 이 주변 주차가 다 그러니까 그건 어디든 마찬가지 일거예요.예약 할 때 요청사항을 절 맞춰주셔서 일단 들어가면서부터 너무 맘에 들었구요. 음식도 맛있는데 심지어 양도 많기까지! 주차가 조금 어렵지만 이 주변 주차가 다 그러니까 그건 어디든 마찬가지 일거예요.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            {% endfor %}
         </main>
     </body>
 </html>
