@@ -31,14 +31,15 @@ class MyView(View):
         rest = Rest.objects.get(id=1);
         star_avg = Review.objects.filter(rest=1).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'), p_avg=Avg('p_rating'));
         menu = Menu.objects.filter(rest=1);
-        review = Review.objects.filter(rest=1);
+        review = Review.objects.filter(rest=1).order_by('-id'); # 내림차순 정렬
         imgpath = Imgpath.objects.all();
         context = {
             'rest': rest,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
-            'imgpath': imgpath
+            'imgpath': imgpath,
+            'reviewlist': 'reviewlist.html'
         };
         return render(request, 'restDetail.html', context);
 
