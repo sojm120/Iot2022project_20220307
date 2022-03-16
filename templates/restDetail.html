@@ -14,6 +14,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+        <!-- Image Popup CSS -->
+        <link href="{%static 'css/imageModal.css'%}" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94ded692846518f0b425f06ff651c6a5&libraries=services"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -58,11 +60,6 @@
                  return result;
             };
 
-            function make_list(restimg){
-                var list = restimg.split(' ');
-                return list;
-            };
-
             $(document).ready(function(){
                 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                     mapOption = {
@@ -104,16 +101,34 @@
                  $('#p_rating').html(result);
             });
 
+<!--            식당 이미지-->
             $(document).ready(function(){
                 list = make_list('{{rest.restimg}}');
                 for(var i = 0; i < list.length; i++){
                     var result = '';
-                    result += '<div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="/static/img/';
+                    result += '<div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><img class="restimg restimg_hover img-fluid rounded-3 my-5" onclick="imgModal(this);" src="/static/img/';
                     result += list[i];
-                    result += '" alt="..." /></a></div>';
+                    result += '" alt="..." /></div>';
                     $('#mainimg').append(result);
                 }
             });
+
+            function make_list(restimg){
+                var list = restimg.split(' ');
+                return list;
+            };
+        </script>
+        <!--Image Modal function-->
+        <script>
+            // Get the image and insert it inside the modal
+            function imgModal(img){
+                $('#myModal').css({'display':'block'});
+                $('#img01').attr('src', img.src);
+            }
+            // When the user clicks on <span> (x), close the modal
+            function closeModal(){
+                $('#myModal').css({'display':'none'});
+            }
         </script>
     </head>
     <body class="d-flex flex-column h-100">
@@ -204,74 +219,21 @@
                             </div>
                             <!-- review edit button-->
                             <div class="text-center mb-4" style="width:100; height:100; clear:both;">
-                              <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">음식점 수정</button></a>
-                              <a href="/reviewreg"><button style="background-color: rgb(256,50,50); border-radius: 10px; color:white">리뷰 등록</button></a>
+                              <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,167,34); border-radius: 10px; color:white">음식점 수정</button></a>
+                              <a href="/review/iv/{{rest.id}}"><button style="background-color: rgb(256,167,34); border-radius: 10px; color:white">리뷰 등록</button></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </header>
-            <!-- review section-->
-            {% for r in review %}
-            <section class="" id="review">
-                <div class="container px-5 my-5" style="border:3px solid rgba(255, 0, 0, .5); border-radius:10px">
-                    <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">{{r.cust.id}}</span>
-                    <span class="nav-item" style="opacity: 0.5">{{r.regdate}}</span>
-                    <span class="nav-item" style="display: inline-block; width:800px; opacity: 0.5"></span>
-                    <!-- review edit delete-->
-                    <span class="nav-item text-decoration-underline" style="display: inline-block; width:50px; opacity: 0.5"><a href="/review/uv">수정</a></span>
-                    <span class="nav-item text-decoration-underline" style="opacity: 0.5"><a href="#">삭제</a></span>
-                    <h1 class="lead fw-normal text-black mb-1 fs-6 text-center float-start" style="border:1px solid; width:4rem">서비스</h1>
-                        <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            {% for i in "x"|rjust:r.s_rating %}
-                                <div class="bi-star-fill"></div>
-                            {% endfor %}
-                            {% with tmp=5|sub:r.s_rating %}
-                            {% for i in "x"|rjust:tmp %}
-                                <div class="bi-star"></div>
-                            {% endfor %}
-                            {% endwith %}
-                        </div>
-                    <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">음식</h1>
-                        <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            {% for i in "x"|rjust:r.m_rating %}
-                                <div class="bi-star-fill"></div>
-                            {% endfor %}
-                            {% with tmp=5|sub:r.m_rating %}
-                            {% for i in "x"|rjust:tmp %}
-                                <div class="bi-star"></div>
-                            {% endfor %}
-                            {% endwith %}
-                        </div>
-                    <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">가격</h1>
-                        <div class="d-flex justify-content-center small text-warning mb-2 float-start">
-                            {% for i in "x"|rjust:r.p_rating %}
-                                <div class="bi-star-fill"></div>
-                            {% endfor %}
-                            {% with tmp=5|sub:r.p_rating %}
-                            {% for i in "x"|rjust:tmp %}
-                                <div class="bi-star"></div>
-                            {% endfor %}
-                            {% endwith %}
-                        </div>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:80px"></h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">메뉴: {{r.menu}}</h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">인원: {{r.number}}</h1>
-                    <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">목적: {{r.purpose}}</h1>
-                    <!-- review photo title content-->
-                    <div class="" style="clear:both" id="reviewimg">
-                        <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><a href="#"><img class="img-fluid rounded-3 my-1" src="{% static 'img/food1.jpg' %}" alt="..." /></a></div>
-                        <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><a href="#"><img class="img-fluid rounded-3 my-1" src="{% static 'img/food2.jpg' %}" alt="..." /></a></div>
-                    </div>
-                    <div style="clear:both">
-                        <div class="my-3"><h2 class="h3"style="text-overflow:ellipsis;overflow:hidden;width=240px">{{r.title}}</h2></div>
-                        <div class="col-lg-8">
-                            <p class="mb-0" style="word-break:break-all">{{r.content}}</p>
-                        </div>
-                    </div>
-                </div>
+            <section id="reviewlist">
+                {% include reviewlist %}
             </section>
-            {% endfor %}
+            <!-- Image Pop-up -->
+            <div id="myModal" class="modal">
+                <span class="close" onclick="closeModal();">&times;</span>
+                <img class="modal-content" id="img01">
+            </div>
         </main>
     </body>
 </html>
