@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:color="http://www.w3.org/1999/xhtml">
+<html lang="en">
 {%load static%}
     <head>
         <meta charset="utf-8" />
@@ -7,12 +7,25 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Shop Homepage - Start Bootstrap Template</title>
-        <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{%static 'assets/favicon.ico'%}" />
-        <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+    function rating(rate){
+                var star = '';
+                for (var i = 0; i < rate, i++){
+                    star += '<div class="bi-star-fill"></div>'
+                }
+            };
+
+            $(document).ready(function(){
+                var result = '';
+                result = rating({{star_rating.s_rating}});
+                 $('#star_rating').html(result);
+            });
+</script>
     </head>
     <body>
         <!-- Navigation-->
@@ -95,14 +108,10 @@
                     </div>
                     <div style="margin: 10px; margin-top: 3rem; margin-bottom: 5.8rem">
                         <div style="height: 100%">
-                            <!-- Product image-->
                             <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />
-                            <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    <!-- Product name-->
                                     <h5 class="fw-bolder">리뷰가 없어요</h5>
-                                    <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
                                         <div class="bi-star-fill" style="color:black"></div>
                                         <div class="bi-star-fill" style="color:black"></div>
@@ -121,220 +130,159 @@
 
             </div>
         <section class="py-5">
-
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-half"></div>
-                                        <div class="bi-star"></div>
-                                    </div>
-                                    <div>###명이 리뷰했어요</div>
-                                </div>
+
+
+                    <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                      </div>
+                    <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
+                      </div>
+                    <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
+                      </div>
+                    <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
+                      </div>
+                      <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
+                      </div>
+                      <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
+                      </div>
+                <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
+                      </div>
+                    <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
+
+
+<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
                             </div>
-                        </div>
-                    </div>
-                                        <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">음식점 이름</h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                      </div>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; IoT project</p></div>
         </footer>
-        <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="static/js/scripts.js"></script>
     </body>
 </html>

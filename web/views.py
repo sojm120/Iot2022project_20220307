@@ -1,15 +1,27 @@
+from django.db.models import Avg
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django_request_mapping import request_mapping
+import json
 
+from web.models import Rest, Review, Menu, Imgpath
 
 
 @request_mapping("")
 class MyView(View):
 
     @request_mapping("/", method="get")
-    def home(self,request):
-        return render(request,'home.html');
+    def home(self, request):
+        rest = Rest.objects.all();
+        star_rating = Review.objects.all();
+        imgpath = Imgpath.objects.all();
+        context = {
+            'rest': rest,
+            'star_rating': star_rating,
+            'imgpath': imgpath
+        };
+        return render(request, 'home.html', context);
 
     @request_mapping("/search", method="get")
     def search(self,request):
