@@ -13,11 +13,19 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <script>
+
+    var array
     function rating(rate){
                 var star = '';
-                for (var i = 0; i < rate, i++){
+                var i = 0
+                for (i < rate, i++){
                     star += '<div class="bi-star-fill"></div>'
                 }
+                var j = 5-i;
+                for (var k, k < j, k++){
+                    star += '<div class="bi-star"></div>'
+                }
+
             };
 
             $(document).ready(function(){
@@ -62,9 +70,10 @@
         <header class="bg-picture py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <form class = "input-box" action="http://127.0.0.1/search" method="GET">
+                    <form class = "input-box" action="127.0.0.1/search" method="get">
+                        {% csrf_token %}
 <!--                        차후 데이터와 검색 연동 진행-->
-                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력">
+                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력" name="q" value = "{{q}}">
                         <button class="forgot-main" type="submit">Search</button>
 <!--                        <a href="/search" style="font:bold; color:white; text-decoration:none"></a>-->
                     </form>
@@ -135,13 +144,13 @@
 
 
                     <div class="col mb-5" >
-                        <div class="card h-100" id="rest_img">
+                        <div class="card h-100" id="rest_img" method="GET">
 
 <!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
                                 <div class="card-body p-4">
-                                    <div class="text-center" id="rest_name">
+                                    <div class="text-center" id="rest_name" method="GET">
 <!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
-                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating" method="GET">
 
                                                     </div>
                                                 </div>
