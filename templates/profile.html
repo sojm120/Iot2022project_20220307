@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:color="http://www.w3.org/1999/xhtml">
 {%load static%}
     <head>
         <meta charset="utf-8" />
-<!--        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />-->
-        <meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Shop Homepage - Start Bootstrap Template</title>
@@ -19,14 +18,26 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>
+                {% if request.session.sessionid == None %}
+                    <span></span>
+                {% else %}
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
+                    <span>{{request.session.sessionid}}</span>
+                {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
-                    </ul>
+                    {% if request.session.sessionid == None %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
+                            &nbsp;
+                        </ul>
+                    {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
                         <a class="navbar-brand" href="/">로고</a>
@@ -37,7 +48,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#!">자주 묻는 질문</a></li>
                                 <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
-                                <li><a class="dropdown-item" href="#!">고객 상담 게시판</a></li>
+                                <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
                             </ul>
                         </li>
                     </ul>

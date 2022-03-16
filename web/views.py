@@ -78,13 +78,38 @@ class MyView(View):
         phone = request.POST['custphone'];
         host_flag = int(request.POST['host_flag']);
 
-        print(id,pwd,name,birth,gender,email,address1+address2,phone,host_flag);
+        print(id,pwd,name,birth,gender,email,address1+ address2,phone,host_flag);
         context = {};
         try:
             Cust.objects.get(id = id);
-            context['center'] = 'registerfail.html';
+            context['center'] = 'register.html';
         except:
             Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1+address2, phone=phone, host_flag=host_flag).save();
             context['center'] = 'registerok.html';
             context['rname'] = name;
         return render(request, 'home.html', context);
+
+    @request_mapping("/loginimpl", method="post")
+    def loginimpl(self, request):
+        # id, pwd 를 프로그램을 확인 한다.
+        id = request.POST['custid'];
+        pwd = request.POST['custpw'];
+        context = {};
+        try:
+            cust = Cust.objects.get(id=id);
+            if cust.pwd == pwd:
+                request.session['sessionid'] = cust.id;
+                request.session['sessionname'] = cust.name;
+                context['center'] = 'loginok.html';
+            else:
+                raise Exception;
+        except:
+            context['center'] = 'loginfail.html';
+
+        return render(request, 'home.html', context);
+
+    @request_mapping("/logout", method="get")
+    def logout(self, request):
+        if request.session['sessionid'] != None:
+            del request.session['sessionid'];
+        return render(request, 'home.html');
