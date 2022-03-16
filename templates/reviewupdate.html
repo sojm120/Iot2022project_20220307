@@ -244,10 +244,9 @@
                 <header class="container" style="text-align:center; width:100%;">
                     <h3 style="white-space:nowrap; font-weight: bold;">리뷰 수정</h3>
                 </header>
-                <form id="reviewreg" action="/review/u" method="POST" enctype="multipart/form-data">
+                <form id="reviewreg" action="/review/u/{{obj1.id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <h6 id="required">*필수입력사항</h6>
-                    <input id="id" type="number" name="id" value="{{obj1.id}}">
                     <div class="input-box">
                         <span class="asterisk">*</span>
                         <input id="title" type="text" name="title" placeholder="제목" autocomplete="off" value="{{obj1.title}}" required>

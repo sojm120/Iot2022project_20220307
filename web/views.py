@@ -31,20 +31,17 @@ class MyView(View):
         rest = Rest.objects.get(id=1);
         star_avg = Review.objects.filter(rest=1).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'), p_avg=Avg('p_rating'));
         menu = Menu.objects.filter(rest=1);
-        review = Review.objects.filter(rest=1);
+        review = Review.objects.filter(rest=1).order_by('-id'); # 내림차순 정렬
         imgpath = Imgpath.objects.all();
         context = {
             'rest': rest,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
-            'imgpath': imgpath
+            'imgpath': imgpath,
+            'reviewlist': 'reviewlist.html'
         };
         return render(request, 'restDetail.html', context);
-
-    @request_mapping("/reviewreg", method="get")
-    def reviewreg(self, request):
-        return render(request, 'reviewreg.html');
 
     @request_mapping("/list", method="get")
     def list(self, request):
@@ -91,16 +88,41 @@ class MyView(View):
         phone = request.POST['custphone'];
         host_flag = int(request.POST['host_flag']);
 
-        print(id,pwd,name,birth,gender,email,address1+address2,phone,host_flag);
+        print(id,pwd,name,birth,gender,email,address1+ address2,phone,host_flag);
         context = {};
         try:
             Cust.objects.get(id = id);
-            context['center'] = 'registerfail.html';
+            context['center'] = 'register.html';
         except:
             Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1+address2, phone=phone, host_flag=host_flag).save();
             context['center'] = 'registerok.html';
             context['rname'] = name;
         return render(request, 'home.html', context);
+
+    @request_mapping("/loginimpl", method="post")
+    def loginimpl(self, request):
+        # id, pwd 를 프로그램을 확인 한다.
+        id = request.POST['custid'];
+        pwd = request.POST['custpw'];
+        context = {};
+        try:
+            cust = Cust.objects.get(id=id);
+            if cust.pwd == pwd:
+                request.session['sessionid'] = cust.id;
+                request.session['sessionname'] = cust.name;
+                context['center'] = 'loginok.html';
+            else:
+                raise Exception;
+        except:
+            context['center'] = 'loginfail.html';
+
+        return render(request, 'home.html', context);
+
+    @request_mapping("/logout", method="get")
+    def logout(self, request):
+        if request.session['sessionid'] != None:
+            del request.session['sessionid'];
+        return render(request, 'home.html');
 
     @request_mapping("/faq", method="get")
     def faq(self, request):

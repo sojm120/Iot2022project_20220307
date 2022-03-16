@@ -1,0 +1,94 @@
+{% load static %}
+{% load mathfilters %}
+<script>
+    function reviewUpdate(id){
+        c = confirm('리뷰를 수정하시겠습니까?');
+        if(c == true){
+            location.href="/review/uv/"+id;
+        }
+    }
+
+    function reviewDelete(id){
+        c = confirm('[주의]\n삭제 후에는 되돌릴 수 없습니다.\n정말 리뷰를 삭제하시겠습니까?');
+        if(c == true){
+            location.href="/review/d/"+id;
+        }
+    }
+</script>
+
+<section>
+    <!-- review section-->
+    {% for r in review %}
+    <section class="" id="review">
+        <div class="container px-5 my-5" style="border:3px solid #FFA722; border-radius:10px">
+            <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">{{r.cust.id}}</span>
+            <span class="nav-item" style="opacity: 0.5">{{r.regdate}}</span>
+            <span class="nav-item" style="display: inline-block; width:800px; opacity: 0.5"></span>
+            <!-- review edit delete-->
+            <div style="float:right;">
+                {% if r.cust.id == 'id02' %}
+                <button class="button_update" onclick="reviewUpdate({{r.id}});">수정</button>
+                <button class="button_delete" onclick="reviewDelete({{r.id}});">삭제</button>
+                {% endif %}
+            </div>
+            <h1 class="lead fw-normal text-black mb-1 fs-6 text-center float-start" style="border:1px solid; width:4rem">서비스</h1>
+                <div class="d-flex justify-content-center small text-warning mb-2 float-start">
+                    {% for i in "x"|rjust:r.s_rating %}
+                        <div class="bi-star-fill"></div>
+                    {% endfor %}
+                    {% with tmp=5|sub:r.s_rating %}
+                    {% if tmp != 0 %}
+                    {% for i in "x"|rjust:tmp %}
+                        <div class="bi-star"></div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">음식</h1>
+                <div class="d-flex justify-content-center small text-warning mb-2 float-start">
+                    {% for i in "x"|rjust:r.m_rating %}
+                        <div class="bi-star-fill"></div>
+                    {% endfor %}
+                    {% with tmp=5|sub:r.m_rating %}
+                    {% if tmp != 0 %}
+                    {% for i in "x"|rjust:tmp %}
+                        <div class="bi-star"></div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            <h1 class="mx-1 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="border:1px solid; width:4rem">가격</h1>
+                <div class="d-flex justify-content-center small text-warning mb-2 float-start">
+                    {% for i in "x"|rjust:r.p_rating %}
+                        <div class="bi-star-fill"></div>
+                    {% endfor %}
+                    {% with tmp=5|sub:r.p_rating %}
+                    {% if tmp != 0 %}
+                    {% for i in "x"|rjust:tmp %}
+                        <div class="bi-star"></div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:80px"></h1>
+            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">메뉴: {{r.menu}}</h1>
+            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">인원: {{r.number}}</h1>
+            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">목적: {{r.purpose}}</h1>
+            <!-- review photo title content-->
+            <div class="" style="clear:both" id="reviewimg">
+                {% for img in imgpath %}
+                {% if r.id == img.review_id %}
+                    <div class="col-xxl-1 d-none d-xl-block float-start mx-2"><img onclick="imgModal(this);" width="200px" class="reviewimg reviewimg_hover img-fluid rounded-3 my-1" src="/static/img/{{img.path}}" alt="..." /></div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div style="clear:both">
+                <div class="my-3"><h2 class="h3"style="text-overflow:ellipsis;overflow:hidden;width=240px">{{r.title}}</h2></div>
+                <div class="col-lg-8">
+                    <p class="mb-0" style="word-break:break-all">{{r.content}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+</section>

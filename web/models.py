@@ -11,6 +11,7 @@ class Cust(models.Model):
     address = models.CharField(max_length=100)
     phone = models.CharField(unique=True, max_length=13)
     host_flag = models.IntegerField()
+    custimg = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'db_cust'

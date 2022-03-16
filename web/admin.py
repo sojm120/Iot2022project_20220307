@@ -4,7 +4,7 @@ from web.models import Cust, Cate, Rest, Review, Imgpath, Board, Menu
 
 
 class CustAdmin(admin.ModelAdmin):
-    list_display = ('id', 'pwd', 'name', 'birth', 'gender', 'email', 'address', 'phone', 'host_flag')
+    list_display = ('id', 'pwd', 'name', 'birth', 'gender', 'email', 'address', 'phone', 'host_flag', 'custimg')
 
 
 admin.site.register(Cust, CustAdmin)
