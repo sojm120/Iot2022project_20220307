@@ -13,23 +13,31 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
-        <link href="{%static 'css/loginstyle.css'%}" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>
+                {% if request.session.sessionid == None %}
+                    <span></span>
+                {% else %}
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
+                    <span>{{request.session.sessionid}}</span>
+                {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
-<!--                <a href="/login" style="color:white; text-decoration:none">-->
-<!--                    <img src="http://placeimg.com/100/100/any" style="width:50px; height:50px; border-radius:70%; over-flow:hidden;">-->
-<!--                </a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
-                    </ul>
+                    {% if request.session.sessionid == None %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
+                            &nbsp;
+                        </ul>
+                    {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
                         <a class="navbar-brand" href="/">로고</a>
@@ -76,18 +84,19 @@
             <header class="container" style="text-align:center; width:100%;">
                 <h3 style="white-space:nowrap;">로그인</h3>
             </header>
-            <form action="" method="POST" style="text-align:center;">
+            <form action="loginimpl" method="POST" style="text-align:center;">
+                {% csrf_token %}
                 <div class="input-box">
-                    <input id="username" type="text" name="username" placeholder="아이디" autocomplete="off">
-                    <label for="username">아이디</label>
+                    <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
+                    <label for="custid">아이디</label>
                     <span class="errorbox"></span>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotid" style="text-align:right; width:85px;">아이디찾기</button>
                     </div>
                 </div>
                 <div class="input-box">
-                    <input id="password" type="password" name="password" placeholder="비밀번호" autocomplete="off">
-                    <label for="password">비밀번호</label>
+                    <input id="custpw" type="password" name="custpw" placeholder="비밀번호" autocomplete="off">
+                    <label for="custpw">비밀번호</label>
                     <span class="errorbox"></span>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotpw" style="text-align:right; width:85px;">비밀번호찾기</button>
@@ -97,7 +106,11 @@
                 <div class="p-2" style="position:absolute; left:50%; transform:translateX(-50%); width:100%;">
                     <input type="submit" value="로그인" style="width:80%">
                 </div>
-
+            {% if center != None %}
+                {% include center %}
+            {% else %}
+                <section></section>
+            {% endif %}
             </form>
         </div>
     </section>

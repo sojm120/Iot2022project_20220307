@@ -13,52 +13,31 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
-        <link href="{%static 'css/loginstyle.css'%}" rel="stylesheet" />
     </head>
-    <script>
-        function check_pw(){
-
-            var pw = document.getElementById('pw').value;
-            var SC = ["!","@","#","$","%"];
-            var check_SC = 0;
-
-            if(pw.length < 6 || pw.length>16){
-                window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
-                document.getElementById('pw').value='';
-            }
-            for(var i=0;i<SC.length;i++){
-                if(pw.indexOf(SC[i]) != -1){
-                    check_SC = 1;
-                }
-            }
-            if(check_SC == 0){
-                window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
-                document.getElementById('pw').value='';
-            }
-            if(document.getElementById('pw').value !='' && document.getElementById('pw2').value!=''){
-                if(document.getElementById('pw').value==document.getElementById('pw2').value){
-                    document.getElementById('check').innerHTML='비밀번호가 일치합니다.'
-                    document.getElementById('check').style.color='blue';
-                }
-                else{
-                    document.getElementById('check').innerHTML='비밀번호가 일치하지 않습니다.';
-                    document.getElementById('check').style.color='red';
-                }
-            }
-        }
-    </script>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>
+                {% if request.session.sessionid == None %}
+                    <span></span>
+                {% else %}
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
+                    <span>{{request.session.sessionid}}</span>
+                {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
-                    </ul>
+                    {% if request.session.sessionid == None %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
+                            &nbsp;
+                        </ul>
+                    {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
                         <a class="navbar-brand" href="/">로고</a>
@@ -112,11 +91,11 @@
                         <label for="custid">아이디</label>
                     </div>
                     <div class="input-box">
-                        <input id="custpw" type="text" name="custpw" placeholder="비밀번호" onchange="check_pw()">
+                        <input id="custpw" type="password" name="custpw" placeholder="비밀번호" onchange="check_pw()">
                         <label for="custpw">비밀번호</label>
                     </div>
                     <div class="input-box">
-                        <input id="custpwcheck" type="text" name="pwcheck" placeholder="비밀번호확인" onchange="check_pw()">
+                        <input id="custpwcheck" type="password" name="pwcheck" placeholder="비밀번호확인" onchange="check_pw()">
                         <label for="custpwcheck">비밀번호확인</label>
                     </div>
                     <div class="input-box">
@@ -129,9 +108,9 @@
                     </div>
                     <div>
                         <div class="box-radio-input">
-                            <input id="man" type="radio" name="gender" value="남자" style="width:15px; height:15px;">
+                            <input id="man" type="radio" name="gender" value="남" style="width:15px; height:15px;">
                             <span>남자</span>
-                            <input id="woman" type="radio" name="gender" value="여자" style="width:15px; height:15px;">
+                            <input id="woman" type="radio" name="gender" value="여" style="width:15px; height:15px;">
                             <span>여자</span>
                         </div>
                     </div>
@@ -211,30 +190,30 @@
                                 }
                             </script>
                         </div>
-                    </div>
-                    <div class="input-box">
-                        <input id="custphone" type="text" name="custphone" placeholder="휴대폰번호" autocomplete="off">
-                        <label for="custphone">휴대폰번호</label>
-                    </div>
-                    <div class="input-box" style="padding-top:8px;">
-                        <span style="font-size:15px;">프로필사진
-                        <input type="file" id="custimg" name="custimg" accept="image/*"></span>
-                    </div>
-                    <div>
-                        <div class="box-radio-input">
-                            <input id="cust" type="radio" name="host_flag" value="0" style="width:15px; height:15px;">
-                            <span>일반회원</span>
-                            <input id="ceo" type="radio" name="host_flag" value="1" style="width:15px; height:15px;">
-                            <span>점주회원</span>
+                        <div class="input-box">
+                            <input id="custphone" type="text" name="custphone" placeholder="휴대폰번호" autocomplete="off">
+                            <label for="custphone">휴대폰번호</label>
                         </div>
+                        <div class="input-box" style="padding-top:8px;">
+                            <span style="font-size:15px;">프로필사진
+                            <input type="file" id="custimg" name="custimg" accept="image/*"></span>
+                        </div>
+                        <div>
+                            <div class="box-radio-input">
+                                <input id="cust" type="radio" name="host_flag" value="0" style="width:15px; height:15px;">
+                                <span>일반회원</span>
+                                <input id="ceo" type="radio" name="host_flag" value="1" style="width:15px; height:15px;">
+                                <span>점주회원</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="btnfield" style="text-align:center">
+                            <input type="submit" value="회원가입" style="width:80%">
+                        </div>
+                    <br>
+                    <br>
+                    <br>
                     </div>
-                    <br>
-                    <div class="btnfield" style="text-align:center">
-                        <input type="submit" value="회원가입" style="width:80%">
-                    </div>
-                    <br>
-                    <br>
-                    <br>
                 </form>
             </div>
         </section>
