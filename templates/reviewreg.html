@@ -207,7 +207,7 @@
                 <header class="container" style="text-align:center; width:100%;">
                     <h3 style="white-space:nowrap; font-weight: bold;">리뷰 등록</h3>
                 </header>
-                <form id="reviewreg" action="/review/i" method="POST" enctype="multipart/form-data">
+                <form id="reviewreg" action="/review/i/{{rest_id}}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <h6 id="required">*필수입력사항</h6>
                     <div class="input-box">
