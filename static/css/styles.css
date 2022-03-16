@@ -11471,10 +11471,6 @@ input[type=submit]{
     text-align: right;
 }
 
-#reviewreg > #id {
-    display: none;
-}
-
 #reviewreg .button_delete {
     font-size: 20px;
     color: white;
@@ -11502,6 +11498,30 @@ input[type=submit]{
     height: 45px;
     font-size: 10pt;
     line-height: 200%;
+}
+
+#mainimg .restimg{
+    cursor: pointer;
+}
+#mainimg .restimg_hover:hover{
+    opacity: 0.7;
+}
+
+#reviewlist .reviewimg {
+    cursor: pointer;
+}
+
+#reveiwlist > .reviewimg_hover:hover {
+    opacity: 0.7;
+}
+
+#reviewlist .button_update,.button_delete{
+    font-size: 20px;
+    color: white;
+    background-color: #FFA722;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
 }
 
 .input-box > .asterisk {
