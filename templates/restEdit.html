@@ -32,15 +32,13 @@
                 list = make_list('{{rest.restimg}}');
                 for(var i = list.length; i > 0; i--){
                     var result = '';
-                    result += '<div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center" style="position: relative;"><a href="#"><img class="img-fluid rounded-3 my-5" src="/static/img/';
+                    result += '<div id="img';
+                    result += i-1;
+                    result += '" class="col-xl-4 col-xxl-2 d-none d-xl-block text-center" style="position: relative;"><a href="#"><img class="img-fluid rounded-3 my-5" src="/static/img/';
                     result += list[i-1];
                     result += '" alt="..." /></a></div>';
                     $('#mainimg').prepend(result);
                 }
-
-                $('#delete_img1').click(function(){
-                    $('#filePhoto1').val(null);
-                });
             });
 
             function make_list(restimg){
@@ -49,7 +47,7 @@
             };
 
             $(document).ready(function(){
-                $("#filePhoto1").change(function() {
+                $("#insertimg").change(function() {
                     savePhoto(this);
                 });
             });
@@ -62,11 +60,16 @@
                         result += '<div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center"><a href="#"><img class="img-fluid rounded-3 my-5" src="';
                         result += e.target.result;
                         result += '" alt="..." /></a></div>';
-                        $('#mainimg').append(result);
+                        $('#mainimg').prepend(result);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
             }
+
+            function deleteimg(){
+                list = make_list('{{rest.restimg}}');
+                 $('#img'+(list.length-1)).remove();
+            };
         </script>
     </head>
     <body class="d-flex flex-column h-100">
@@ -111,11 +114,11 @@
                         <div class="row gx-1 align-items-center justify-content-start" id="mainimg">
                             <!-- main img-->
                             <div class="col-xl-4 col-xxl-2 d-none d-xl-block text-center">
-                                <button type="button" style="color: white; background-color: rgb(256,167,34);width:150px; height:50px; border-radius:15px;" onclick="$('#filePhoto1').click()">
+                                <button type="button" style="color: white; background-color: rgb(256,167,34);width:150px; height:50px; border-radius:15px;" onclick="$('#insertimg').click()">
                                     사진 추가
                                 </button>
-                                <input id="filePhoto1" class="img" type="file" name="img" style="display:none;">
-                                <button type="button" style="color: white; background-color: rgb(256,167,34);width:150px; height:50px; border-radius:15px;" onclick="location.href='/restEdit/img/{{rest.id}}'">
+                                <input id="insertimg" class="img" type="file" name="img" style="display:none;">
+                                <button type="button" style="color: white; background-color: rgb(256,167,34);width:150px; height:50px; border-radius:15px;" onclick="deleteimg(); location.href='/restEdit/delimg/{{rest.id}}';">
                                     사진 삭제
                                 </button>
                             </div>

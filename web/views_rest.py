@@ -45,19 +45,26 @@ class RestView(View):
             for img in request.FILES.getlist('img'):
                 imgname = img._name
 
-                imgpath = '';
                 f = open('%s/%s' % (UPLOAD_DIR, imgname), 'wb')
                 for chunk in img.chunks():
                     f.write(chunk)
                     f.close()
 
                 imgpath = rest.restimg;
-                imgpath += ' ';
-                imgpath += imgname;
-                print(imgpath)
-                print(imgname)
+                imgpath = imgname + ' ' + imgpath;
                 rest.restimg = imgpath;
                 rest.save()
+        return redirect('/restDetail')
+
+    @request_mapping("/delimg/<int:pk>", method="get")
+    def delImg(self, request, pk):
+        rest = Rest.objects.get(id=pk);
+        imgpath = rest.restimg;
+        path = imgpath.split(' ');
+        del path[len(path)-1];
+        imgpath = ' '.join(path);
+        rest.restimg = imgpath;
+        rest.save();
         return redirect('/restDetail')
 
     @request_mapping("/menu/<int:pk>", method="get")
