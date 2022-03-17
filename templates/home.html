@@ -1,4 +1,68 @@
 <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>web test</title>
+<!--    css파일에 연동하여 전체적인 디자인을 진행-->
+    <link rel="stylesheet" type="text/css" href="{%static 'css/layout.css'%}">
+<!--    js.query를 쓴다고 선언-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--    지도 api를 쓰기 위해 선언-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2bec7f259c7fbb712885b9e6c72aa4fe"></script>
+<!--    <script src="{%static 'js/home.js'%}"></script>-->
+<!--    highcart를 사용하기 위해 선언-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+
+
+</head>
+<body>
+        <header>
+        {% if request.session.sessionid == None %}
+            <span><a href="/login">LOGIN</a></span>
+<!--            그냥 login 이었을 경우 home.html에서 로그인이 가능하나, /login으로 변경 해 주면 다른 창에서도 가능하다. -->
+            <span><a href="/register">REGISTER</a></span>
+        {% else %}
+            <span>{{request.session.sessionid}}</span>
+            <span><a href="/logout">LOGOUT</a></span>
+        {% endif %}
+        <h1><a href="/">HTML5 & CSS</a></h1>
+        <h3>Javascript, AJAX</h3>
+        </header>
+    <nav>
+        <ul>
+            <li><a href="/guest/a">guest</a></li>
+            <li><a href="/guest/iv">add guest</a></li>
+            <li><a href="/article/a">article</a></li>
+            <li><a href="/article/iv">add article</a></li>
+            <li><a href="/item/a">Item</a></li>
+            <li><a href="/item/iv">add Item</a></li>
+            <li><a href="/cart/a">Cart</a></li>
+            <li><a href="/geo">Geo</a></li>
+            <li><a href="/geo2">Geo2</a></li>
+            <li><a href="/ajax">ajax</a></li>
+            <li><a href="/chart1">chart1</a></li>
+        </ul>
+    </nav>
+    {% if center != None %}
+        {% include center %}
+    {% else %}
+        <section></section>
+    {% endif %}
+    <footer></footer>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 {%load static%}
     <head>
