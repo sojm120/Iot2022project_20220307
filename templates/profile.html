@@ -21,7 +21,7 @@
                 {% if request.session.sessionid == None %}
                     <span></span>
                 {% else %}
-                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" style="width:100px; height:24px;"><a href="/profile" style="color:white; text-decoration:none; vertical-align:middle;">프로필사진</a></span>&nbsp;&nbsp;
                     <span>{{request.session.sessionid}}</span>
                 {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
@@ -62,40 +62,46 @@
         <div class="container" align="center">
             <div class="row col-xs-10 col-sm-10 col-md-4 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" style="padding:10px; background:#fff; border-top:solid; border-bottom:solid; border-width:1px;">
                 <div class="panel panel-info" style="padding-bottom:40px;">
+                    {% for Cust in profile %}
                     <div class="panel-heading">
                         <h3 class="panel-title" style="text-align:left; padding-top:20px;">
-                            <img src="http://placeimg.com/100/100/any" style="width:50px; height:50px; border-radius:70%; over-flow:hidden;">
-                            &nbsp;&nbsp;id
+                            {% if request.session.sessionid == None %}
+                            <img src="http://placeimg.com/100/100/any" style="width:50px; height:50px;">
+                            {% else %}
+                            {{Cust.custimg}}
+                            {% endif %}
+                            &nbsp;&nbsp;{{Cust.id}}
                         </h3>
                     </div>
                     <div class="panel-body">
+
                         <div class="row" style="padding:10px;">
-                            <div class="col-md-6 col-lg-6">
+                            <div id="profile" name="profile" class="col-md-6 col-lg-6">
                                 <table class="table table-user-information">
                                     <tbody style="text-align:left;">
                                         <tr>
                                             <td style="width:130px;">이름</td>
-                                            <td>name</td>
+                                            <td>{{Cust.name}}</td>
                                         </tr>
                                         <tr>
                                             <td>생년월일</td>
-                                            <td>birth</td>
+                                            <td>{{Cust.birth}}</td>
                                         </tr>
                                         <tr>
                                             <td>성별</td>
-                                            <td>gender</td>
+                                            <td>{{Cust.gender}}</td>
                                         </tr>
                                         <tr>
                                             <td>이메일</td>
-                                            <td>email</td>
+                                            <td>{{Cust.email}}</td>
                                         </tr>
                                         <tr>
                                             <td>연락처</td>
-                                            <td>phone</td>
+                                            <td>{{Cust.phone}}</td>
                                         </tr>
                                         <tr>
                                             <td>주소</td>
-                                            <td>address</td>
+                                            <td>{{Cust.address}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -121,21 +127,16 @@
                                     </tr>
                                 </table>
                                 <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>
-
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-
-
-
         <br><br><br>
         <form style="position:absolute; left:50%; transform:translateX(-50%); text-align:center;">
             <input type="button" onclick="location.href='profileupdate'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; " value="회원정보수정">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" onclick="location.href='ownerupdate'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white;" value="점주정보수정">
         </form>
         <br><br><br><br><br>
         <div class="container">

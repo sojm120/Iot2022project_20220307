@@ -59,17 +59,87 @@
         <header class="bg-dark py-5">
         </header>
         <br><br><br>
-        <div>고객설정한 이미지</div>
-        <div>아이디</div>
-        <div>이름</div>
-        <div>생년월일</div>
-        <div>성별</div>
-        <div>주소</div>
-        <div>연락처</div>
+        <div class="container" align="center">
+            <div class="row col-xs-10 col-sm-10 col-md-4 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" style="padding:10px; background:#fff; border-top:solid; border-bottom:solid; border-width:1px;">
+                <div class="panel panel-info" style="padding-bottom:40px;">
+                    {% for Cust in profile %}
+                    <div class="panel-heading">
 
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row" style="padding:10px;">
+                            <div id="profile" name="profile" class="col-md-6 col-lg-6">
+                                <table class="table table-user-information">
+                                    <tbody style="text-align:left;">
+                                        <tr>
+                                            <td style="width:130px;">이름</td>
+                                            <td>{{Cust.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>아이디</td>
+                                            <td>{{Cust.id}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>비밀번호</td>
+                                            <td>{{Cust.pwd}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>생년월일</td>
+                                            <td>{{Cust.birth}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>성별</td>
+                                            <td>{{Cust.gender}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>이메일</td>
+                                            <td>{{Cust.email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>주소</td>
+                                            <td>{{Cust.address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>연락처</td>
+                                            <td>{{Cust.phone}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+
+                                <table class="table table-user-information" style="text-align:left;">
+                                    <tr>
+                                        <td style="width:130px;">상호명</td>
+                                        <td>상호명</td>
+                                    </tr>
+                                    <tr>
+                                        <td>사업자등록번호</td>
+                                        <td>123123123</td>
+                                    </tr>
+                                    <tr>
+                                        <td>대표자명</td>
+                                        <td>ㅁㄴㅇㄹㅋㅌㅊㅍ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>가게주소</td>
+                                        <td>주우소</td>
+                                    </tr>
+                                </table>
+                                <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
         <br><br><br>
+        <form style="position:absolute; left:50%; transform:translateX(-50%); text-align:center;">
+            <input type="button" onclick="location.href='profileupdate'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; " value="회원정보수정">
+        </form>
+        <br><br><br><br><br>
     </body>
 </html>
-
-
-<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
