@@ -21,7 +21,7 @@
     {% for r in review %}
     <section class="" id="review">
         <div class="container px-5 my-5" style="border:3px solid #FFA722; border-radius:10px">
-            <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">{{r.cust.id}}</span>
+            <span class="nav-item" style="display: inline-block; width:300px; opacity: 0.5">{{r.cust.id}}</span>
             <span class="nav-item" style="opacity: 0.5">{{r.regdate}}</span>
             <span class="nav-item" style="display: inline-block; width:800px; opacity: 0.5"></span>
             <!-- review edit delete-->
@@ -73,7 +73,7 @@
             <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:80px"></h1>
             <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">메뉴: {{r.menu}}</h1>
             <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">인원: {{r.number}}</h1>
-            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">목적: {{r.purpose}}</h1>
+            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:130px">목적: {{r.purpose}}</h1>
             <!-- review photo title content-->
             <div class="" style="clear:both" id="reviewimg">
                 {% for img in imgpath %}
