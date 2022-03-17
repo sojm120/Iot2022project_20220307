@@ -1,3 +1,218 @@
+import logging
+import json
+
+import cust as cust
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views import View
+from django_request_mapping import request_mapping
+from web.models import Cust
+
+@request_mapping("")
+class MyView(View):
+# home
+    @request_mapping("/", method="get")
+    def home(self,request):
+        return render(request,'home.html');
+
+
+# iot 장비에서 요청
+    @request_mapping("/iot", method="get")
+    def iot(self, request):
+        id = request.GET['id'];
+        temp = request.GET['temp'];
+        el = request.GET['el'];
+        # -------------------------------------------
+        el_logger = logging.getLogger('el_file');
+        el_logger.debug(id + ',' + temp + ',' + el);
+        # -------------------------------------------
+        return render(request, 'ok.html');
+
+    # login
+    @request_mapping("/login", method="get")
+    def login(self,request):
+        context = {
+            'center': 'login.html'
+        }
+        return render(request, 'home.html', context);
+
+    @request_mapping("/logout", method="get")
+    def logout(self, request):
+        if request.session['sessionid'] != None:
+            del request.session['sessionid']
+        return render(request, 'home.html');
+
+    @request_mapping("/register", method="get")
+    def register(self,request):
+        context = {
+            'center': 'register.html'
+        }
+        return render(request, 'home.html', context);
+
+    @request_mapping("/loginimpl", method="post") #method는 post로 변경
+    def loginimpl(self, request):
+        #id와 pwd를 확인한다.
+        id = request.POST['id'];
+        pwd = request.POST['pwd'];
+        #id를 이용하여 db에 사용자 정보 조회
+        #id가 존재하면 pwd 검사
+        #pwd가 틀리면 실패
+        #pwd가 맞으면 성공
+        context = {};
+
+        try:
+            cust = Cust.objects.get(id=id);
+            if cust.pwd == pwd:
+                request.session['sessionid'] = cust.id;
+                request.session['sessionname'] = cust.name;
+                context['center'] = 'loginok.html';
+                # context['rid'] = id
+            else:
+                raise Exception;
+        except:
+            context['center'] = 'loginfail.html';
+
+        return render(request, 'home.html', context);
+
+# page
+
+    @request_mapping("/registerimpl", method="post")
+    def registerimpl(self, request):
+        id = request.POST['id'];
+        pwd = request.POST['pwd'];
+        name = request.POST['name'];
+        context = {};
+        try:
+            Cust.objects.get(id=id);
+            context['center'] = 'registerfail.html'  # 입력한 id가 없거나, 빈칸이면
+        except:
+            Cust(id=id, pwd=pwd, name=name).save();
+            context['center'] = 'registerok.html'
+            context['rname'] = name
+
+        return render(request, 'home.html', context);
+
+
+    @request_mapping("/geo", method="get")
+    def geo(self, request):
+        context = {
+            'center': 'geo.html'
+        };
+        return render(request, 'home.html', context);
+
+
+    @request_mapping("/geo2", method="get")
+    def geo2(self, request):
+        context = {
+            'center': 'geo2.html'
+        };
+        return render(request, 'home.html', context);
+
+        # iot 장비에서 요청
+    @request_mapping("/ajax", method="get")
+    def ajax(self, request):
+        context = {
+            'center': 'ajax.html'
+        };
+        return render(request, 'home.html', context);
+
+    @request_mapping("/ajaximpl", method="get")
+    def ajaximpl(self, request):
+        data = [];
+        for i in range(1, 10):
+            dic = {};
+            dic['id'] = 'id' + str(i);
+            dic['name'] = 'james' + str(i);
+            dic['age'] = i;
+            data.append(dic);
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+    @request_mapping("/geoimpl", method="get")
+    def geoimpl(self, request):
+        data = []
+
+        dic1 = {}
+        dic1['content'] = '<div>kakao</div>'
+        dic1['lat'] = 35.085971
+        dic1['lng'] = 129.032359
+        dic1['target'] = 'http://www.naver.com'
+        data.append(dic1)
+
+        dic2 = {}
+        dic2['content'] = '<div>googlegoogle</div>'
+        dic2['lat'] = 35.09
+        dic2['lng'] = 129.025359
+        dic2['target'] = 'http://www.google.com'
+        data.append(dic2)
+
+        dic3 = {}
+        dic3['content'] = '<div>daumdaum</div>'
+        dic3['lat'] = 35.081971
+        dic3['lng'] = 129.04
+        dic3['target'] = 'http://www.daum.net'
+        data.append(dic3)
+
+        dic4 = {}
+        dic4['content'] = '<div>msnmsn</div>'
+        dic4['lat'] = 35.1
+        dic4['lng'] = 129.1
+        dic4['target'] = 'http://www.msn.com'
+        data.append(dic4)
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+    # chart
+    @request_mapping("/chart1", method="get")
+    def chart1(self,request):
+        context = {
+            'center': 'chart1.html'
+        }
+        return render(request, 'home.html', context);
+
+    # chart
+    @request_mapping("/chart1impl", method="get")
+    def chart1impl(self,request):
+        data = [];
+        content1 = {};
+        content2 = {};
+
+        content1['name'] = 'Installation';
+        content1['data'] = [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175];
+        data.append(content1);
+
+        content2['name'] = 'Manufacturing';
+        content2['data'] = [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434];
+        data.append(content2);
+
+        # content1['name'] = 'Project Developmen';
+        # content1['data'] = [null, null, 7988, 12169, 15112, 22452, 34400, 34227];
+        # data.append(content1);
+        #
+        # content1['name'] = 'Other';
+        # content1['data'] = [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111];
+        # data.append(content1);
+        # data.append(content1);
+        # data.append(content2);
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+        # try:
+        #     con = Db().getConnection();
+        #     cursor = con.cursor();
+        #     cursor.execute(Sql.cartavg);
+        #     result = cursor.fetchall();
+        #     for o in result:
+        #         print(o[0])
+        # except:
+        #     print('Error');
+        # finally:
+        #     Db().close(con, cursor)
+
+
+
 from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.http import HttpResponse
