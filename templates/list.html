@@ -37,7 +37,7 @@
                 var result = '';
                 result += '<div>';
                 result += '<div class="num">' + item.id + '</div>';
-                result += '<div class="title"><a href="/board/view">' + item.title + '</a></div>';
+                result += '<div class="title"><a href="/board/g/'+item.id+'">' + item.title + '</a></div>';
                 result += '<div class="writer">' + item.cust_id + '</div>';
                 result += '<div class="date">' + item.regdate + '</div>';
                 result += '</div>'
@@ -213,10 +213,12 @@
                 <a href="#" class="bt next" onclick="getNext(idx, page);">></a>
                 <a href="#" class="bt last" onclick="getLast();">>></a>
             </div>
+            {% if request.session.sessionid != none %}
             <div class="bt_wrap">
-                <a href="/board/write" class="on">등록</a>
+                <a href="/board/iv" class="on">등록</a>
                 <!--<a href="#">수정</a>-->
             </div>
+            {% endif %}
         </div>
     </div>
     <!-- Bootstrap core JS-->
