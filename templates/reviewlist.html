@@ -21,14 +21,17 @@
     {% for r in review %}
     <section class="" id="review">
         <div class="container px-5 my-5" style="border:3px solid #FFA722; border-radius:10px">
-            <span class="nav-item" style="display: inline-block; width:300px; opacity: 0.5">{{r.cust.id}}</span>
+            <span class="nav-item" style="display: inline-block; width:200px; opacity: 0.5">{{r.cust.id}}</span>
             <span class="nav-item" style="opacity: 0.5">{{r.regdate}}</span>
             <span class="nav-item" style="display: inline-block; width:800px; opacity: 0.5"></span>
             <!-- review edit delete-->
             <div style="float:right;">
-                {% if r.cust.id == 'id02' %}
+                {% if r.cust.id == 'user05' %}
                 <button class="button_update" onclick="reviewUpdate({{r.id}});">수정</button>
                 <button class="button_delete" onclick="reviewDelete({{r.id}});">삭제</button>
+                {% else %}
+                <button class="button_update" style="opacity:0">수정</button>
+                <button class="button_delete" style="opacity:0">삭제</button>
                 {% endif %}
             </div>
             <h1 class="lead fw-normal text-black mb-1 fs-6 text-center float-start" style="border:1px solid; width:4rem">서비스</h1>
@@ -70,7 +73,7 @@
                     {% endif %}
                     {% endwith %}
                 </div>
-            <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:80px"></h1>
+            <h1 class="mx-4 lead fw-normal text-black mb-1 fs-1 float-start text-center" style="width:0px"></h1>
             <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">메뉴: {{r.menu}}</h1>
             <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:100px">인원: {{r.number}}</h1>
             <h1 class="mx-5 lead fw-normal text-black mb-1 fs-6 float-start text-center" style="width:130px">목적: {{r.purpose}}</h1>
