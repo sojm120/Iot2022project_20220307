@@ -6,7 +6,7 @@ from django.views import View
 from django_request_mapping import request_mapping
 import json
 
-from web.models import Rest, Review, Menu, Imgpath, Cate, Cust
+from web.models import Rest, Review, Menu, Imgpath, Cate
 from config.settings import UPLOAD_DIR
 
 @request_mapping("")
