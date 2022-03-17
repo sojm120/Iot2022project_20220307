@@ -57,39 +57,6 @@ class MyView(View):
         };
         return render(request, 'restDetail.html', context);
 
-    @request_mapping("/list", method="get")
-    def list(self, request):
-        count = Board.objects.all().count()
-        context = {
-            'count': count
-        }
-        return render(request, 'list.html', context);
-
-    @request_mapping("/listview/<int:idx>/<int:getcnt>", method="get")
-    def listview(self, request, idx, getcnt):
-        objs = Board.objects.all().order_by('-id')[idx:idx+getcnt]
-        data = []
-        for obj in objs:
-            datum = dict()
-            datum['id'] = str(obj.id)
-            datum['title'] = str(obj.title)
-            datum['cust_id'] = str(obj.cust.id)
-            datum['regdate'] = str(obj.regdate)
-            data.append(datum)
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
-    @request_mapping("/view", method="get")
-    def view(self, request):
-        return render(request, 'view.html');
-
-    @request_mapping("/write", method="get")
-    def write(self, request):
-        return render(request, 'write.html');
-
-    @request_mapping("/edit", method="get")
-    def edit(self, request):
-        return render(request, 'edit.html');
-
     @request_mapping("/register", method="get")
     def register(self, request):
         return render(request, 'register.html');
