@@ -41,7 +41,7 @@ admin.site.register(Imgpath, ImgpathAdmin)
 
 
 class BoardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'cust_id', 'title', 'content')
+    list_display = ('id', 'cust_id', 'title', 'content', 'regdate')
 
 
 admin.site.register(Board, BoardAdmin)
