@@ -71,7 +71,6 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <form class = "input-box" action="127.0.0.1/search" method="get">
-                        {% csrf_token %}
 <!--                        차후 데이터와 검색 연동 진행-->
                         <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력" name="q" value = "{{q}}">
                         <button class="forgot-main" type="submit">Search</button>

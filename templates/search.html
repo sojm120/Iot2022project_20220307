@@ -48,17 +48,19 @@
         <header class="bg-picture py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <div class = "input-box" >
-                        <input style="width:50rem; font:bold; font-size:15pt; color:white;" type="text"  placeholder="검색어 또는 태그 입력">
-                        <button style = "font:bold" class="forgot-main">Search</button>
-                    </div>
+                    <form class = "input-box" action="127.0.0.1/search" method="get">
+<!--                        차후 데이터와 검색 연동 진행-->
+                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력" name="q" value = "{{q}}">
+                        <button class="forgot-main" type="submit">Search</button>
+<!--                        <a href="/search" style="font:bold; color:white; text-decoration:none"></a>-->
+                    </form>
 <!--                    음식점 태그-->
-                    <p class="lead fw-normal text-white-50 mb-0">
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
+                    <p class="lead fw-normal text-white-50 mb-0" id="tag">
+<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
                     </p>
                 </div>
             </div>
