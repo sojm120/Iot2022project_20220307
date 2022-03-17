@@ -21,8 +21,8 @@
                 {% if request.session.sessionid == None %}
                     <span></span>
                 {% else %}
-                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
-                    <span>{{request.session.sessionid}}</span>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" style="width:100px; height:24px;"><a href="/profile" style="color:white; text-decoration:none; vertical-align:middle;">프로필사진</a></span>&nbsp;&nbsp;
+                    <span>{{Cust.id}}</span>
                 {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -89,7 +89,6 @@
                 <div class="input-box">
                     <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
                     <label for="custid">아이디</label>
-                    <span class="errorbox"></span>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotid" style="text-align:right; width:85px;">아이디찾기</button>
                     </div>
@@ -97,7 +96,6 @@
                 <div class="input-box">
                     <input id="custpw" type="password" name="custpw" placeholder="비밀번호" autocomplete="off">
                     <label for="custpw">비밀번호</label>
-                    <span class="errorbox"></span>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotpw" style="text-align:right; width:85px;">비밀번호찾기</button>
                     </div>

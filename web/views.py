@@ -1,4 +1,8 @@
+import json
+import logging
+
 from django.db.models import Avg
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django_request_mapping import request_mapping
@@ -65,15 +69,23 @@ class MyView(View):
 
     @request_mapping("/profile", method="get")
     def profile(self, request):
-        return render(request, 'profile.html');
+        profile=Cust.objects.all()
+        context={
+            'profile':profile
+        };
+        return render(request, 'profile.html',context);
 
     @request_mapping("/profileupdate", method="get")
     def profileupdate(self, request):
-        return render(request, 'profileupdate.html');
+        profile=Cust.objects.all()
+        context={
+            'profile':profile
+        }
+        return render(request, 'profileupdate.html',context);
 
-    @request_mapping("/ownerupdate", method="get")
-    def ownerupdate(self, request):
-        return render(request, 'ownerupdate.html');
+    @request_mapping("/profileupdateimpl", method="get")
+    def profileupdateimpl(self, request):
+        return render(request, 'profileupdateimpl.html');
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
@@ -87,14 +99,15 @@ class MyView(View):
         address2 = request.POST['address2'];
         phone = request.POST['custphone'];
         host_flag = int(request.POST['host_flag']);
+        custimg = request.POST['custimg'];
 
-        print(id,pwd,name,birth,gender,email,address1+ address2,phone,host_flag);
+        print(id,pwd,name,birth,gender,email,address1+' '+address2,phone,host_flag,custimg);
         context = {};
         try:
             Cust.objects.get(id = id);
             context['center'] = 'register.html';
         except:
-            Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1+address2, phone=phone, host_flag=host_flag).save();
+            Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1+address2, phone=phone, host_flag=host_flag, custimg=custimg).save();
             context['center'] = 'registerok.html';
             context['rname'] = name;
         return render(request, 'home.html', context);
@@ -104,19 +117,15 @@ class MyView(View):
         # id, pwd 를 프로그램을 확인 한다.
         id = request.POST['custid'];
         pwd = request.POST['custpw'];
-        context = {};
         try:
             cust = Cust.objects.get(id=id);
             if cust.pwd == pwd:
                 request.session['sessionid'] = cust.id;
                 request.session['sessionname'] = cust.name;
-                context['center'] = 'loginok.html';
-            else:
-                raise Exception;
         except:
-            context['center'] = 'loginfail.html';
+            return render(request,'login.html');
 
-        return render(request, 'home.html', context);
+        return render(request, 'home.html');
 
     @request_mapping("/logout", method="get")
     def logout(self, request):

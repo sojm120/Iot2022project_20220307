@@ -118,8 +118,8 @@
                         <input id="custemail" type="text" name="custemail" placeholder="이메일" autocomplete="off">
                         <label for="custemail">email</label>
                     </div>
-                    <div class="formfield m-1">
-                        <div id="custaddr">
+                    <div class="input-box">
+                        <div class="formfield m-1" id="custaddr">
                             <input type="text" id="sample4_postcode" placeholder="우편번호">
                             <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
                             <br>
@@ -127,8 +127,9 @@
                             <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width:40%">
                             <br>
                             <span id="guide" style="color:#999;display:none"></span>
-                            <span style="font-size:0.8em;">상세주소</span>
+                            <span>상세주소</span>
                             <input type="text" id="sample4_detailAddress" name="address2" placeholder="상세주소" style="width:30%">
+
                             <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="width:30%">
 
                             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -203,7 +204,7 @@
                                 <input id="cust" type="radio" name="host_flag" value="0" style="width:15px; height:15px;">
                                 <span>일반회원</span>
                                 <input id="ceo" type="radio" name="host_flag" value="1" style="width:15px; height:15px;">
-                                <span>점주회원</span>
+                                <span>점주</span>
                             </div>
                         </div>
                         <br>
