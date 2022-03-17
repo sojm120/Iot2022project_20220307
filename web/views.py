@@ -88,8 +88,10 @@ class MyView(View):
     @request_mapping("/profileupdate/<str:pk>", method="get")
     def profileupdate(self, request, pk):
         profile = Cust.objects.get(id=pk);
+        restprf = Rest.objects.get(cust_id=pk);
         context = {
-            'Cust': profile
+            'Cust': profile,
+            'Rest': restprf
         };
         return render(request, 'profileupdate.html', context);
 
@@ -110,6 +112,27 @@ class MyView(View):
         cust.phone = phone;
         cust.address = address;
         cust.save()
+
+        hrest = request.POST['hrest'];
+        hname = request.POST['hname'];
+        hreg = request.POST['hreg'];
+        hphone = request.POST['hphone'];
+        haddr = request.POST['haddr'];
+        hopen = request.POST['hopen'];
+        hbreak = request.POST['hbreak'];
+        hindex = request.POST['hindex'];
+
+        rest = Rest.objects.get(cust_id=pk)
+        rest.rest_name = hrest;
+        rest.host_name = hname;
+        rest.reg_num = hreg;
+        rest.phone = hphone;
+        rest.address = haddr;
+        rest.openhour = hopen;
+        rest.breakhour = hbreak;
+        rest.restindex = hindex;
+        rest.save()
+
         return redirect('/login');
 
     @request_mapping("/registerimpl", method="post")
