@@ -78,8 +78,10 @@ class MyView(View):
     @request_mapping("/profile/<str:pk>", method="get")
     def profile(self, request, pk):
         profile = Cust.objects.get(id=pk);
+        restprf = Rest.objects.get(cust_id=pk);
         context = {
-            'Cust': profile
+            'Cust': profile,
+            'Rest': restprf
         };
         return render(request, 'profile.html',context);
 
@@ -112,6 +114,7 @@ class MyView(View):
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
+        host_flag = int(request.POST['host_flag']);
         id = request.POST['custid'];
         pwd = request.POST['custpw'];
         name = request.POST['custname'];
@@ -121,19 +124,63 @@ class MyView(View):
         address1 = request.POST['address1'];
         address2 = request.POST['address2'];
         phone = request.POST['custphone'];
-        host_flag = int(request.POST['host_flag']);
-        custimg = request.POST['custimg'];
+        # custimg = request.POST['custimg'];
+        #
+        # context = {};
+        # try:
+        #     Cust.objects.get(id=id);
+        # except:
+        #     profile = Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1 + address2,
+        #          phone=phone, host_flag=host_flag, custimg=custimg);
+        #     profile.save();
+        imgname = '';
+        if 'custimg' in request.FILES:
+            img = request.FILES['custimg'];
+            imgname = img._name;
+            f = open('%s/%s' % (UPLOAD_DIR, imgname), 'wb')
+            for chunk in img.chunks():
+                f.write(chunk);
+                f.close();
+        profile = Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email,
+                       address=address1 + address2,
+                       phone=phone, host_flag=host_flag, custimg=imgname);
+        profile.save();
 
-        print(id,pwd,name,birth,gender,email,address1+' '+address2,phone,host_flag,custimg);
-        context = {};
-        try:
-            Cust.objects.get(id = id);
-            context['center'] = 'register.html';
-        except:
-            Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1+address2, phone=phone, host_flag=host_flag, custimg=custimg).save();
-            context['center'] = 'registerok.html';
-            context['rname'] = name;
-        return render(request, 'home.html', context);
+        if host_flag==1:
+            reg_num = request.POST['reg_num'];
+            rest_name = request.POST['rest_name'];
+            host_name = request.POST['host_name'];
+            address3 = request.POST['address3'];
+            address4 = request.POST['address4'];
+            restindex = request.POST['restindex'];
+            hostphone = request.POST['hostphone'];
+            openhour = request.POST['openhour'];
+            breakhour = request.POST['breakhour'];
+            cate_id = request.POST['cate_id']
+            # restimg = request.POST['restimg'];
+            #
+            # print(rest_name, host_name, address3, address4, restindex, hostphone, openhour, breakhour, cate_id, restimg);
+            # context = {};
+            # try:
+            #     Rest.objects.get(id=id);
+            # except:
+            #     restprf = Rest(cust=profile, reg_num=reg_num, rest_name=rest_name, host_name=host_name, address=address3+' '+address4,
+            #          restindex=restindex, phone=hostphone, openhour=openhour, breakhour=breakhour,
+            #          cate_id=cate_id, restimg=restimg);
+            #     restprf.save();
+            imgname2 = '';
+
+            if 'restimg' in request.FILES:
+                img = request.FILES['restimg'];
+                imgname2 = img._name;
+                f = open('%s/%s' % (UPLOAD_DIR, imgname2), 'wb')
+                for chunk in img.chunks():
+                    f.write(chunk);
+                    f.close();
+            restprf = Rest(cust=profile, reg_num=reg_num, rest_name=rest_name, host_name=host_name, address=address3 + address4,
+                            restindex=restindex, phone=hostphone, openhour=openhour, breakhour=breakhour, cate_id=cate_id, restimg=imgname2);
+            restprf.save();
+        return render(request, 'home.html');
 
     @request_mapping("/loginimpl", method="post")
     def loginimpl(self, request):
