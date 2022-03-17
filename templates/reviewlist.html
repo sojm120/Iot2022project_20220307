@@ -26,7 +26,7 @@
             <span class="nav-item" style="display: inline-block; width:800px; opacity: 0.5"></span>
             <!-- review edit delete-->
             <div style="float:right;">
-                {% if r.cust.id == 'user05' %}
+                {% if r.cust.id == request.session.sessionid %}
                 <button class="button_update" onclick="reviewUpdate({{r.id}});">수정</button>
                 <button class="button_delete" onclick="reviewDelete({{r.id}});">삭제</button>
                 {% else %}
