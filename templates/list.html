@@ -1,72 +1,157 @@
 <!DOCTYPE html>
 <html lang="ko">
-{%load static%}
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고객 상담 게시판</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{%static 'assets/favicon.ico'%}" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="{%static 'css/css.css'%}" rel="stylesheet" />
+    <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        var idx = 0;                        // 데이터 뿌리는 시작 인덱스(0이면 제일 최신 데이터)
+        var page = 1;                           // 화면 뜨면 1페이지로 setting
+        var cnt = {{count}};                // 게시판 데이터 갯수
+        if (cnt % 5 == 0){
+            var pages = parseInt(cnt/5);    // 게시판 페이지 수 계산
+            var remain = 5;                 // 게시판 마지막 페이지 데이터 갯수
+        } else {
+            var pages = parseInt(cnt/5) + 1;
+            var remain = cnt % 5;
+        }
+
+        // 데이터 출력력
+       function display(data){
+            results = ''
+            results = '<div class="top">';
+            results += '<div class="num">번호</div>';
+            results += '<div class="title">제목</div>';
+            results += '<div class="writer">글쓴이</div>';
+            results += '<div class="date">작성일</div>';
+            results += '</div>';
+            $(data).each(function(index, item){
+                var result = '';
+                result += '<div>';
+                result += '<div class="num">' + item.id + '</div>';
+                result += '<div class="title"><a href="/view">' + item.title + '</a></div>';
+                result += '<div class="writer">' + item.cust_id + '</div>';
+                result += '<div class="date">' + item.regdate + '</div>';
+                result += '</div>'
+                results += result;
+            $('#board_list').html(results);
+            });
+        }
+
+        // 해당하는 index와 page 정보로 데이터 가져오기
+        function getData(i, p){
+            if (p == pages){
+                var getcnt = remain;
+            } else {
+                var getcnt = 5
+            }
+            alert(i);
+            alert(getcnt);
+            $.ajax({
+                url: '/listview/'+i+'/'+getcnt,
+                success: function(data){
+                    display(data);
+                }
+            });
+        }
+
+        // 이전 페이지
+        function getPrevious(i, p){
+            if (idx == 0){
+                alert('첫 페이지입니다.');
+                return;
+            }
+            idx = i - 5;
+            page = p - 1;
+            getData(idx, page);
+
+        }
+
+        // 다음 페이지
+        function getNext(i, p){
+            if (page == pages){
+                alert('마지막 페이지입니다.');
+                return;
+            }
+            idx = i + 5;
+            page = p + 1;
+            alert('page'+page);
+            alert('pages'+pages);
+            getData(idx, page);
+        }
+
+        $(document).ready(function(){
+            getData(idx, page);
+        });
+    </script>
 </head>
 <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            {% if request.session.sessionid == None %}
+                <span></span>
+            {% else %}
+                <span class="badge bg-dark text-white ms-1 rounded-pill" style="width:100px; height:24px;"><a href="/profile" style="color:white; text-decoration:none; vertical-align:middle;">프로필사진</a></span>&nbsp;&nbsp;
+                <span>{{request.session.sessionid}}</span>
+            {% endif %}
+<!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if request.session.sessionid == None %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
+                        &nbsp;
+                    </ul>
+                {% endif %}
+                <ul style="width:40rem"></ul>
+                <form class="d-flex">
+                    <a class="navbar-brand" href="/">로고</a>
+                </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">고객센터</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
+                            <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
+                            <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="board_wrap">
         <div class="board_title">
             <strong>고객 상담 </strong>
             <p>답변을 빠르고 정확하게 안내해드립니다.</p>
         </div>
         <div class="board_list_wrap">
-            <div class="board_list">
-                <div class="top">
-                    <div class="num">번호</div>
-                    <div class="title">제목</div>
-                    <div class="writer">글쓴이</div>
-                    <div class="date">작성일</div>
-                    <div class="count">조회</div>
-                </div>
-                <div>
-                    <div class="num">5</div>
-                    <div class="title"><a href="/view">글 제목이 들어갑니다.</a></div>
-                    <div class="writer">고갱님</div>
-                    <div class="date">2022.03.01</div>
-                    <div class="count">1</div>
-                </div>
-                <div>
-                    <div class="num">4</div>
-                    <div class="title"><a href="/view">글 제목이 들어갑니다.</a></div>
-                    <div class="writer">고갱2</div>
-                    <div class="date">2022.3.2</div>
-                    <div class="count">2</div>
-                </div>
-                <div>
-                    <div class="num">3</div>
-                    <div class="title"><a href="/view">글 제목이 들어갑니다.</a></div>
-                    <div class="writer">고갱3</div>
-                    <div class="date">2022.3.3</div>
-                    <div class="count">3</div>
-                </div>
-                <div>
-                    <div class="num">2</div>
-                    <div class="title"><a href="/view">글 제목이 들어갑니다.</a></div>
-                    <div class="writer">고갱4</div>
-                    <div class="date">2022.3.4</div>
-                    <div class="count">4</div>
-                </div>
-                <div>
-                    <div class="num">1</div>
-                    <div class="title"><a href="/view">글 제목이 들어갑니다.</a></div>
-                    <div class="writer">고갱5</div>
-                    <div class="date">2022.3.5</div>
-                    <div class="count">5</div>
-                </div>
+            <div id="board_list" class="board_list">
+            <!--ajax로 리스트 뿌리는 곳-->
             </div>
             <div class="board_page">
                 <a href="#" class="bt first"><<</a>
-                <a href="#" class="bt prev"><</a>
+                <a href="#" class="bt prev"><button class="button" onclick="getPrevious(idx, page);"><</button></a>
                 <a href="#" class="num on">1</a>
                 <a href="#" class="num">2</a>
                 <a href="#" class="num">3</a>
                 <a href="#" class="num">4</a>
                 <a href="#" class="num">5</a>
-                <a href="#" class="bt next">></a>
+                <a href="#" class="bt next"><button class="button" onclick="getNext(idx, page);">></button></a>
                 <a href="#" class="bt last">>></a>
             </div>
             <div class="bt_wrap">
@@ -75,5 +160,7 @@
             </div>
         </div>
     </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html> 

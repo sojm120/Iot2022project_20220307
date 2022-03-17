@@ -11,7 +11,7 @@ ul, li {
     list-style: none;
 }
 
-a {
+.board_wrap a {
     text-decoration: none;
     color: inherit;
 }
@@ -149,6 +149,12 @@ a {
 
 .board_page a:first-child {
     border-left: 1px solid #ddd;
+}
+
+.board_page .button {
+    background: none;
+    border: none;
+    padding: none;
 }
 
 .board_view {
