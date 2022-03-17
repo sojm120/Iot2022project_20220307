@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-o4lpt0szf9ra(w&^y^amxx0w1b*p2xslt!o50d=vhg#bh*227j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']   # pythonanywhere 접속하려면 모든 호스트 허용
 
 
 # Application definition
@@ -76,6 +76,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# 로컬DB
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -86,6 +87,21 @@ DATABASES = {
         'POST': '3306'
     }
 }
+
+# pythonanywhere DB setting
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'powerstone829$semipjt',
+#         'USER': 'powerstone829',
+#         'PASSWORD': 'qwer1234!!',
+#         'HOST': 'powerstone829.mysql.pythonanywhere-services.com',
+#         # MySQL Strict Mode 관련 경고 안 뜨게 하는 옵션
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
