@@ -21,8 +21,10 @@
                 {% if request.session.sessionid == None %}
                     <span></span>
                 {% else %}
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" style="width:100px; height:24px;"><a href="/profile" style="color:white; text-decoration:none; vertical-align:middle;">프로필사진</a></span>&nbsp;&nbsp;
-                    <span>{{request.session.sessionid}}</span>
+                    <a href="/profile/{{request.session.sessionid}}" style="color:white; text-decoration:none; vertical-align:middle;">
+                        <img class="card-img-top" style="vertical-align:middle; display:block; width: 50px; height:50px;" src="/static/img/{{request.session.sessionimg}}" alt="..." />
+                    </a>
+                    <span>&nbsp;&nbsp;{{request.session.sessionid}}</span>
                 {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -110,22 +112,37 @@
                                 <table class="table table-user-information" style="text-align:left;">
                                     <tr>
                                         <td style="width:130px;">상호명</td>
-                                        <td>상호명</td>
-                                    </tr>
-                                    <tr>
-                                        <td>사업자등록번호</td>
-                                        <td>123123123</td>
+                                        <td>{{Rest.rest_name}}</td>
                                     </tr>
                                     <tr>
                                         <td>대표자명</td>
-                                        <td>ㅁㄴㅇㄹㅋㅌㅊㅍ</td>
+                                        <td>{{Rest.host_name}}</td>
                                     </tr>
                                     <tr>
-                                        <td>가게주소</td>
-                                        <td>주우소</td>
+                                        <td>음식점연락처</td>
+                                        <td>{{Rest.phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>음식점주소</td>
+                                        <td>{{Rest.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>개점시간</td>
+                                        <td>{{Rest.openhour}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>재료준비시간</td>
+                                        <td>{{Rest.breakhour}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>정보</td>
+                                        <td>{{Rest.restindex}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>음식점사진</td>
+                                        <td style="text-align:left;"><img src="/static/img/{{Rest.restimg}}" style="width:100px; height:100px;"></td>
                                     </tr>
                                 </table>
-<!--                                <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>-->
                             </div>
                         </div>
                     </div>
