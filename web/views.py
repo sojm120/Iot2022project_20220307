@@ -45,8 +45,10 @@ class MyView(View):
         menu = Menu.objects.filter(rest=1);
         review = Review.objects.filter(rest=1).order_by('-id'); # 내림차순 정렬
         imgpath = Imgpath.objects.all();
+        cust = Cust.objects.get(id=request.session['sessionid']);
         context = {
             'rest': rest,
+            'cust': cust,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
@@ -95,7 +97,11 @@ class MyView(View):
     @request_mapping("/profile/<str:pk>", method="get")
     def profile(self, request, pk):
         profile = Cust.objects.get(id=pk);
-        restprf = Rest.objects.get(cust_id=pk);
+        try:
+            Rest.objects.get(cust_id=pk);
+            restprf = Rest.objects.get(cust_id=pk);
+        except:
+            restprf = '';
         context = {
             'Cust': profile,
             'Rest': restprf
@@ -127,7 +133,7 @@ class MyView(View):
         cust.phone = phone;
         cust.address = address;
         cust.save()
-        return redirect('/restDetail')
+        return redirect('/profile/'+str(pk));
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
@@ -210,6 +216,8 @@ class MyView(View):
                 request.session['sessionid'] = cust.id;
                 request.session['sessionname'] = cust.name;
                 request.session['sessionimg'] = cust.custimg;
+            else:
+                raise
         except:
             return render(request,'login.html');
         return render(request, 'home.html');
