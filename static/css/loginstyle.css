@@ -1,0 +1,95 @@
+@charset "UTF-8";
+/*!
+* Start Bootstrap - Shop Homepage v5.0.4 (https://startbootstrap.com/template/shop-homepage)
+* Copyright 2013-2021 Start Bootstrap
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-shop-homepage/blob/master/LICENSE)
+*/
+/*!
+ * Bootstrap v5.1.3 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+
+.input-box{
+    position:relative;
+    margin:10px 0;
+    width:100%
+}
+
+
+.input-box > input{
+    background:transparent;
+    border:none;
+    border-bottom:solid 1px #8aa1a1;
+    padding:20px 0px 5px 0px;
+    font-size:14px;
+    width:100%;
+}
+
+input::placeholder{
+        color:transparent
+}
+input:placeholder-shown + label{
+    color:#black;
+    font-size:14pt;
+    top:16px;
+}
+input:focus + label, label{
+color:#8aa1a1;
+font-size:8pt;
+pointer-events: none;
+position: absolute;
+left:0px;
+top:0px;
+transition: all 0.2s ease ;
+-webkit-transition: all 0.2s ease;
+-moz-transition: all 0.2s ease;
+-o-transition: all 0.2s ease;
+}
+input:focus,input:not(:placeholder-shown){
+    border-bottom:solid 1px #8aa1a1;
+    outline:none;
+}
+input[type=submit]{
+    background-color:#FFA722;
+    border:none;
+    color:white;
+    border-radius: 7px;
+    width:100%;
+    height:45px;
+    font-size: 14pt;
+    margin-top:10px;
+}
+
+.forgot{
+    background-color:rgb(0,0,0,0);
+    color:rgb(164,164,164);
+    border:none;
+    font-size: 12px;
+    width:12%
+}
+
+.box-radio-input input[type="radio"]{
+    display:inline-block;
+}
+
+.box-radio-input input[type="radio"] + span{
+display:inline-block;
+background:none;
+border:1px solid #FFA722;
+border-radius: 5px;
+padding:0px 10px;
+text-align:center;
+height:35px;
+line-height:33px;
+font-weight:500;
+cursor:pointer;
+}
+
+.box-radio-input input[type="radio"]:checked + span{
+border:1px solid #FFA722;
+background:#FFA722;
+color:#fff;
+}

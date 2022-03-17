@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:color="http://www.w3.org/1999/xhtml">
+{%load static%}
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>리뷰 수정</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{%static 'assets/favicon.ico'%}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Star Rating JavaScript-->
+        <script>
+            $(document).ready(function(){
+                $('#s_rating_'+{{obj1.s_rating}}).prop("checked", true);
+                $('#m_rating_'+{{obj1.m_rating}}).prop("checked", true);
+                $('#p_rating_'+{{obj1.p_rating}}).prop("checked", true);
+                $(':radio').change(function() {
+                  console.log('New star rating: ' + this.value);
+                });
+            });
+        </script>
+        <!-- Image Preview JavaScript-->
+        <script>
+            $(document).ready(function(){
+                // DB에 저장되어 있는 사진이 있는지 확인하여 미리보기에 불러오기
+                if ("{{obj2.0}}"){
+                    //alert("{{obj2.0.path}}");
+                    $('#previewHolder1').attr('src', "/static/img/{{obj2.0.path}}");
+                    // img1_flag, img2_flag를 파일 존재 여부 flag로 사용
+                    // flag=1 일 때, 파일o: 변경 or 파일x: 기존사진 유지
+                    // flag=0 일 때, 파일o: 불가능 or 파일x: 기존사진 삭제 혹은 사진 없음
+                    $('#img1_flag').val(1);
+                    $('#imgpath_id1').val({{obj2.0.id}});
+
+                    if ("{{obj2.1}}"){
+                        //alert("{{obj2.1.path}}");
+                        $('#previewHolder2').attr('src', "/static/img/{{obj2.1.path}}");
+                        $('#img2_flag').val(1);
+                        $('#imgpath_id2').val({{obj2.1.id}});
+                    } else {
+                        $('#img2_flag').val(0);
+                        $('#imgpath_id2').val(0);
+                    }
+                // 첫 번째 사진(0번 인덱스)이 없으면 두번째도 없는 것
+                } else {
+                    //alert('비어있음');
+                    $('#img1_flag').val(0);
+                    $('#img2_flag').val(0);
+                    $('#imgpath_id1').val(0);
+                    $('#imgpath_id2').val(0);
+                }
+
+                // 사진1:변경을 눌러서 파일을 선택하여 이미지를 가져오면, 해당 이미지로 미리보기 변경
+                function readURL1(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                        $('#previewHolder1').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                        $('#img1_flag').val(1);
+                    } else {
+                        $('#previewHolder1').attr('src', "{% static 'img/emptyImage.png' %}");
+                    }
+                }
+
+                $("#filePhoto1").change(function() {
+                    readURL1(this);
+                });
+
+                // 사진2:변경을 눌러서 파일을 선택하여 이미지를 가져오면, 해당 이미지로 미리보기 변경
+                function readURL2(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                        $('#previewHolder2').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                        $('#img2_flag').val(1);
+                    } else {
+                        $('#previewHolder2').attr('src', "{% static 'img/emptyImage.png' %}");
+                    }
+                }
+
+                $("#filePhoto2").change(function() {
+                    readURL2(this);
+                });
+            });
+        </script>
+        <!--Image Delete JavaScript-->
+        <script>
+            $(document).ready(function(){
+                $('#delete_img1').click(function(){
+                    $('#previewHolder1').attr('src', "{% static 'img/emptyImage.png' %}");
+                    $('#filePhoto1').val(null);
+                    $('#img1_flag').val(0);
+                });
+                $('#delete_img2').click(function(){
+                    $('#previewHolder2').attr('src', "{% static 'img/emptyImage.png' %}");
+                    $('#filePhoto2').val(null);
+                    $('#img2_flag').val(0);
+                });
+            });
+        </script>
+        <!--Review Update Cancel-->
+        <script>
+            $(document).ready(function(){
+                $('#reviewupdate_cancel').click(function(){
+                    c = confirm('주의!!\n변경된 내용이 저장되지 않았습니다.  \n정말로 리뷰 수정을 취소하시겠습니까?');
+                    if(c == true){
+                        location.href='/restDetail';
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body class="d-flex flex-column h-100">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/" style="color:white; text-decoration:none">프로필 사진</a></span>
+<!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                    </ul>
+                    <ul style="width:40rem"></ul>
+                    <form class="d-flex">
+                        <a class="navbar-brand" href="/">로고</a>
+                    </form>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">고객센터</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">자주 묻는 질문</a></li>
+                                <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
+                                <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- review register section-->
+        <section class="p-5">
+            <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:50%;">
+                <header class="container" style="text-align:center; width:100%;">
+                    <h3 style="white-space:nowrap; font-weight: bold;">리뷰 수정</h3>
+                </header>
+                <form id="reviewreg" action="/review/u/{{obj1.id}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h6 id="required">*필수입력사항</h6>
+                    <div class="input-box">
+                        <span class="asterisk">*</span>
+                        <input id="title" type="text" name="title" placeholder="제목" autocomplete="off" value="{{obj1.title}}" required>
+                        <label id="label-title" for="title">제목</label>
+                    </div>
+                    <div style="border-radius:20px;border:3px solid #FFA722; padding:10px;">
+                        <img id="previewHolder1" alt="사진을 넣어주세요." width="49%" src="{% static 'img/emptyImage.png'%}"/>
+                        <img id="previewHolder2" alt="사진을 넣어주세요." width="49%" src="{% static 'img/emptyImage.png'%}"/>
+                        <div style="display:grid;grid-template-columns: 1fr 1fr;">
+                            <div>
+                                <input id="img1_flag" type="number" name="img1_flag" style="display:none;">
+                                <input id="imgpath_id1" type="number" name="imgpath_id1" style="display:none;">
+                                <button class="button_add" type="button" onclick="$('#filePhoto1').click()">변경</button>
+                                <input id="filePhoto1" class="img" type="file" name="img1" style="display:none;">
+                                <button id="delete_img1" class="button_delete" type="button">삭제</button>
+                            </div>
+                            <div>
+                                <input id="img2_flag" type="number" name="img2_flag" style="display:none;">
+                                <input id="imgpath_id2" type="number" name="imgpath_id2" style="display:none;">
+                                <button class="button_add" type="button" onclick="$('#filePhoto2').click()">변경</button>
+                                <input id="filePhoto2" class="img" type="file" name="img2" style="display:none;">
+                                <button id="delete_img2" class="button_delete" type="button">삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>서비스</span>
+                        </div>
+                        <div class="rating">
+                            <label class="rating_label">
+                                <input id="s_rating_1" type="radio" name="s_rating" value="1" required/>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="s_rating_2" type="radio" name="s_rating" value="2" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="s_rating_3" type="radio" name="s_rating" value="3" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="s_rating_4" type="radio" name="s_rating" value="4" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="s_rating_5" type="radio" name="s_rating" value="5" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>음식</span>
+                        </div>
+                        <div class="rating">
+                            <label class="rating_label">
+                                <input id="m_rating_1" type="radio" name="m_rating" value="1" required/>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="m_rating_2" type="radio" name="m_rating" value="2" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="m_rating_3" type="radio" name="m_rating" value="3" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="m_rating_4" type="radio" name="m_rating" value="4" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="m_rating_5" type="radio" name="m_rating" value="5" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>가격</span>
+                        </div>
+                        <div class="rating">
+                            <label class="rating_label">
+                                <input id="p_rating_1" type="radio" name="p_rating" value="1" required/>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="p_rating_2" type="radio" name="p_rating" value="2" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="p_rating_3" type="radio" name="p_rating" value="3" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="p_rating_4" type="radio" name="p_rating" value="4" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                            <label class="rating_label">
+                                <input id="p_rating_5" type="radio" name="p_rating" value="5" required/>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <input id="menu" type="text" name="menu" placeholder="주문 메뉴" autocomplete="off" value="{{obj1.menu}}">
+                        <label for="menu">주문 메뉴</label>
+                    </div>
+                    <div class="input-box">
+                        <input id="number" type="number" name="number" placeholder="인원수" autocomplete="off" value="{{obj1.number}}">
+                        <label for="number">인원수</label>
+                    </div>
+                    <div class="input-box">
+                        <input id="purpose" type="text" name="purpose" placeholder="방문 목적" autocomplete="off" value="{{obj1.purpose}}">
+                        <label for="purpose">방문 목적</label>
+                    </div>
+                    <div class="input-box">
+                        <div class="rating-name">
+                            <span class="asterisk">*</span>
+                            <span>내용</span>
+                        </div>
+                        <textarea id="content" name="content" rows="10" cols="80" placeholder="리뷰 상세 내용" required>{{obj1.content}}</textarea>
+                    </div>
+
+                    <div class="p-2" style="position:absolute; left:50%; transform:translateX(-50%); width:100%;">
+                        <input type="submit" value="리뷰 수정하기" style="width: 75%">
+                        <button id="reviewupdate_cancel" type="button">수정 취소</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

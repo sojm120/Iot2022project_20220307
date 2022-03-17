@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:color="http://www.w3.org/1999/xhtml">
 {%load static%}
     <head>
         <meta charset="utf-8" />
-<!--        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />-->
-        <meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Shop Homepage - Start Bootstrap Template</title>
@@ -19,14 +18,26 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/" style="color:white; text-decoration:none">프로필 사진</a></span>
+                {% if request.session.sessionid == None %}
+                    <span></span>
+                {% else %}
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
+                    <span>{{request.session.sessionid}}</span>
+                {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
-                    </ul>
+                    {% if request.session.sessionid == None %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
+                            &nbsp;
+                        </ul>
+                    {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
                         <a class="navbar-brand" href="/">로고</a>
@@ -45,162 +56,166 @@
             </div>
         </nav>
         <!-- Header-->
+<!--        <header class="bg-dark py-5" src="/static/img/burger.jpg">-->
         <header class="bg-picture py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <form class = "input-box" action="http://127.0.0.1/search" method="GET">
-<!--                        차후 데이터와 검색 연동 진행-->
-                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력">
-                        <button class="forgot-main" type="submit">Search</button>
-<!--                        <a href="/search" style="font:bold; color:white; text-decoration:none"></a>-->
-                    </form>
-<!--                    음식점 태그-->
-                    <p class="lead fw-normal text-white-50 mb-0">
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>
-                    </p>
+<!--                    <form class = "input-box" action="http://127.0.0.1/search" method="GET">-->
+<!--&lt;!&ndash;                        차후 데이터와 검색 연동 진행&ndash;&gt;-->
+<!--                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력">-->
+<!--                        <button class="forgot-main" type="submit">Search</button>-->
+<!--&lt;!&ndash;                        <a href="/search" style="font:bold; color:white; text-decoration:none"></a>&ndash;&gt;-->
+<!--                    </form>-->
+<!--&lt;!&ndash;                    음식점 태그&ndash;&gt;-->
+<!--                    <p class="lead fw-normal text-white-50 mb-0">-->
+<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
+<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
+<!--                    </p>-->
                 </div>
             </div>
         </header>
 
 <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
-    <section class="p-5">
-        <div class="m-5">
-            <header class="container" style="text-align:center;">
-                <h3>"Register Page"</h3>
-            </header>
-            <form action="" method="POST" style="text-align:center;">
-                <div class="justify-content-center" style="position:absolute; left:50%; transform:translateX(-50%); width:80%;">
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>아이디</th>
-                            <input type="text" name="id">
-                            <span class="errorbox"></span>
-                        </tr>
+        <section class="p-5">
+            {% csrf_token %}
+            <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:35%;">
+                <header class="container p-3" style="text-align:center; width:100%;">
+                    <h3 style="white-space:nowrap;">회원가입</h3>
+                </header>
+                <form name="regist" action="registerimpl" method="post" id="register_box" style="text-align:left;">
+                    <div class="input-box">
+                        <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
+                        <label for="custid">아이디</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>비밀번호</th>
-                            <input type="text" name="password">입력
-                        </tr>
+                    <div class="input-box">
+                        <input id="custpw" type="password" name="custpw" placeholder="비밀번호" onchange="check_pw()">
+                        <label for="custpw">비밀번호</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>비밀번호 확인</th>
-                            <input type="text" name="password">입력
-                            <span class="errorbox"></span>
-                        </tr>
+                    <div class="input-box">
+                        <input id="custpwcheck" type="password" name="pwcheck" placeholder="비밀번호확인" onchange="check_pw()">
+                        <label for="custpwcheck">비밀번호확인</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>이름</th>
-                            <input type="text" name="custname">입력</input>
-                        </tr>
+                    <div class="input-box">
+                        <input id="custname" type="text" name="custname" placeholder="이름" autocomplete="off">
+                        <label for="custname">이름</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <ul style="list-style:none;">
-                                <li>생년월일</li>
-                                <li class="bday">
-                                    <input type="date">
-                                </li>
-                            </ul>
-                        </tr>
+                    <div class="input-box">
+                        <input id="custbday" type="date" name="birth" placeholder="생년월일" autocomplete="off">
+                        <label for="custbday">생년월일</label>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>성별</th>
-                            <body>
-                                <form>
-                                    <input type="radio" name="gender" value="male" style="width:12pt; height:12pt; border:1pt;">male
-                                    <input type="radio" name="gender" value="female" style="width:12pt; height:12pt; border:1pt;">female
-                                </form>
-                            </body>
-                        </tr>
+                    <div>
+                        <div class="box-radio-input">
+                            <input id="man" type="radio" name="gender" value="남" style="width:15px; height:15px;">
+                            <span>남자</span>
+                            <input id="woman" type="radio" name="gender" value="여" style="width:15px; height:15px;">
+                            <span>여자</span>
+                        </div>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>이메일</th>
-                            <input type="text" name="email">@
-                            <input type="text" name="email_dns">
-                                <select name="emailaddr">
-                                    <option value="">직접입력</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                    <option value="daum.net">daum.net</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="msn.com">msn.com</option>
-                                    <option value="nate.com">nate.com</option>
-                                </select>
-                        </tr>
+                    <div class="input-box">
+                        <input id="custemail" type="text" name="custemail" placeholder="이메일" autocomplete="off">
+                        <label for="custemail">email</label>
                     </div>
-                    <div style="margin:3px; ">
-                        <table align="center";>
-                                <tr>
-                                    <th>도로명주소</th>
-                                    <td><input type="text" id="roadAddrPart1" style="width:85%"></td>
-                                </tr>
-                                <tr>
-                                    <th>상세주소</th>
-                                    <td>
-                                        <input type="text" id="addrDetail" style="width:40%" value="">
-                                        <input type="text" id="roadAddrPart2"  style="width:40%" value="">
-                                    </td>
-                                </tr>
-                        </table>
-                    </div>
-                    <div style="margin:3px;">
-                        <script type="javascript">
-                            function readImage(input) {
-                                // 인풋 태그에 파일이 있는 경우
-                                if(input.files && input.files[0]) {
-                                    // 이미지 파일인지 검사 (생략)
-                                    // FileReader 인스턴스 생성
-                                    const reader = new FileReader()
-                                    // 이미지가 로드가 된 경우
-                                    reader.onload = e => {
-                                        const previewImage = document.getElementById("preview-image")
-                                        previewImage.src = e.target.result
-                                    }
-                                    // reader가 이미지 읽도록 하기
-                                    reader.readAsDataURL(input.files[0])
-                                }
-                            }
-                            // input file에 change 이벤트 부여
-                            const inputImage = document.getElementById("input-image")
-                            inputImage.addEventListener("change", e => {
-                                readImage(e.target)
-                            })
-                        </script>
-                        <form method="post" enctype="multipart/form-data">
-                            <div class="fileContainer">
-                                <div class="image-container">
-                                    <img style="width: 100px;" id="preview-image" src="http://picsum.photos/100">
-                                    <input style="display: block;" type="file" id="input-image">
-                                </div>
-                            </div>
+                    <div class="formfield m-1">
+                        <div id="custaddr">
+                            <input type="text" id="sample4_postcode" placeholder="우편번호">
+                            <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
+                            <br>
+                            <input type="text" id="sample4_roadAddress" name="address1" placeholder="도로명주소" style="width:40%">
+                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width:40%">
+                            <br>
+                            <span id="guide" style="color:#999;display:none"></span>
+                            <span style="font-size:0.8em;">상세주소</span>
+                            <input type="text" id="sample4_detailAddress" name="address2" placeholder="상세주소" style="width:30%">
+                            <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="width:30%">
 
-                        </form>
+                            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                            <script>
+                                //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+                                function sample4_execDaumPostcode() {
+                                    new daum.Postcode({
+                                        oncomplete: function(data) {
+                                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                                            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                            var roadAddr = data.roadAddress; // 도로명 주소 변수
+                                            var extraRoadAddr = ''; // 참고 항목 변수
+
+                                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                                extraRoadAddr += data.bname;
+                                            }
+                                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                                            if(data.buildingName !== '' && data.apartment === 'Y'){
+                                               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                            }
+                                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                            if(extraRoadAddr !== ''){
+                                                extraRoadAddr = ' (' + extraRoadAddr + ')';
+                                            }
+
+                                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                            document.getElementById('sample4_postcode').value = data.zonecode;
+                                            document.getElementById("sample4_roadAddress").value = roadAddr;
+                                            document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+                                            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                                            if(roadAddr !== ''){
+                                                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                                            } else {
+                                                document.getElementById("sample4_extraAddress").value = '';
+                                            }
+
+                                            var guideTextBox = document.getElementById("guide");
+                                            // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                                            if(data.autoRoadAddress) {
+                                                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                                                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                                                guideTextBox.style.display = 'block';
+
+                                            } else if(data.autoJibunAddress) {
+                                                var expJibunAddr = data.autoJibunAddress;
+                                                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                                                guideTextBox.style.display = 'block';
+                                            } else {
+                                                guideTextBox.innerHTML = '';
+                                                guideTextBox.style.display = 'none';
+                                            }
+                                        }
+                                    }).open();
+                                }
+                            </script>
+                        </div>
+                        <div class="input-box">
+                            <input id="custphone" type="text" name="custphone" placeholder="휴대폰번호" autocomplete="off">
+                            <label for="custphone">휴대폰번호</label>
+                        </div>
+                        <div class="input-box" style="padding-top:8px;">
+                            <span style="font-size:15px;">프로필사진
+                            <input type="file" id="custimg" name="custimg" accept="image/*"></span>
+                        </div>
+                        <div>
+                            <div class="box-radio-input">
+                                <input id="cust" type="radio" name="host_flag" value="0" style="width:15px; height:15px;">
+                                <span>일반회원</span>
+                                <input id="ceo" type="radio" name="host_flag" value="1" style="width:15px; height:15px;">
+                                <span>점주회원</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="btnfield" style="text-align:center">
+                            <input type="submit" value="회원가입" style="width:80%">
+                        </div>
+                    <br>
+                    <br>
+                    <br>
                     </div>
-                    <div style="margin:3px;">
-                        <tr>
-                            <th>가게사장님으로 가입 여부</th>
-                                <div>
-                                    <marquee behavior="scroll" scrollamount="50">가게사장님으로 가입 여부</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">업종</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">상호명</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">사업자등록번호</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">대표자명</marquee>
-                                    <marquee behavior="alternate" scrollamount="30">가게주소</marquee>
-                                </div>
-                            </th>
-                        </tr>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
+                </form>
+            </div>
+        </section>
     </body>
 </html>

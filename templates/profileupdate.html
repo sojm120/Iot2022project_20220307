@@ -56,63 +56,20 @@
             </div>
         </nav>
         <!-- Header-->
-<!--        <header class="bg-dark py-5" src="/static/img/burger.jpg">-->
-        <header class="bg-picture py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-<!--                    <form class = "input-box" action="http://127.0.0.1/search" method="GET">-->
-<!--&lt;!&ndash;                        차후 데이터와 검색 연동 진행&ndash;&gt;-->
-<!--                        <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력">-->
-<!--                        <button class="forgot-main" type="submit">Search</button>-->
-<!--&lt;!&ndash;                        <a href="/search" style="font:bold; color:white; text-decoration:none"></a>&ndash;&gt;-->
-<!--                    </form>-->
-<!--&lt;!&ndash;                    음식점 태그&ndash;&gt;-->
-<!--                    <p class="lead fw-normal text-white-50 mb-0">-->
-<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!">#tag</a>-->
-<!--                    </p>-->
-                </div>
-            </div>
+        <header class="bg-dark py-5">
         </header>
+        <br><br><br>
+        <div>고객설정한 이미지</div>
+        <div>아이디</div>
+        <div>이름</div>
+        <div>생년월일</div>
+        <div>성별</div>
+        <div>주소</div>
+        <div>연락처</div>
 
-<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
-    <section class="p-5">
-        <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:50%;">
-            <header class="container" style="text-align:center; width:100%;">
-                <h3 style="white-space:nowrap;">로그인</h3>
-            </header>
-            <form action="loginimpl" method="POST" style="text-align:center;">
-                {% csrf_token %}
-                <div class="input-box">
-                    <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
-                    <label for="custid">아이디</label>
-                    <span class="errorbox"></span>
-                    <div class="p-1" style="text-align:right">
-                        <button class="forgot" id="forgotid" style="text-align:right; width:85px;">아이디찾기</button>
-                    </div>
-                </div>
-                <div class="input-box">
-                    <input id="custpw" type="password" name="custpw" placeholder="비밀번호" autocomplete="off">
-                    <label for="custpw">비밀번호</label>
-                    <span class="errorbox"></span>
-                    <div class="p-1" style="text-align:right">
-                        <button class="forgot" id="forgotpw" style="text-align:right; width:85px;">비밀번호찾기</button>
-                    </div>
-                </div>
-
-                <div class="p-2" style="position:absolute; left:50%; transform:translateX(-50%); width:100%;">
-                    <input type="submit" value="로그인" style="width:80%">
-                </div>
-            {% if center != None %}
-                {% include center %}
-            {% else %}
-                <section></section>
-            {% endif %}
-            </form>
-        </div>
-    </section>
+        <br><br><br>
     </body>
 </html>
+
+
+<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->

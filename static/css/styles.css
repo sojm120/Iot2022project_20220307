@@ -11291,11 +11291,10 @@ textarea.form-control-lg {
 
 
 .input-box{
-    position:center;
+    position:relative;
     margin:10px 0;
     width:100%
 }
-
 
 .input-box > input{
     background:transparent;
@@ -11303,17 +11302,13 @@ textarea.form-control-lg {
     border-bottom:solid 1px #ccc;
     padding:20px 0px 5px 0px;
     font-size:14px;
-    width:100%;
-
-
+    width:100%
 }
-
-
 input::placeholder{
         color:transparent
 }
 input:placeholder-shown + label{
-    color:black;
+    color:#aaa;
     font-size:14pt;
     top:16px;
 }
@@ -11387,6 +11382,168 @@ input[type=submit]{
     width:100%;
 }
 
+.input-box > h1{
+    margin-top: 20px;
+    width:10%;
+}
 
+.input-box > #content{
+    width:100%;
+    border: 1px solid #FFA722;
+    border-radius: 10px;
+}
 
+.input-box > .img{
+    width:100%;
+    border-bottom: none;
+}
 
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
+
+.rating .rating_label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+  font-size: 50px;
+  pointer-events: auto;
+}
+
+.rating .rating_label:last-child {
+  position: static;
+}
+
+.rating .rating_label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating .rating_label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating .rating_label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating .rating_label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating .rating_label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating .rating_label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating .rating_label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating .rating_label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) .rating_label input:checked ~ .icon,
+.rating:hover .rating_label:hover input ~ .icon {
+  color: #FFA722;
+}
+
+.rating .rating_label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}
+
+#reviewreg > #required {
+    color: red;
+    text-align: right;
+}
+
+#reviewreg .button_delete {
+    font-size: 20px;
+    color: white;
+    background-color: #FFA722;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#reviewreg .button_add {
+    font-size: 20px;
+    color: white;
+    background-color: #FFA722;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#reviewreg #reviewreg_cancel,#reviewupdate_cancel {
+    background-color: #fadfb6;
+    border: none;
+    color: #945e03;
+    border-radius: 7px;
+    width: 23%;
+    height: 45px;
+    font-size: 10pt;
+    line-height: 200%;
+}
+
+#mainimg .restimg{
+    cursor: pointer;
+}
+#mainimg .restimg_hover:hover{
+    opacity: 0.7;
+}
+
+#reviewlist .reviewimg {
+    cursor: pointer;
+}
+
+#reveiwlist > .reviewimg_hover:hover {
+    opacity: 0.7;
+}
+
+#reviewlist .button_update,.button_delete{
+    font-size: 20px;
+    color: white;
+    background-color: #FFA722;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.input-box > .asterisk {
+    color: red;
+    font-size: 25px;
+}
+
+.input-box > #title {
+    width: 90%;
+}
+
+.input-box > #label-title {
+    width: 80%;
+    left: 20px;
+}
+
+.input-box > .rating-name > .asterisk {
+    color: red;
+}
+
+.input-box > .rating-name {
+    display: inline-block;
+    width: 25%;
+    font-size: 25px;
+}
