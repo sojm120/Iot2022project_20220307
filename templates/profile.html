@@ -62,15 +62,14 @@
         <div class="container" align="center">
             <div class="row col-xs-10 col-sm-10 col-md-4 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" style="padding:10px; background:#fff; border-top:solid; border-bottom:solid; border-width:1px;">
                 <div class="panel panel-info" style="padding-bottom:40px;">
-                    {% for Cust in profile %}
                     <div class="panel-heading">
                         <h3 class="panel-title" style="text-align:left; padding-top:20px;">
                             {% if request.session.sessionid == None %}
                             <img src="http://placeimg.com/100/100/any" style="width:50px; height:50px;">
                             {% else %}
-                            {{Cust.custimg}}
+                            <div style="text-align:left;"><img src="/static/img/{{Cust.custimg}}" style="width:100px; height:100px;">
                             {% endif %}
-                            &nbsp;&nbsp;{{Cust.id}}
+                            {{Cust.id}}</div>
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -126,17 +125,16 @@
                                         <td>주우소</td>
                                     </tr>
                                 </table>
-                                <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>
+<!--                                <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>-->
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
         <br><br><br>
         <form style="position:absolute; left:50%; transform:translateX(-50%); text-align:center;">
-            <input type="button" onclick="location.href='profileupdate'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; " value="회원정보수정">
+            <input type="button" onclick="location.href='/profileupdate/{{request.session.sessionid}}'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; " value="회원정보수정">
         </form>
         <br><br><br><br><br>
         <div class="container">

@@ -18,8 +18,16 @@ from web.models import Rest, Review, Menu, Imgpath
 class MyView(View):
 
     @request_mapping("/", method="get")
-    def home(self,request):
-        return render(request, 'home.html');
+    def home(self, request):
+        rest = Rest.objects.all();
+        star_rating = Review.objects.all();
+        imgpath = Imgpath.objects.all();
+        context = {
+            'rest': rest,
+            'star_rating': star_rating,
+            'imgpath': imgpath
+        };
+        return render(request, 'home.html', context);
 
     @request_mapping("/search", method="get")
     def search(self,request):
@@ -67,25 +75,40 @@ class MyView(View):
     def register(self, request):
         return render(request, 'register.html');
 
-    @request_mapping("/profile", method="get")
-    def profile(self, request):
-        profile=Cust.objects.all()
-        context={
-            'profile':profile
+    @request_mapping("/profile/<str:pk>", method="get")
+    def profile(self, request, pk):
+        profile = Cust.objects.get(id=pk);
+        context = {
+            'Cust': profile
         };
         return render(request, 'profile.html',context);
 
-    @request_mapping("/profileupdate", method="get")
-    def profileupdate(self, request):
-        profile=Cust.objects.all()
-        context={
-            'profile':profile
-        }
-        return render(request, 'profileupdate.html',context);
+    @request_mapping("/profileupdate/<str:pk>", method="get")
+    def profileupdate(self, request, pk):
+        profile = Cust.objects.get(id=pk);
+        context = {
+            'Cust': profile
+        };
+        return render(request, 'profileupdate.html', context);
 
-    @request_mapping("/profileupdateimpl", method="get")
-    def profileupdateimpl(self, request):
-        return render(request, 'profileupdateimpl.html');
+    @request_mapping("/profileupdateimpl/<str:pk>", method="post")
+    def profileupdateimpl(self, request, pk):
+        name = request.POST['name'];
+        birth = request.POST['birth'];
+        gender = request.POST['gender'];
+        email = request.POST['email'];
+        phone = request.POST['phone'];
+        address = request.POST['address'];
+
+        cust = Cust.objects.get(id=pk);
+        cust.name = name;
+        cust.birth = birth;
+        cust.gender = gender;
+        cust.email = email;
+        cust.phone = phone;
+        cust.address = address;
+        cust.save()
+        return redirect('/restDetail')
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
@@ -122,9 +145,9 @@ class MyView(View):
             if cust.pwd == pwd:
                 request.session['sessionid'] = cust.id;
                 request.session['sessionname'] = cust.name;
+                request.session['sessionimg'] = cust.custimg;
         except:
             return render(request,'login.html');
-
         return render(request, 'home.html');
 
     @request_mapping("/logout", method="get")
