@@ -151,12 +151,6 @@ ul, li {
     border-left: 1px solid #ddd;
 }
 
-.board_page .button {
-    background: none;
-    border: none;
-    padding: none;
-}
-
 .board_view {
     width: 100%;
     border-top: 2px solid #000;
