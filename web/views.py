@@ -110,7 +110,7 @@ class MyView(View):
         cust.phone = phone;
         cust.address = address;
         cust.save()
-        return redirect('/restDetail')
+        return redirect('/login');
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
