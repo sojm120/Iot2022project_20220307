@@ -16,11 +16,9 @@ class MyView(View):
     def home(self, request):
         rest = Rest.objects.all();
         star_rating = Review.objects.all();
-        imgpath = Imgpath.objects.all();
+
         context = {
-            'rest': rest,
-            'star_rating': star_rating,
-            'imgpath': imgpath
+            'star_rating': star_rating
         };
 
         return render(request, 'home.html', context);
