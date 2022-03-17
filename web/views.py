@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django_request_mapping import request_mapping
 
-from web.models import Cust
+from web.models import Cust, Board
 
 from config.settings import UPLOAD_DIR
 from web.models import Rest, Review, Menu, Imgpath
@@ -57,7 +57,24 @@ class MyView(View):
 
     @request_mapping("/list", method="get")
     def list(self, request):
-        return render(request, 'list.html');
+        count = Board.objects.all().count()
+        context = {
+            'count': count
+        }
+        return render(request, 'list.html', context);
+
+    @request_mapping("/listview/<int:idx>/<int:getcnt>", method="get")
+    def listview(self, request, idx, getcnt):
+        objs = Board.objects.all().order_by('-id')[idx:idx+getcnt]
+        data = []
+        for obj in objs:
+            datum = dict()
+            datum['id'] = str(obj.id)
+            datum['title'] = str(obj.title)
+            datum['cust_id'] = str(obj.cust.id)
+            datum['regdate'] = str(obj.regdate)
+            data.append(datum)
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
     @request_mapping("/view", method="get")
     def view(self, request):
