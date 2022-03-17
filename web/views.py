@@ -231,3 +231,7 @@ class MyView(View):
     @request_mapping("/faq", method="get")
     def faq(self, request):
         return render(request, 'faq.html');
+
+    @request_mapping("/live_chat", method="get")
+    def live_chat(self, request):
+        return render(request, 'live_chat.html');
