@@ -13,18 +13,18 @@
     <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-        var idx = 0;                        // 데이터 뿌리는 시작 인덱스(0이면 제일 최신 데이터)
-        var page = 1;                           // 화면 뜨면 1페이지로 setting
-        var cnt = {{count}};                // 게시판 데이터 갯수
+        var idx = 0;                        // 데이터 뿌리는 시작 인덱스(0이면 제일 최신 데이터) (변동)
+        var page = 1;                           // 화면 뜨면 1페이지로 setting (변동)
+        var cnt = {{count}};                // 게시판 데이터 갯수 (고정)
         if (cnt % 5 == 0){
-            var pages = parseInt(cnt/5);    // 게시판 페이지 수 계산
-            var remain = 5;                 // 게시판 마지막 페이지 데이터 갯수
+            var pages = parseInt(cnt/5);    // 게시판 페이지 수 계산 (고정)
+            var remain = 5;                 // 게시판 마지막 페이지 데이터 갯수 (고정)
         } else {
             var pages = parseInt(cnt/5) + 1;
             var remain = cnt % 5;
         }
 
-        // 데이터 출력력
+        // 데이터 출력
        function display(data){
             results = ''
             results = '<div class="top">';
@@ -53,8 +53,7 @@
             } else {
                 var getcnt = 5
             }
-            alert(i);
-            alert(getcnt);
+            // alert('page'+page+' / '+'pages'+pages);
             $.ajax({
                 url: '/listview/'+i+'/'+getcnt,
                 success: function(data){
@@ -63,33 +62,90 @@
             });
         }
 
+        // 첫 페이지
+        function getFirst(){
+            if (idx == 0){
+                alert('첫 페이지입니다.');
+                return;
+            }
+            idx = 0;
+            page = 1;
+            getData(idx, page);
+            currentPage();
+        }
+
         // 이전 페이지
         function getPrevious(i, p){
-            if (idx == 0){
+            if (i == 0){
                 alert('첫 페이지입니다.');
                 return;
             }
             idx = i - 5;
             page = p - 1;
             getData(idx, page);
-
+            currentPage();
         }
 
         // 다음 페이지
         function getNext(i, p){
-            if (page == pages){
+            if (p == pages){
                 alert('마지막 페이지입니다.');
                 return;
             }
             idx = i + 5;
             page = p + 1;
-            alert('page'+page);
-            alert('pages'+pages);
             getData(idx, page);
+            currentPage();
+        }
+
+        // 마지막 페이지
+        function getLast(){
+            if (page == pages){
+                alert('마지막 페이지입니다.');
+                return;
+            }
+            idx = pages * 5 - 5     // 마지막 페이지 시작 인덱스 계산
+            page = pages;
+            getData(idx, page);
+            currentPage();
+        }
+        // 각 페이지 버튼 클릭 시 해당 페이지로 이동
+        function getPage(i){
+            idx = i * 5 - 5         // 해당페이지 시작 인덱스 계산
+            page = i;
+            getData(idx, page);
+            currentPage();
+        }
+
+        // 페이지 수에 맞게 페이지 버튼 생성
+        function makePageButton(){
+            results = '';
+            for (var i=1; i<pages+1; i++){
+                result = '';
+                result += '<a href="#" id="num' + i + '" onclick="getPage(' + i + ');" class="num">'
+                result += i;
+                result += '</a>';
+                results += result;
+            }
+            $('#page_list').html(results);
+        }
+
+        // 페이지 버튼에 현재 페이지 표시
+        function currentPage(){
+            for (var i=1; i<pages+1; i++){
+                var id = '#num' + i;
+                if (i == page){
+                    $(id).addClass('on');
+                } else {
+                    $(id).removeClass('on')
+                }
+            }
         }
 
         $(document).ready(function(){
             getData(idx, page);
+            makePageButton();
+            currentPage();
         });
     </script>
 </head>
@@ -144,15 +200,18 @@
             <!--ajax로 리스트 뿌리는 곳-->
             </div>
             <div class="board_page">
-                <a href="#" class="bt first"><<</a>
-                <a href="#" class="bt prev"><button class="button" onclick="getPrevious(idx, page);"><</button></a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bt next"><button class="button" onclick="getNext(idx, page);">></button></a>
-                <a href="#" class="bt last">>></a>
+                <a href="#" class="bt first" onclick="getFirst();"><<</a>
+                <a href="#" class="bt prev" onclick="getPrevious(idx, page);"><</a>
+                <div id="page_list" style="display:inline;">
+                    <!--Page 번호 뿌려지는 곳-->
+                    <a href="#" class="num on">1</a>
+                    <a href="#" class="num">2</a>
+                    <a href="#" class="num">3</a>
+                    <a href="#" class="num">4</a>
+                    <a href="#" class="num">5</a>
+                </div>
+                <a href="#" class="bt next" onclick="getNext(idx, page);">></a>
+                <a href="#" class="bt last" onclick="getLast();">>></a>
             </div>
             <div class="bt_wrap">
                 <a href="/write" class="on">등록</a>
