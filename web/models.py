@@ -75,6 +75,7 @@ class Board(models.Model):
     cust = models.ForeignKey('Cust', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.CharField(max_length=1000)
+    regdate = models.DateField(auto_now=True)
 
     class Meta:
         db_table = 'db_board'
