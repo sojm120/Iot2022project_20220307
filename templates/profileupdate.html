@@ -22,8 +22,10 @@
                 {% if request.session.sessionid == None %}
                     <span></span>
                 {% else %}
-                    <span class="badge bg-dark text-white ms-1 rounded-pill" style="width:100px; height:24px;"><a href="/profile" style="color:white; text-decoration:none; vertical-align:middle;">프로필사진</a></span>&nbsp;&nbsp;
-                    <span>{{request.session.sessionid}}</span>
+                    <a href="/profile/{{request.session.sessionid}}" style="color:white; text-decoration:none; vertical-align:middle;">
+                        <img class="card-img-top" style="vertical-align:middle; display:block; width: 50px; height:50px;" src="/static/img/{{request.session.sessionimg}}" alt="..." />
+                    </a>
+                    <span>&nbsp;&nbsp;{{request.session.sessionid}}</span>
                 {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -63,7 +65,7 @@
         <form action="/profileupdateimpl/{{Cust.id}}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="container" align="center">
-                <div class="row col-xs-10 col-sm-10 col-md-4 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" style="padding:10px; background:#fff; border-top:solid; border-bottom:solid; border-width:1px;">
+                <div class="row col-xs-8 col-sm-8 col-md-4 col-lg-11 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" style="padding:5px; background:#fff; border-top:solid; border-bottom:solid; border-width:1px;">
                     <div class="panel panel-info" style="padding-bottom:40px;">
                         <div class="panel-heading">
                             <h3 class="panel-title" style="text-align:left; padding-top:20px;">
@@ -72,29 +74,30 @@
                                 {% else %}
                                 <div style="text-align:left;"><img src="/static/img/{{Cust.custimg}}" style="width:100px; height:100px;">
                                 {% endif %}
-                                {{Cust.id}}</div>
+                                {{Cust.id}}
+                                </div>
                             </h3>
                         </div>
                         <div class="panel-body">
-                            <div class="row" style="padding:10px;">
-                                <div id="profile" name="profile" class="col-md-6 col-lg-6 ">
+                            <div class="row" style="padding:3px;">
+                                <div id="profile" name="profile" class="col-md-8 col-lg-6 ">
                                     <table class="table table-user-information">
                                         <tbody style="text-align:left;">
                                             <tr>
-                                                <td>이름</td>
-                                                <td class="input-box" style="width:360px;">
+                                                <td style="width:130px; float:left; padding-top:14px;">이름</td>
+                                                <td class="input-box" style="width:200px;">
                                                     <input class="pt-0" type="text" style="width:300px;" name="name" value="{{Cust.name}}">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>생년월일</td>
-                                                <td class="input-box" style="width:360px;">
-                                                    <input id="custbday" type="date" name="birth" placeholder="생년월일"  value="{{Cust.birth}}" autocomplete="off">
+                                                <td class="input-box">
+                                                    <input style="padding:5px;" id="custbday" type="date" name="birth" placeholder="생년월일"  value="{{Cust.birth}}" autocomplete="off">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>성별</td>
-                                                <td class="input-box" style="width:360px;">
+                                                <td class="input-box">
                                                     <div class="box-radio-input">
                                                         <input id="man" type="radio" name="gender" value="남" checked="checked" style="width:15px; height:15px;">
                                                         <span>남자</span>
@@ -105,19 +108,19 @@
                                             </tr>
                                             <tr>
                                                 <td>이메일</td>
-                                                <td class="input-box" style="width:360px;">
+                                                <td class="input-box">
                                                     <input class="pt-0" type="text" style="width:300px;" name="email" value="{{Cust.email}}">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>연락처</td>
-                                                <td class="input-box" style="width:360px;">
+                                                <td class="input-box">
                                                     <input class="pt-0" type="text" style="width:300px;" name="phone" value="{{Cust.phone}}">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>주소</td>
-                                                <td class="input-box" style="width:360px;">
+                                                <td class="input-box">
                                                     <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
                                                     <input class="pt-0" type="text" style="width:300px;" value="{{Cust.address}}" id="sample4_roadAddress" name="address" placeholder="도로명주소">
                                                 </td>
@@ -164,28 +167,125 @@
 
                                     $(document).ready(function(){$('input[type=date]').val(yyyy+"-"+mm+"-"+dd);});
                                 </script>
-                                <div class="col-md-6 col-lg-6">
-
-                                    <table class="table table-user-information" style="text-align:left;">
-                                        <tr>
-                                            <td style="width:130px;">상호명</td>
-                                            <td>상호명</td>
-                                        </tr>
-                                        <tr>
-                                            <td>사업자등록번호</td>
-                                            <td>123123123</td>
-                                        </tr>
-                                        <tr>
-                                            <td>대표자명</td>
-                                            <td>ㅁㄴㅇㄹㅋㅌㅊㅍ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>가게주소</td>
-                                            <td>주우소</td>
-                                        </tr>
+                                <div id="restprf" name="restprf" class="col-md-8 col-lg-6 ">
+                                    <table class="table table-user-information">
+                                        <tbody style="text-align:left;">
+                                            <tr>
+                                                <td style="width:130px; float:left; padding-top:14px;">상호명</td>
+                                                <td class="input-box" style="width:200px;">
+                                                    <input class="pt-0" type="text" style="width:300px;" name="hrest" value="{{Rest.rest_name}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>대표자명</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input class="pt-0" type="text" name="hname" value="{{Rest.host_name}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>사업자등록번호</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input class="pt-0" type="text" name="hreg" value="{{Rest.reg_num}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>음식점연락처</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input class="pt-0" type="text" name="hphone" value="{{Rest.phone}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>음식점주소</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input class="pt-0" type="text" name="haddr" value="{{Rest.address}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>개점시간</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input class="pt-0" type="text" name="hopen" value="{{Rest.openhour}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>재료준비시간</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input class="pt-0" type="text" name="hbreak" value="{{Rest.breakhour}}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>정보</td>
+                                                <td class="input-box" style="200px;">
+                                                    <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
+                                                    <input class="pt-0" type="text" style="width:300px;" value="{{Rest.restindex}}" id="sample4_hroadAddress" name="haddr" placeholder="도로명주소">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>음식점사진</td>
+                                                <td style="text-align:left;">
+                                                    <img src="/static/img/{{Rest.restimg}}" style="width:100px; height:100px;">
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
     <!--                                <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>-->
                                 </div>
+                                <script>
+                                    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+                                    function sample4_hexecDaumPostcode() {
+                                        new daum.Postcode({
+                                            oncomplete: function(data) {
+                                                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                                                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                                                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                                                var extraRoadAddr = ''; // 참고 항목 변수
+
+                                                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                                    extraRoadAddr += data.bname;
+                                                }
+                                                // 건물명이 있고, 공동주택일 경우 추가한다.
+                                                if(data.buildingName !== '' && data.apartment === 'Y'){
+                                                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                                }
+                                                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                                if(extraRoadAddr !== ''){
+                                                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                                                }
+
+                                                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                                document.getElementById('sample4_hpostcode').value = data.zonecode;
+                                                document.getElementById("sample4_hroadAddress").value = roadAddr;
+                                                document.getElementById("sample4_hjibunAddress").value = data.jibunAddress;
+
+                                                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                                                if(roadAddr !== ''){
+                                                    document.getElementById("sample4_hextraAddress").value = extraRoadAddr;
+                                                } else {
+                                                    document.getElementById("sample4_hextraAddress").value = '';
+                                                }
+
+                                                var hguideTextBox = document.getElementById("hguide");
+                                                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                                                if(data.autoRoadAddress) {
+                                                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                                                    hguideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                                                    hguideTextBox.style.display = 'block';
+
+                                                } else if(data.autoJibunAddress) {
+                                                    var expJibunAddr = data.autoJibunAddress;
+                                                    hguideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                                                    hguideTextBox.style.display = 'block';
+                                                } else {
+                                                    hguideTextBox.innerHTML = '';
+                                                    hguideTextBox.style.display = 'none';
+                                                }
+                                            }
+                                        }).open();
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -193,6 +293,7 @@
             </div>
             <br><br><br>
             <input type="submit" style="display:block; margin: 0 auto; font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; text-align:center;" value="회원정보수정">
+            <br><br><br>
         </form>
     </body>
 </html>
