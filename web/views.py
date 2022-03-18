@@ -37,19 +37,26 @@ class MyView(View):
     def login(self, request):
         return render(request, 'login.html');
 
-    @request_mapping("/profile/<str:pk>", method="get")
-    def profile(self, request, pk):
-        profile = Cust.objects.get(id=pk);
-        try:
-            Rest.objects.get(cust_id=pk);
-            restprf = Rest.objects.get(cust_id=pk);
-        except:
-            restprf = '';
+    @request_mapping("/restDetail/<int:pk>", method="get")
+    def restDetail(self, request, pk):
+        # home에서 클릭한 id 가져오기
+        rest = Rest.objects.get(id=pk);
+        star_avg = Review.objects.filter(rest=pk).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'),
+                                                           p_avg=Avg('p_rating'));
+        menu = Menu.objects.filter(rest=pk);
+        review = Review.objects.filter(rest=pk).order_by('-id');  # 내림차순 정렬
+        imgpath = Imgpath.objects.all();
+        cust = Cust.objects.get(id=request.session['sessionid']);
         context = {
-            'Cust': profile,
-            'Rest': restprf
+            'rest': rest,
+            'cust': cust,
+            'star_avg': star_avg,
+            'menu': menu,
+            'review': review,
+            'imgpath': imgpath,
+            'reviewlist': 'reviewlist.html'
         };
-        return render(request, 'profile.html', context);
+        return render(request, 'restDetail.html', context);
 
     @request_mapping("/register", method="get")
     def register(self, request):
