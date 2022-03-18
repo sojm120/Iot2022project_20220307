@@ -37,7 +37,7 @@
                 var result = '';
                 result += '<div>';
                 result += '<div class="num">' + item.id + '</div>';
-                result += '<div class="title"><a href="/view">' + item.title + '</a></div>';
+                result += '<div class="title"><a href="/board/g/'+item.id+'">' + item.title + '</a></div>';
                 result += '<div class="writer">' + item.cust_id + '</div>';
                 result += '<div class="date">' + item.regdate + '</div>';
                 result += '</div>'
@@ -55,7 +55,7 @@
             }
             // alert('page'+page+' / '+'pages'+pages);
             $.ajax({
-                url: '/listview/'+i+'/'+getcnt,
+                url: '/board/listview/'+i+'/'+getcnt,
                 success: function(data){
                     display(data);
                 }
@@ -183,7 +183,7 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
                             <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
-                            <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
+                            <li><a class="dropdown-item" href="/board">고객 상담 게시판</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -213,10 +213,12 @@
                 <a href="#" class="bt next" onclick="getNext(idx, page);">></a>
                 <a href="#" class="bt last" onclick="getLast();">>></a>
             </div>
+            {% if request.session.sessionid != none %}
             <div class="bt_wrap">
-                <a href="/write" class="on">등록</a>
+                <a href="/board/iv" class="on">등록</a>
                 <!--<a href="#">수정</a>-->
             </div>
+            {% endif %}
         </div>
     </div>
     <!-- Bootstrap core JS-->
