@@ -12,28 +12,6 @@
         <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<script>
-
-    var array
-    function rating(rate){
-                var star = '';
-                var i = 0
-                for (i < rate, i++){
-                    star += '<div class="bi-star-fill"></div>'
-                }
-                var j = 5-i;
-                for (var k, k < j, k++){
-                    star += '<div class="bi-star"></div>'
-                }
-
-            };
-
-            $(document).ready(function(){
-                var result = '';
-                result = rating({{star_rating.s_rating}});
-                 $('#star_rating').html(result);
-            });
-</script>
     </head>
     <body>
         <!-- Navigation-->
@@ -70,7 +48,7 @@
         <header class="bg-picture py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <form class = "input-box" action="127.0.0.1/search" method="get">
+                    <form class = "input-box" action="/search" method="get">
 <!--                        차후 데이터와 검색 연동 진행-->
                         <input type="text" style="width:50rem; font:bold; font-size:15pt; color:white;" placeholder="검색어 또는 태그 입력" name="q" value = "{{q}}">
                         <button class="forgot-main" type="submit">Search</button>
@@ -78,16 +56,15 @@
                     </form>
 <!--                    음식점 태그-->
                     <p class="lead fw-normal text-white-50 mb-0" id="tag">
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#중식</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#양식</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#흡연가능</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#피자</a>
-                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#한식</a>
+                        <a class="text-white mb-0" href="/search" style = "text-decoration:none">#중식</a>
+                        <a class="text-white mb-0" href="/search" style = "text-decoration:none">#양식</a>
+                        <a class="text-white mb-0" href="/search" style = "text-decoration:none">#흡연가능</a>
+                        <a class="text-white mb-0" href="/search" style = "text-decoration:none">#피자</a>
+                        <a class="text-white mb-0" href="/search" style = "text-decoration:none">#한식</a>
                     </p>
                 </div>
             </div>
         </header>
-        <!-- Section-->
             <div id="sidebar" style="margin:0; border:0; padding-top:0; padding-bottom:0rem; width:18.7rem; height: 100%; background-color: #BDBDBD; float:left">
                 <div style="margin: 10px; margin-top: 3rem; margin-bottom: 2rem">
                         <div style="height: 100%">
@@ -108,7 +85,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
                             </div>
@@ -129,20 +105,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View details</a></div>
                             </div>
                         </div>
-                    </div>
-
+                </div>
             </div>
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5" >
                         <div class="card h-100" id="rest_img">
-
                             <img class="card-img-top" src="/static/img/rest02img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
