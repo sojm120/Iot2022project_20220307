@@ -34,6 +34,10 @@ class MyView(View):
     def login(self, request):
         return render(request, 'login.html');
 
+    @request_mapping("/live_chat", method="get")
+    def live_chat(self, request):
+        return render(request, 'live_chat.html');
+
     @request_mapping("/restDetail/<int:pk>", method="get")
     def restDetail(self, request, pk):
         # home에서 클릭한 id 가져오기
