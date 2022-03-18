@@ -228,7 +228,7 @@
                             </div>
                             <!-- review edit button-->
                             <div class="text-center mb-4" style="width:100; height:100; clear:both;">
-                              {% if cust.host_flag == 1 %}
+                              {% if host_flag == 1 %}
                               <a href="/restEdit/{{rest.id}}"><button style="background-color: rgb(256,167,34); border-radius: 10px; color:white">음식점 수정</button></a>
                               {% endif %}
                               {% if request.session.sessionid != None %}
