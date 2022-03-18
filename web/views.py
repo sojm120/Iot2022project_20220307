@@ -42,7 +42,7 @@ class MyView(View):
                                                            p_avg=Avg('p_rating'));
         menu = Menu.objects.filter(rest=pk);
         review = Review.objects.filter(rest=pk).order_by('-id');  # 내림차순 정렬
-        imgpath = Imgpath.objects.get(id=pk);
+        imgpath = Imgpath.objects.all();
         cust = Cust.objects.get(id=request.session['sessionid']);
         context = {
             'rest': rest,
