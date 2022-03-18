@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django_request_mapping import request_mapping
 
-from web.models import Cust
+from web.models import Cust, Board
 
 from config.settings import UPLOAD_DIR
 from web.models import Rest, Review, Menu, Imgpath
@@ -45,8 +45,10 @@ class MyView(View):
         menu = Menu.objects.filter(rest=1);
         review = Review.objects.filter(rest=1).order_by('-id'); # 내림차순 정렬
         imgpath = Imgpath.objects.all();
+        cust = Cust.objects.get(id=request.session['sessionid']);
         context = {
             'rest': rest,
+            'cust': cust,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
@@ -55,22 +57,6 @@ class MyView(View):
         };
         return render(request, 'restDetail.html', context);
 
-    @request_mapping("/list", method="get")
-    def list(self, request):
-        return render(request, 'list.html');
-
-    @request_mapping("/view", method="get")
-    def view(self, request):
-        return render(request, 'view.html');
-
-    @request_mapping("/write", method="get")
-    def write(self, request):
-        return render(request, 'write.html');
-
-    @request_mapping("/edit", method="get")
-    def edit(self, request):
-        return render(request, 'edit.html');
-
     @request_mapping("/register", method="get")
     def register(self, request):
         return render(request, 'register.html');
@@ -78,7 +64,11 @@ class MyView(View):
     @request_mapping("/profile/<str:pk>", method="get")
     def profile(self, request, pk):
         profile = Cust.objects.get(id=pk);
-        restprf = Rest.objects.get(cust_id=pk);
+        try:
+            Rest.objects.get(cust_id=pk);
+            restprf = Rest.objects.get(cust_id=pk);
+        except:
+            restprf = '';
         context = {
             'Cust': profile,
             'Rest': restprf
@@ -133,7 +123,8 @@ class MyView(View):
         rest.restindex = hindex;
         rest.save()
 
-        return redirect('/login');
+        return redirect('/profile/'+str(pk));
+
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
@@ -216,6 +207,8 @@ class MyView(View):
                 request.session['sessionid'] = cust.id;
                 request.session['sessionname'] = cust.name;
                 request.session['sessionimg'] = cust.custimg;
+            else:
+                raise
         except:
             return render(request,'login.html');
         return render(request, 'home.html');

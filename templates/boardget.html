@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담내용</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{%static 'assets/favicon.ico'%}" />
+    <link href="{%static 'css/css.css'%}" rel="stylesheet" />
+    <link href="{%static 'css/styles.css'%}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        function clickDelete(){
+            c = confirm('[주의]\n삭제 후에는 복구할 수 없습니다.\n정말로 삭제하시겠습니까?');
+            if(c == true){
+                location.href = '/board/d/' + {{objs.id}}
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            {% if request.session.sessionid == None %}
+                <span></span>
+            {% else %}
+                <span class="badge bg-dark text-white ms-1 rounded-pill" style="width:100px; height:24px;"><a href="/profile" style="color:white; text-decoration:none; vertical-align:middle;">프로필사진</a></span>&nbsp;&nbsp;
+                <span>{{request.session.sessionid}}</span>
+            {% endif %}
+<!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                {% if request.session.sessionid == None %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/login" style="white-space:nowrap; margin-right:15px;">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register" style="white-space:nowrap;">회원가입</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
+                        &nbsp;
+                    </ul>
+                {% endif %}
+                <ul style="width:40rem"></ul>
+                <form class="d-flex">
+                    <a class="navbar-brand" href="/">로고</a>
+                </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">고객센터</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
+                            <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
+                            <li><a class="dropdown-item" href="/board">고객 상담 게시판</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>고객 문의</strong>
+            <p>빠르고 신속하게 답변 드리겠습니다.</p>
+        </div>
+        <div class="board_view_wrap">
+            <div class="board_view">
+                <div class="title">
+                    {{objs.title}}
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>번호</dt>
+                        <dd>{{objs.id}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>글쓴이</dt>
+                        <dd>{{objs.cust.id}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>작성일</dt>
+                        <dd>{{objs.regdate}}</dd>
+                    </dl>
+                </div>
+                <div class="cont">
+                    {{objs.content}}
+                </div>
+            </div>
+            <div class="bt_wrap">
+                <a href="/board" class="on">목록</a>
+                {% if request.session.sessionid == objs.cust.id%}
+                <a href="/board/uv/{{objs.id}}">수정</a>
+                <a href="#" onclick="clickDelete();">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

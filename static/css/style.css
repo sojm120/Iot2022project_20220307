@@ -11,7 +11,7 @@ ul, li {
     list-style: none;
 }
 
-a {
+.board_wrap a {
     text-decoration: none;
     color: inherit;
 }
@@ -57,6 +57,12 @@ a {
 .bt_wrap a.on {
     background: #000;
     color: #fff;
+}
+
+.bt_wrap a.on button{
+    background: #000;
+    color: #fff;
+    border: none;
 }
 
 .board_list {
@@ -222,6 +228,7 @@ a {
 .board_write .title,
 .board_write .info {
     padding: 15px;
+    border-bottom: 2px solid #000;
 }
 
 .board_write .info {

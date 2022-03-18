@@ -63,7 +63,7 @@
                     {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
-                        <a class="navbar-brand" href="/"><img class="card-img-top" style="width: auto; height: 50px;" src="/static/img/restaurant.jpg" alt="..." /></a>
+                        <a class="navbar-brand" href="/"><img class="card-img-top" style="width: auto; height: 50px;" src="/static/img/images.png" alt="..." /></a>
                     </form>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item dropdown">
@@ -71,7 +71,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
                                 <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
-                                <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
+                                <li><a class="dropdown-item" href="/board">고객 상담 게시판</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -91,21 +91,21 @@
                     </form>
 <!--                    음식점 태그-->
                     <p class="lead fw-normal text-white-50 mb-0" id="tag">
-<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
-<!--                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#tag</a>-->
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#중식</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#양식</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#흡연가능</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#피자</a>
+                        <a class="text-white mb-0" href="#!" style = "text-decoration:none">#한식</a>
                     </p>
                 </div>
             </div>
         </header>
         <!-- Section-->
             <div id="sidebar" style="margin:0; border:0; padding-top:0; padding-bottom:0rem; width:18.7rem; height: 100%; background-color: #BDBDBD; float:left">
-                <div style="margin: 10px; margin-top: 3rem; margin-bottom: 4rem">
+                <div style="margin: 10px; margin-top: 3rem; margin-bottom: 2rem">
                         <div style="height: 100%">
                             <!-- Product image-->
-                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />
+                            <img class="card-img-top" src="/static/img/rest01img1.jpg" alt="..." />
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -127,9 +127,9 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin: 10px; margin-top: 3rem; margin-bottom: 5.8rem">
+                    <div style="margin: 10px; margin-top: 3rem; margin-bottom: 4.8rem">
                         <div style="height: 100%">
-                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />
+                            <img class="card-img-top" src="/static/img/rest10img1.jpg" alt="..." />
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <h5 class="fw-bolder">리뷰가 없어요</h5>
@@ -153,17 +153,41 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5" >
+                        <div class="card h-100" id="rest_img">
 
+                            <img class="card-img-top" src="/static/img/rest02img1.jpg" alt="..." />
+                                <div class="card-body p-4">
+                                    <div class="text-center" id="rest_name">
+                                        <h5 class="fw-bolder">파더스김밥</h5>
+                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-half"></div>
+                                        <div class="bi-star"></div>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
+                                   </div>
+                            </div>
+                      </div>
 
                     <div class="col mb-5" >
                         <div class="card h-100" id="rest_img">
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest03img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">이디야커피</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -176,12 +200,16 @@
                         <div class="card h-100" id="rest_img">
 
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest04img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">신비초밥</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -194,12 +222,16 @@
                         <div class="card h-100" id="rest_img">
 
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest05img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">후라이드참잘하는집</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-half"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -212,12 +244,16 @@
                         <div class="card h-100" id="rest_img">
 
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest06img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">빅스타피자</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -230,12 +266,16 @@
                         <div class="card h-100" id="rest_img">
 
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest07img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">미스사이공</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -248,12 +288,16 @@
                         <div class="card h-100" id="rest_img">
 
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest08img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">매드포갈릭</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star-fill"></div>
+                                        <div class="bi-star"></div>
+                                        <div class="bi-star"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -266,12 +310,16 @@
                         <div class="card h-100" id="rest_img">
 
 
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
+                            <img class="card-img-top" src="/static/img/rest09img1.jpg" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
+                                        <h5 class="fw-bolder">파크루안</h5>
                                         <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
+                                        <div class="bi-star"></div>
+                                        <div class="bi-star"></div>
+                                        <div class="bi-star"></div>
+                                        <div class="bi-star"></div>
+                                        <div class="bi-star"></div>
                                                     </div>
                                                 </div>
                                               </div>
@@ -280,24 +328,8 @@
                                    </div>
                             </div>
                       </div>
-                    <div class="col mb-5" >
-                        <div class="card h-100" id="rest_img">
-
-
-<!--                            <img class="card-img-top" src="/static/img/burger.jpg" alt="..." />-->
-                                <div class="card-body p-4">
-                                    <div class="text-center" id="rest_name">
-<!--                                        <h5 class="fw-bolder">이름이들어가야지</h5>-->
-                                        <div class="d-flex justify-content-center small text-warning mb-2" id="star_rating">
-
-                                                    </div>
-                                                </div>
-                                              </div>
-                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/restDetail">View details</a></div>
-                                   </div>
-                            </div>
-                      </div>
+                </div>
+            </div>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
