@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django_request_mapping import request_mapping
 
-from web.models import Cust, Board
+from web.models import Cust, Board, Imgpath
 
 from config.settings import UPLOAD_DIR
 from web.models import Rest, Review, Menu
@@ -34,15 +34,15 @@ class MyView(View):
     def login(self, request):
         return render(request, 'login.html');
 
-    @request_mapping("/restDetail", method="get")
-    def restDetail(self, request):
+    @request_mapping("/restDetail/<int:pk>", method="get")
+    def restDetail(self, request, pk):
         # home에서 클릭한 id 가져오기
-        rest = Rest.objects.get(id=1);
-        star_avg = Review.objects.filter(rest=1).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'),
+        rest = Rest.objects.get(id=pk);
+        star_avg = Review.objects.filter(rest=pk).aggregate(s_avg=Avg('s_rating'), m_avg=Avg('m_rating'),
                                                            p_avg=Avg('p_rating'));
-        menu = Menu.objects.filter(rest=1);
-        review = Review.objects.filter(rest=1).order_by('-id');  # 내림차순 정렬
-        imgpath = Imgpath.objects.all();
+        menu = Menu.objects.filter(rest=pk);
+        review = Review.objects.filter(rest=pk).order_by('-id');  # 내림차순 정렬
+        imgpath = Imgpath.objects.get(id=pk);
         cust = Cust.objects.get(id=request.session['sessionid']);
         context = {
             'rest': rest,
