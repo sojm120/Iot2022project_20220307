@@ -90,6 +90,10 @@ class MyView(View):
         profile = Cust.objects.get(id=pk);
         try:
             restprf = Rest.objects.get(cust_id=pk);
+            context = {
+                'Cust': profile,
+                'Rest': restprf
+            };
         except:
             context = {
                 'Cust': profile
