@@ -160,7 +160,7 @@
                                     {% for m in menu %}
                                         <a href="/restEdit/menu/{{m.id}}" style="text-decoration:none"><p class="lead fw-normal text-white-50 mb-2 fs-6">* {{m.id}}  {{m.name}} {{m.price}}</p></a>
                                     {% endfor %}
-                                    <button type="button" style="background-color: rgb(256,167,34); border-radius: 10px; color: white;">Add menu</button>
+                                    <button type="button" style="background-color: rgb(256,167,34); border-radius: 10px; color: white;" onClick="location.href='/restEdit/menu/iv/{{rest.id}}'">Add menu</button>
                                 </div>
     <!--                            address-->
                                 <div class="my-4 mx-4 col-xxl-5 border float-start">
