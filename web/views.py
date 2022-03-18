@@ -143,15 +143,6 @@ class MyView(View):
         address1 = request.POST['address1'];
         address2 = request.POST['address2'];
         phone = request.POST['custphone'];
-        # custimg = request.POST['custimg'];
-        #
-        # context = {};
-        # try:
-        #     Cust.objects.get(id=id);
-        # except:
-        #     profile = Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1 + address2,
-        #          phone=phone, host_flag=host_flag, custimg=custimg);
-        #     profile.save();
         imgname = '';
         if 'custimg' in request.FILES:
             img = request.FILES['custimg'];
@@ -176,17 +167,6 @@ class MyView(View):
             openhour = request.POST['openhour'];
             breakhour = request.POST['breakhour'];
             cate_id = request.POST['cate_id']
-            # restimg = request.POST['restimg'];
-            #
-            # print(rest_name, host_name, address3, address4, restindex, hostphone, openhour, breakhour, cate_id, restimg);
-            # context = {};
-            # try:
-            #     Rest.objects.get(id=id);
-            # except:
-            #     restprf = Rest(cust=profile, reg_num=reg_num, rest_name=rest_name, host_name=host_name, address=address3+' '+address4,
-            #          restindex=restindex, phone=hostphone, openhour=openhour, breakhour=breakhour,
-            #          cate_id=cate_id, restimg=restimg);
-            #     restprf.save();
             imgname2 = '';
 
             if 'restimg' in request.FILES:
@@ -213,10 +193,10 @@ class MyView(View):
                 request.session['sessionname'] = cust.name;
                 request.session['sessionimg'] = cust.custimg;
             else:
-                raise
+                raise Exception;
         except:
             return render(request,'login.html');
-        return render(request, 'home.html');
+        return render(request,'home.html');
 
     @request_mapping("/logout", method="get")
     def logout(self, request):
