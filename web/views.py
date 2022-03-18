@@ -46,10 +46,19 @@ class MyView(View):
         menu = Menu.objects.filter(rest=pk);
         review = Review.objects.filter(rest=pk).order_by('-id');  # 내림차순 정렬
         imgpath = Imgpath.objects.all();
-        cust = Cust.objects.get(id=request.session['sessionid']);
+        try:
+            cust = Cust.objects.get(id=request.session['sessionid']);
+            rest_temp = Rest.objects.get(cust_id=cust.id)
+            if rest_temp.id == pk:
+                host_flag = 1
+            else:
+                host_flag = 0
+        except:
+            host_flag = 0
+
         context = {
             'rest': rest,
-            'cust': cust,
+            'host_flag': host_flag,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
@@ -79,11 +88,13 @@ class MyView(View):
     @request_mapping("/profileupdate/<str:pk>", method="get")
     def profileupdate(self, request, pk):
         profile = Cust.objects.get(id=pk);
-        restprf = Rest.objects.get(cust_id=pk);
-        context = {
-            'Cust': profile,
-            'Rest': restprf
-        };
+        try:
+            restprf = Rest.objects.get(cust_id=pk);
+        except:
+            context = {
+                'Cust': profile
+            };
+
         return render(request, 'profileupdate.html', context);
 
     @request_mapping("/profileupdateimpl/<str:pk>", method="post")
@@ -113,6 +124,7 @@ class MyView(View):
         hbreak = request.POST['hbreak'];
         hindex = request.POST['hindex'];
 
+        # 가게 사장으로 등록 안 한경우 rest 테이블에 해당 정보가 없으므로 수정 필요
         rest = Rest.objects.get(cust_id=pk)
         rest.rest_name = hrest;
         rest.host_name = hname;

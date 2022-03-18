@@ -47,7 +47,7 @@ class ReviewView(View):
 
                 obj2 = Imgpath(review=obj1, path=imgname)
                 obj2.save()
-        return redirect('/restDetail')
+        return redirect('/restDetail/'+str(rest_pk))
 
     @request_mapping("/uv/<int:pk>", method="get")
     def updateview(self, request, pk):
@@ -144,14 +144,15 @@ class ReviewView(View):
             if imgpath_id2 != '0':
                 obj2 = Imgpath.objects.get(id=imgpath_id2)
                 obj2.delete()
-        return redirect('/restDetail')
+        return redirect('/restDetail/'+str(obj1.rest.id))
 
     @request_mapping("/d/<int:pk>", method="get")
     def delete(self, request, pk):
         # 해당 리뷰가 로그인된 사람이 쓴 것일 경우에만 삭제 실행
+        obj1 = Review.objects.get(id=pk)
         try:
-            obj = Review.objects.get(id=pk, cust_id=request.session['sessionid'])
+            obj2 = Review.objects.get(id=pk, cust_id=request.session['sessionid'])
         except:
-            return redirect('/restDetail')
-        obj.delete()
-        return redirect('/restDetail')
+            return redirect('/restDetail/'+str(obj1.rest.id))
+        obj1.delete()
+        return redirect('/restDetail/'+str(obj1.rest.id))

@@ -54,7 +54,7 @@ class RestView(View):
                 imgpath = imgname + ' ' + imgpath;
                 rest.restimg = imgpath;
                 rest.save()
-        return redirect('/restDetail')
+        return redirect('/restDetail/'+str(id))
 
     @request_mapping("/delimg/<int:pk>", method="get")
     def delImg(self, request, pk):
@@ -65,7 +65,7 @@ class RestView(View):
         imgpath = ' '.join(path);
         rest.restimg = imgpath;
         rest.save();
-        return redirect('/restDetail')
+        return redirect('/restDetail/'+str(pk))
 
     @request_mapping("/menu/<int:pk>", method="get")
     def menu(self, request, pk):
