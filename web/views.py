@@ -45,10 +45,15 @@ class MyView(View):
         menu = Menu.objects.filter(rest=1);
         review = Review.objects.filter(rest=1).order_by('-id'); # 내림차순 정렬
         imgpath = Imgpath.objects.all();
-        cust = Cust.objects.get(id=request.session['sessionid']);
+        try:
+            cust = Cust.objects.get(id=request.session['sessionid']);
+            host_flag = cust.host_flag
+        except:
+            host_flag = 0
+
         context = {
             'rest': rest,
-            'cust': cust,
+            'host_flag': host_flag,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
@@ -56,39 +61,6 @@ class MyView(View):
             'reviewlist': 'reviewlist.html'
         };
         return render(request, 'restDetail.html', context);
-
-    @request_mapping("/list", method="get")
-    def list(self, request):
-        count = Board.objects.all().count()
-        context = {
-            'count': count
-        }
-        return render(request, 'list.html', context);
-
-    @request_mapping("/listview/<int:idx>/<int:getcnt>", method="get")
-    def listview(self, request, idx, getcnt):
-        objs = Board.objects.all().order_by('-id')[idx:idx+getcnt]
-        data = []
-        for obj in objs:
-            datum = dict()
-            datum['id'] = str(obj.id)
-            datum['title'] = str(obj.title)
-            datum['cust_id'] = str(obj.cust.id)
-            datum['regdate'] = str(obj.regdate)
-            data.append(datum)
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
-    @request_mapping("/view", method="get")
-    def view(self, request):
-        return render(request, 'view.html');
-
-    @request_mapping("/write", method="get")
-    def write(self, request):
-        return render(request, 'write.html');
-
-    @request_mapping("/edit", method="get")
-    def edit(self, request):
-        return render(request, 'edit.html');
 
     @request_mapping("/register", method="get")
     def register(self, request):
@@ -111,8 +83,10 @@ class MyView(View):
     @request_mapping("/profileupdate/<str:pk>", method="get")
     def profileupdate(self, request, pk):
         profile = Cust.objects.get(id=pk);
+        restprf = Rest.objects.get(cust_id=pk);
         context = {
-            'Cust': profile
+            'Cust': profile,
+            'Rest': restprf
         };
         return render(request, 'profileupdate.html', context);
 
@@ -133,7 +107,29 @@ class MyView(View):
         cust.phone = phone;
         cust.address = address;
         cust.save()
+
+        hrest = request.POST['hrest'];
+        hname = request.POST['hname'];
+        hreg = request.POST['hreg'];
+        hphone = request.POST['hphone'];
+        haddr = request.POST['haddr'];
+        hopen = request.POST['hopen'];
+        hbreak = request.POST['hbreak'];
+        hindex = request.POST['hindex'];
+
+        rest = Rest.objects.get(cust_id=pk)
+        rest.rest_name = hrest;
+        rest.host_name = hname;
+        rest.reg_num = hreg;
+        rest.phone = hphone;
+        rest.address = haddr;
+        rest.openhour = hopen;
+        rest.breakhour = hbreak;
+        rest.restindex = hindex;
+        rest.save()
+
         return redirect('/profile/'+str(pk));
+
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
@@ -226,7 +222,7 @@ class MyView(View):
     def logout(self, request):
         if request.session['sessionid'] != None:
             del request.session['sessionid'];
-        return render(request, 'home.html');
+        return redirect('/');
 
     @request_mapping("/faq", method="get")
     def faq(self, request):
