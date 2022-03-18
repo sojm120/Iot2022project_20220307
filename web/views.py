@@ -215,8 +215,8 @@ class MyView(View):
             else:
                 raise
         except:
-            return render(request,'login.html');
-        return render(request, 'home.html');
+            return redirect('/');
+        return redirect('/');
 
     @request_mapping("/logout", method="get")
     def logout(self, request):
