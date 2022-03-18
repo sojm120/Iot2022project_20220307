@@ -1,13 +1,16 @@
-from django.core.paginator import Paginator
+import json
+import logging
+
 from django.db.models import Avg
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django_request_mapping import request_mapping
-import json
 
-from web.models import Rest, Review, Menu, Imgpath, Cate, Cust
+from web.models import Cust, Board
+
 from config.settings import UPLOAD_DIR
+from web.models import Rest, Review, Menu
 
 @request_mapping("")
 class MyView(View):
@@ -40,8 +43,10 @@ class MyView(View):
         menu = Menu.objects.filter(rest=1);
         review = Review.objects.filter(rest=1).order_by('-id');  # 내림차순 정렬
         imgpath = Imgpath.objects.all();
+        cust = Cust.objects.get(id=request.session['sessionid']);
         context = {
             'rest': rest,
+            'cust': cust,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
@@ -52,7 +57,24 @@ class MyView(View):
 
     @request_mapping("/list", method="get")
     def list(self, request):
-        return render(request, 'list.html');
+        count = Board.objects.all().count()
+        context = {
+            'count': count
+        }
+        return render(request, 'list.html', context);
+
+    @request_mapping("/listview/<int:idx>/<int:getcnt>", method="get")
+    def listview(self, request, idx, getcnt):
+        objs = Board.objects.all().order_by('-id')[idx:idx + getcnt]
+        data = []
+        for obj in objs:
+            datum = dict()
+            datum['id'] = str(obj.id)
+            datum['title'] = str(obj.title)
+            datum['cust_id'] = str(obj.cust.id)
+            datum['regdate'] = str(obj.regdate)
+            data.append(datum)
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
     @request_mapping("/view", method="get")
     def view(self, request):
@@ -70,20 +92,50 @@ class MyView(View):
     def register(self, request):
         return render(request, 'register.html');
 
-    @request_mapping("/profile", method="get")
-    def profile(self, request):
-        return render(request, 'profile.html');
+    @request_mapping("/profile/<str:pk>", method="get")
+    def profile(self, request, pk):
+        profile = Cust.objects.get(id=pk);
+        try:
+            Rest.objects.get(cust_id=pk);
+            restprf = Rest.objects.get(cust_id=pk);
+        except:
+            restprf = '';
+        context = {
+            'Cust': profile,
+            'Rest': restprf
+        };
+        return render(request, 'profile.html', context);
 
-    @request_mapping("/profileupdate", method="get")
-    def profileupdate(self, request):
-        return render(request, 'profileupdate.html');
+    @request_mapping("/profileupdate/<str:pk>", method="get")
+    def profileupdate(self, request, pk):
+        profile = Cust.objects.get(id=pk);
+        context = {
+            'Cust': profile
+        };
+        return render(request, 'profileupdate.html', context);
 
-    @request_mapping("/ownerupdate", method="get")
-    def ownerupdate(self, request):
-        return render(request, 'ownerupdate.html');
+    @request_mapping("/profileupdateimpl/<str:pk>", method="post")
+    def profileupdateimpl(self, request, pk):
+        name = request.POST['name'];
+        birth = request.POST['birth'];
+        gender = request.POST['gender'];
+        email = request.POST['email'];
+        phone = request.POST['phone'];
+        address = request.POST['address'];
+
+        cust = Cust.objects.get(id=pk);
+        cust.name = name;
+        cust.birth = birth;
+        cust.gender = gender;
+        cust.email = email;
+        cust.phone = phone;
+        cust.address = address;
+        cust.save()
+        return redirect('/profile/' + str(pk));
 
     @request_mapping("/registerimpl", method="post")
     def registerimpl(self, request):
+        host_flag = int(request.POST['host_flag']);
         id = request.POST['custid'];
         pwd = request.POST['custpw'];
         name = request.POST['custname'];
@@ -93,38 +145,82 @@ class MyView(View):
         address1 = request.POST['address1'];
         address2 = request.POST['address2'];
         phone = request.POST['custphone'];
-        host_flag = int(request.POST['host_flag']);
+        # custimg = request.POST['custimg'];
+        #
+        # context = {};
+        # try:
+        #     Cust.objects.get(id=id);
+        # except:
+        #     profile = Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1 + address2,
+        #          phone=phone, host_flag=host_flag, custimg=custimg);
+        #     profile.save();
+        imgname = '';
+        if 'custimg' in request.FILES:
+            img = request.FILES['custimg'];
+            imgname = img._name;
+            f = open('%s/%s' % (UPLOAD_DIR, imgname), 'wb')
+            for chunk in img.chunks():
+                f.write(chunk);
+                f.close();
+        profile = Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email,
+                       address=address1 + address2,
+                       phone=phone, host_flag=host_flag, custimg=imgname);
+        profile.save();
 
-        print(id, pwd, name, birth, gender, email, address1 + address2, phone, host_flag);
-        context = {};
-        try:
-            Cust.objects.get(id=id);
-            context['center'] = 'register.html';
-        except:
-            Cust(id=id, pwd=pwd, name=name, birth=birth, gender=gender, email=email, address=address1 + address2,
-                 phone=phone, host_flag=host_flag).save();
-            context['center'] = 'registerok.html';
-            context['rname'] = name;
-        return render(request, 'home.html', context);
+        if host_flag == 1:
+            reg_num = request.POST['reg_num'];
+            rest_name = request.POST['rest_name'];
+            host_name = request.POST['host_name'];
+            address3 = request.POST['address3'];
+            address4 = request.POST['address4'];
+            restindex = request.POST['restindex'];
+            hostphone = request.POST['hostphone'];
+            openhour = request.POST['openhour'];
+            breakhour = request.POST['breakhour'];
+            cate_id = request.POST['cate_id']
+            # restimg = request.POST['restimg'];
+            #
+            # print(rest_name, host_name, address3, address4, restindex, hostphone, openhour, breakhour, cate_id, restimg);
+            # context = {};
+            # try:
+            #     Rest.objects.get(id=id);
+            # except:
+            #     restprf = Rest(cust=profile, reg_num=reg_num, rest_name=rest_name, host_name=host_name, address=address3+' '+address4,
+            #          restindex=restindex, phone=hostphone, openhour=openhour, breakhour=breakhour,
+            #          cate_id=cate_id, restimg=restimg);
+            #     restprf.save();
+            imgname2 = '';
+
+            if 'restimg' in request.FILES:
+                img = request.FILES['restimg'];
+                imgname2 = img._name;
+                f = open('%s/%s' % (UPLOAD_DIR, imgname2), 'wb')
+                for chunk in img.chunks():
+                    f.write(chunk);
+                    f.close();
+            restprf = Rest(cust=profile, reg_num=reg_num, rest_name=rest_name, host_name=host_name,
+                           address=address3 + address4,
+                           restindex=restindex, phone=hostphone, openhour=openhour, breakhour=breakhour,
+                           cate_id=cate_id, restimg=imgname2);
+            restprf.save();
+        return render(request, 'home.html');
 
     @request_mapping("/loginimpl", method="post")
     def loginimpl(self, request):
         # id, pwd 를 프로그램을 확인 한다.
         id = request.POST['custid'];
         pwd = request.POST['custpw'];
-        context = {};
         try:
             cust = Cust.objects.get(id=id);
             if cust.pwd == pwd:
                 request.session['sessionid'] = cust.id;
                 request.session['sessionname'] = cust.name;
-                context['center'] = 'loginok.html';
+                request.session['sessionimg'] = cust.custimg;
             else:
-                raise Exception;
+                raise
         except:
-            context['center'] = 'loginfail.html';
-
-        return render(request, 'home.html', context);
+            return render(request, 'login.html');
+        return render(request, 'home.html');
 
     @request_mapping("/logout", method="get")
     def logout(self, request):

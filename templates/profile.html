@@ -21,8 +21,10 @@
                 {% if request.session.sessionid == None %}
                     <span></span>
                 {% else %}
-                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
-                    <span>{{request.session.sessionid}}</span>
+                    <a href="/profile/{{request.session.sessionid}}" style="color:white; text-decoration:none; vertical-align:middle;">
+                        <img class="card-img-top" style="vertical-align:middle; display:block; width: 50px; height:50px;" src="/static/img/{{request.session.sessionimg}}" alt="..." />
+                    </a>
+                    <span>&nbsp;&nbsp;{{request.session.sessionid}}</span>
                 {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -35,18 +37,17 @@
                     {% else %}
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
-                            &nbsp;
                         </ul>
                     {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
-                        <a class="navbar-brand" href="/">로고</a>
+                        <a class="navbar-brand" href="/"><img class="card-img-top" style="width: auto; height: 50px;" src="/static/img/images.png" alt="..." /></a>
                     </form>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">고객센터</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">자주 묻는 질문</a></li>
+                                <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
                                 <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
                                 <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
                             </ul>
@@ -64,38 +65,43 @@
                 <div class="panel panel-info" style="padding-bottom:40px;">
                     <div class="panel-heading">
                         <h3 class="panel-title" style="text-align:left; padding-top:20px;">
-                            <img src="http://placeimg.com/100/100/any" style="width:50px; height:50px; border-radius:70%; over-flow:hidden;">
-                            &nbsp;&nbsp;id
+                            {% if request.session.sessionid == None %}
+                            <img src="http://placeimg.com/100/100/any" style="width:50px; height:50px;">
+                            {% else %}
+                            <div style="text-align:left;"><img src="/static/img/{{Cust.custimg}}" style="width:100px; height:100px;">
+                            {% endif %}
+                            {{Cust.id}}</div>
                         </h3>
                     </div>
                     <div class="panel-body">
+
                         <div class="row" style="padding:10px;">
-                            <div class="col-md-6 col-lg-6">
+                            <div id="profile" name="profile" class="col-md-6 col-lg-6">
                                 <table class="table table-user-information">
                                     <tbody style="text-align:left;">
                                         <tr>
                                             <td style="width:130px;">이름</td>
-                                            <td>name</td>
+                                            <td>{{Cust.name}}</td>
                                         </tr>
                                         <tr>
                                             <td>생년월일</td>
-                                            <td>birth</td>
+                                            <td>{{Cust.birth}}</td>
                                         </tr>
                                         <tr>
                                             <td>성별</td>
-                                            <td>gender</td>
+                                            <td>{{Cust.gender}}</td>
                                         </tr>
                                         <tr>
                                             <td>이메일</td>
-                                            <td>email</td>
+                                            <td>{{Cust.email}}</td>
                                         </tr>
                                         <tr>
                                             <td>연락처</td>
-                                            <td>phone</td>
+                                            <td>{{Cust.phone}}</td>
                                         </tr>
                                         <tr>
                                             <td>주소</td>
-                                            <td>address</td>
+                                            <td>{{Cust.address}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -105,37 +111,46 @@
                                 <table class="table table-user-information" style="text-align:left;">
                                     <tr>
                                         <td style="width:130px;">상호명</td>
-                                        <td>상호명</td>
-                                    </tr>
-                                    <tr>
-                                        <td>사업자등록번호</td>
-                                        <td>123123123</td>
+                                        <td>{{Rest.rest_name}}</td>
                                     </tr>
                                     <tr>
                                         <td>대표자명</td>
-                                        <td>ㅁㄴㅇㄹㅋㅌㅊㅍ</td>
+                                        <td>{{Rest.host_name}}</td>
                                     </tr>
                                     <tr>
-                                        <td>가게주소</td>
-                                        <td>주우소</td>
+                                        <td>음식점연락처</td>
+                                        <td>{{Rest.phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>음식점주소</td>
+                                        <td>{{Rest.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>개점시간</td>
+                                        <td>{{Rest.openhour}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>재료준비시간</td>
+                                        <td>{{Rest.breakhour}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>정보</td>
+                                        <td>{{Rest.restindex}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>음식점사진</td>
+                                        <td style="text-align:left;"><img src="/static/img/{{Rest.restimg}}" style="width:100px; height:100px;"></td>
                                     </tr>
                                 </table>
-                                <div style="text-align:left;">&nbsp; &nbsp; <img src="empty" style="width:100px; height:100px;"></div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
         <br><br><br>
         <form style="position:absolute; left:50%; transform:translateX(-50%); text-align:center;">
-            <input type="button" onclick="location.href='profileupdate'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; " value="회원정보수정">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" onclick="location.href='ownerupdate'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white;" value="점주정보수정">
+            <input type="button" onclick="location.href='/profileupdate/{{request.session.sessionid}}'" style="font-size:14pt; border:none; width:250px; height:45px; border-radius:7px; background-color:#FFA722; color:white; " value="회원정보수정">
         </form>
         <br><br><br><br><br>
         <div class="container">

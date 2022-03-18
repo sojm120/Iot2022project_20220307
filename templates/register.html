@@ -21,8 +21,10 @@
                 {% if request.session.sessionid == None %}
                     <span></span>
                 {% else %}
-                    <span class="badge bg-dark text-white ms-1 rounded-pill"><a href="/profile" style="color:white; text-decoration:none">프로필 사진</a></span>&nbsp;&nbsp;
-                    <span>{{request.session.sessionid}}</span>
+                    <a href="/profile/{{request.session.sessionid}}" style="color:white; text-decoration:none; vertical-align:middle;">
+                        <img class="card-img-top" style="vertical-align:middle; display:block; width: 50px; height:50px;" src="/static/img/{{request.session.sessionimg}}" alt="..." />
+                    </a>
+                    <span>&nbsp;&nbsp;{{request.session.sessionid}}</span>
                 {% endif %}
 <!--                <a class="navbar-brand" href="#!">프로필 사진</a>-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -35,18 +37,17 @@
                     {% else %}
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout" style="white-space:nowrap; margin-right:15px;">로그아웃</a></li>
-                            &nbsp;
                         </ul>
                     {% endif %}
                     <ul style="width:40rem"></ul>
                     <form class="d-flex">
-                        <a class="navbar-brand" href="/">로고</a>
+                        <a class="navbar-brand" href="/"><img class="card-img-top" style="width: auto; height: 50px;" src="/static/img/images.png" alt="..." /></a>
                     </form>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">고객센터</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">자주 묻는 질문</a></li>
+                                <li><a class="dropdown-item" href="/faq">자주 묻는 질문</a></li>
                                 <li><a class="dropdown-item" href="#!">실시간 채팅 상담</a></li>
                                 <li><a class="dropdown-item" href="/list">고객 상담 게시판</a></li>
                             </ul>
@@ -80,12 +81,12 @@
 
 <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;   ctrl + /     -->
         <section class="p-5">
-            {% csrf_token %}
             <div class="m-5" style="position:absolute; left:50%; transform:translateX(-50%); width:35%;">
                 <header class="container p-3" style="text-align:center; width:100%;">
                     <h3 style="white-space:nowrap;">회원가입</h3>
                 </header>
-                <form name="regist" action="registerimpl" method="post" id="register_box" style="text-align:left;">
+                <form name="regist" action="registerimpl" method="post" id="register_box" enctype="multipart/form-data" style="text-align:left;">
+                    {% csrf_token %}
                     <div class="input-box">
                         <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
                         <label for="custid">아이디</label>
@@ -118,8 +119,8 @@
                         <input id="custemail" type="text" name="custemail" placeholder="이메일" autocomplete="off">
                         <label for="custemail">email</label>
                     </div>
-                    <div class="formfield m-1">
-                        <div id="custaddr">
+                    <div class="input-box">
+                        <div class="formfield m-1" id="custaddr">
                             <input type="text" id="sample4_postcode" placeholder="우편번호">
                             <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
                             <br>
@@ -127,8 +128,9 @@
                             <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width:40%">
                             <br>
                             <span id="guide" style="color:#999;display:none"></span>
-                            <span style="font-size:0.8em;">상세주소</span>
+                            <span>상세주소</span>
                             <input type="text" id="sample4_detailAddress" name="address2" placeholder="상세주소" style="width:30%">
+
                             <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="width:30%">
 
                             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -200,10 +202,141 @@
                         </div>
                         <div>
                             <div class="box-radio-input">
-                                <input id="cust" type="radio" name="host_flag" value="0" style="width:15px; height:15px;">
+                                <input id="cust" type="radio" name="host_flag" value="0" onclick="div_OnOff(this.value,'con');" style="width:15px; height:15px;">
                                 <span>일반회원</span>
-                                <input id="ceo" type="radio" name="host_flag" value="1" style="width:15px; height:15px;">
-                                <span>점주회원</span>
+                                <input id="ceo" type="radio" name="host_flag" value="1" onclick="div_OnOff(this.value,'con');" style="width:15px; height:15px;">
+                                <span>점주</span>
+                                <script>
+                                    function div_OnOff(v,id){
+                                        // 라디오 버튼 value 값 조건 비교
+                                            if(v == "1"){
+                                            document.getElementById(id).style.display = ""; // 보여줌
+                                            }else{
+                                            document.getElementById(id).style.display = "none"; // 숨김
+                                        }
+                                    }
+                                </script>
+                                <div id="con" style="display:none">
+                                    점주용 필드
+                                    <div class="input-box">
+                                        <input id="reg_num" type="text" name="reg_num" placeholder="식당이름" autocomplete="off" minlength="10" maxlength="10">
+                                        <label for="reg_num">사업자등록번호</label>
+                                    </div>
+                                    <div class="input-box">
+                                        <input id="rest_name" type="text" name="rest_name" placeholder="식당이름" autocomplete="off">
+                                        <label for="rest_name">식당이름</label>
+                                    </div>
+                                    <div class="input-box">
+                                        <input id="host_name" type="text" name="host_name" placeholder="점주이름" autocomplete="off">
+                                        <label for="host_name">점주이름</label>
+                                    </div>
+                                    <div class="input-box">
+                                        <div class="formfield m-1" id="hostaddr">
+                                            <input type="text" id="sample4_hpostcode" placeholder="우편번호">
+                                            <input type="button" onclick="sample4_hexecDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
+                                            <br>
+                                            <input type="text" id="sample4_hroadAddress" name="address3" placeholder="도로명주소" style="width:40%">
+                                            <input type="text" id="sample4_hjibunAddress" placeholder="지번주소" style="width:40%">
+                                            <br>
+                                            <span id="hguide" style="color:#999;display:none"></span>
+                                            <span>상세주소</span>
+                                            <input type="text" id="sample4_hdetailAddress" name="address4" placeholder="상세주소" style="width:30%">
+
+                                            <input type="text" id="sample4_hextraAddress" placeholder="참고항목" style="width:30%">
+                                        </div>
+                                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                                        <script>
+                                            //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+                                            function sample4_hexecDaumPostcode() {
+                                                new daum.Postcode({
+                                                    oncomplete: function(data) {
+                                                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                                                        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                                                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                                        var roadAddr = data.roadAddress; // 도로명 주소 변수
+                                                        var extraRoadAddr = ''; // 참고 항목 변수
+
+                                                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                                            extraRoadAddr += data.bname;
+                                                        }
+                                                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                                                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                                                           extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                                        }
+                                                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                                        if(extraRoadAddr !== ''){
+                                                            extraRoadAddr = ' (' + extraRoadAddr + ')';
+                                                        }
+
+                                                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                                        document.getElementById('sample4_hpostcode').value = data.zonecode;
+                                                        document.getElementById("sample4_hroadAddress").value = roadAddr;
+                                                        document.getElementById("sample4_hjibunAddress").value = data.jibunAddress;
+
+                                                        // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                                                        if(roadAddr !== ''){
+                                                            document.getElementById("sample4_hextraAddress").value = extraRoadAddr;
+                                                        } else {
+                                                            document.getElementById("sample4_hextraAddress").value = '';
+                                                        }
+
+                                                        var hguideTextBox = document.getElementById("hguide");
+                                                        // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                                                        if(data.autoRoadAddress) {
+                                                            var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                                                            hguideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                                                            hguideTextBox.style.display = 'block';
+
+                                                        } else if(data.autoJibunAddress) {
+                                                            var expJibunAddr = data.autoJibunAddress;
+                                                            hguideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                                                            hguideTextBox.style.display = 'block';
+                                                        } else {
+                                                            hguideTextBox.innerHTML = '';
+                                                            hguideTextBox.style.display = 'none';
+                                                        }
+                                                    }
+                                                }).open();
+                                            }
+                                        </script>
+                                    </div>
+                                    <div class="input-box">
+                                        <input id="restindex" type="text" name="restindex" placeholder="음식점정보" autocomplete="off">
+                                        <label for="restindex">음식점정보</label>
+                                    </div>
+                                    <div class="input-box">
+                                        <input id="hostphone" type="text" name="hostphone" placeholder="음식점연락처" autocomplete="off">
+                                        <label for="hostphone">음식점연락처</label>
+                                    </div>
+                                    <div class="input-box">
+                                        <input id="openhour" type="text" name="openhour" placeholder="영업시간" autocomplete="off">
+                                        <label for="openhour">영업시간</label>
+                                    </div>
+                                    <div class="input-box">
+                                        <input id="breakhour" type="text" name="breakhour" placeholder="휴식시간" autocomplete="off">
+                                        <label for="breakhour">재료준비시간</label>
+                                    </div>
+                                    <div class="input-box" style="padding-top:8px;">
+                                        <span>음식점사진
+                                        <input type="file" id="restimg" name="restimg" accept="image/* "></span>
+                                    </div>
+                                    <div class="input-box">
+                                        <span>업종을선택하세요</span>
+                                        <select id="cate_id" name="cate_id">
+                                            <option value="1">1:한식</option>
+                                            <option value="2">2:중식</option>
+                                            <option value="3">3:일식</option>
+                                            <option value="4">4:양식</option>
+                                            <option value="5">5:베트남식</option>
+                                            <option value="6">6:태국식</option>
+                                            <option value="7">7:기타</option>
+                                        </select>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                         <br>
