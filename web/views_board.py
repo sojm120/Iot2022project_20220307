@@ -22,7 +22,7 @@ class BoardView(View):
         context = {
             'count': count
         }
-        return render(request, 'list.html', context)
+        return render(request, 'boardlist.html', context)
 
     @request_mapping("/listview/<int:idx>/<int:getcnt>", method="get")
     def listview(self, request, idx, getcnt):

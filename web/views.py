@@ -45,10 +45,15 @@ class MyView(View):
         menu = Menu.objects.filter(rest=1);
         review = Review.objects.filter(rest=1).order_by('-id'); # 내림차순 정렬
         imgpath = Imgpath.objects.all();
-        cust = Cust.objects.get(id=request.session['sessionid']);
+        try:
+            cust = Cust.objects.get(id=request.session['sessionid']);
+            host_flag = cust.host_flag
+        except:
+            host_flag = 0
+
         context = {
             'rest': rest,
-            'cust': cust,
+            'host_flag': host_flag,
             'star_avg': star_avg,
             'menu': menu,
             'review': review,
@@ -197,8 +202,12 @@ class MyView(View):
     def logout(self, request):
         if request.session['sessionid'] != None:
             del request.session['sessionid'];
-        return render(request, 'home.html');
+        return redirect('/');
 
     @request_mapping("/faq", method="get")
     def faq(self, request):
         return render(request, 'faq.html');
+
+    @request_mapping("/live_chat", method="get")
+    def live_chat(self, request):
+        return render(request, 'live_chat.html');
