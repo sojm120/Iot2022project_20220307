@@ -19,7 +19,7 @@ class ReviewView(View):
     @request_mapping("/i/<int:rest_pk>", method="post")
     def insert(self, request, rest_pk):
         rest = rest_pk
-        cust = request.session['sessionid']   # 로그인 기능 추가시 sessionid로 변경
+        cust = request.session['sessionid']
         title = request.POST['title']
         content = request.POST['content']
         s_rating = request.POST['s_rating']
@@ -53,7 +53,7 @@ class ReviewView(View):
     def updateview(self, request, pk):
         # 해당 리뷰가 로그인된 사람이 쓴 것일 경우에만 페이지 띄우기
         try:
-            obj1 = Review.objects.get(id=pk, cust_id=request.session['sessionid'])   # 로그인 기능 추가시 sessionid로 변경
+            obj1 = Review.objects.get(id=pk, cust_id=request.session['sessionid'])
         except:
             return redirect('/restDetail')
         obj2 = []
@@ -150,7 +150,7 @@ class ReviewView(View):
     def delete(self, request, pk):
         # 해당 리뷰가 로그인된 사람이 쓴 것일 경우에만 삭제 실행
         try:
-            obj = Review.objects.get(id=pk, cust_id=request.session['sessionid'])    # 로그인 기능 추가시 sessionid로 변경
+            obj = Review.objects.get(id=pk, cust_id=request.session['sessionid'])
         except:
             return redirect('/restDetail')
         obj.delete()
