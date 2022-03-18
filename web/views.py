@@ -195,7 +195,7 @@ class MyView(View):
             else:
                 raise Exception;
         except:
-            return redirect('/');
+            return redirect('/login');
         return redirect('/');
 
 
