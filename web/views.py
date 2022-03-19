@@ -191,7 +191,13 @@ class MyView(View):
             restprf = Rest(cust=profile, reg_num=reg_num, rest_name=rest_name, host_name=host_name, address=address3 + address4,
                             restindex=restindex, phone=hostphone, openhour=openhour, breakhour=breakhour, cate_id=cate_id, restimg=imgname2);
             restprf.save();
-        return render(request, 'home.html');
+
+        # 회원가입 완료 시, 자동 로그인
+        request.session['sessionid'] = profile.id
+        request.session['sessionname'] = profile.name
+        request.session['sessionimg'] = profile.custimg
+
+        return redirect('/')
 
     @request_mapping("/loginimpl", method="post")
     def loginimpl(self, request):
