@@ -35,7 +35,16 @@ class MyView(View):
 
     @request_mapping("/login", method="get")
     def login(self, request):
-        return render(request, 'login.html');
+        print(request.GET)
+        if 'id' in request.GET:
+            context = {
+                'id': request.GET['id']
+            }
+        else:
+            context = {
+                'id': ''
+            }
+        return render(request, 'login.html', context);
 
     @request_mapping("/restDetail/<int:pk>", method="get")
     def restDetail(self, request, pk):
@@ -213,7 +222,7 @@ class MyView(View):
             else:
                 raise Exception;
         except:
-            return redirect('/login');
+            return redirect('/login?id='+id);
         return redirect('/');
 
 
