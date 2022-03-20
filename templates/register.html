@@ -88,50 +88,50 @@
                 <form name="regist" action="registerimpl" method="post" id="register_box" enctype="multipart/form-data" style="text-align:left;">
                     {% csrf_token %}
                     <div class="input-box">
-                        <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off">
+                        <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off" required>
                         <label for="custid">아이디</label>
                     </div>
                     <div class="input-box">
-                        <input id="custpw" type="password" name="custpw" placeholder="비밀번호" onchange="check_pw()">
+                        <input id="custpw" type="password" name="custpw" placeholder="비밀번호" onchange="check_pw()" required>
                         <label for="custpw">비밀번호</label>
                     </div>
                     <div class="input-box">
-                        <input id="custpwcheck" type="password" name="pwcheck" placeholder="비밀번호확인" onchange="check_pw()">
+                        <input id="custpwcheck" type="password" name="pwcheck" placeholder="비밀번호확인" onchange="check_pw()" required>
                         <label for="custpwcheck">비밀번호확인</label>
                     </div>
                     <div class="input-box">
-                        <input id="custname" type="text" name="custname" placeholder="이름" autocomplete="off">
+                        <input id="custname" type="text" name="custname" placeholder="이름" autocomplete="off" required>
                         <label for="custname">이름</label>
                     </div>
                     <div class="input-box">
-                        <input id="custbday" type="date" name="birth" placeholder="생년월일" autocomplete="off">
+                        <input id="custbday" type="date" name="birth" placeholder="생년월일" autocomplete="off" required>
                         <label for="custbday">생년월일</label>
                     </div>
                     <div>
                         <div class="box-radio-input">
-                            <input id="man" type="radio" name="gender" value="남" style="width:15px; height:15px;">
+                            <input id="man" type="radio" name="gender" value="남" style="width:15px; height:15px;" required>
                             <span>남자</span>
-                            <input id="woman" type="radio" name="gender" value="여" style="width:15px; height:15px;">
+                            <input id="woman" type="radio" name="gender" value="여" style="width:15px; height:15px;" required>
                             <span>여자</span>
                         </div>
                     </div>
                     <div class="input-box">
-                        <input id="custemail" type="text" name="custemail" placeholder="이메일" autocomplete="off">
+                        <input id="custemail" type="text" name="custemail" placeholder="이메일" autocomplete="off" required>
                         <label for="custemail">email</label>
                     </div>
                     <div class="input-box">
                         <div class="formfield m-1" id="custaddr">
-                            <input type="text" id="sample4_postcode" placeholder="우편번호">
+                            <input type="text" id="sample4_postcode" placeholder="우편번호" required>
                             <input type="button" onclick="sample4_execDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
                             <br>
-                            <input type="text" id="sample4_roadAddress" name="address1" placeholder="도로명주소" style="width:40%">
-                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width:40%">
+                            <input type="text" id="sample4_roadAddress" name="address1" placeholder="도로명주소" style="width:40%" required>
+                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width:40%" required>
                             <br>
                             <span id="guide" style="color:#999;display:none"></span>
                             <span>상세주소</span>
-                            <input type="text" id="sample4_detailAddress" name="address2" placeholder="상세주소" style="width:30%">
+                            <input type="text" id="sample4_detailAddress" name="address2" placeholder="상세주소" style="width:30%" required>
 
-                            <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="width:30%">
+                            <input type="text" id="sample4_extraAddress" placeholder="참고항목" style="width:30%" required>
 
                             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                             <script>
@@ -193,7 +193,7 @@
                             </script>
                         </div>
                         <div class="input-box">
-                            <input id="custphone" type="text" name="custphone" placeholder="휴대폰번호" autocomplete="off">
+                            <input id="custphone" type="tel" name="custphone" placeholder="휴대폰번호" autocomplete="off" required>
                             <label for="custphone">휴대폰번호</label>
                         </div>
                         <div class="input-box" style="padding-top:8px;">
@@ -202,47 +202,55 @@
                         </div>
                         <div>
                             <div class="box-radio-input">
-                                <input id="cust" type="radio" name="host_flag" value="0" onclick="div_OnOff(this.value,'con');" style="width:15px; height:15px;">
+                                <input id="cust" type="radio" name="host_flag" value="0" onclick="div_OnOff(this.value,'con');" style="width:15px; height:15px;" required>
                                 <span>일반회원</span>
-                                <input id="ceo" type="radio" name="host_flag" value="1" onclick="div_OnOff(this.value,'con');" style="width:15px; height:15px;">
+                                <input id="ceo" type="radio" name="host_flag" value="1" onclick="div_OnOff(this.value,'con');" style="width:15px; height:15px;" required>
                                 <span>점주</span>
                                 <script>
                                     function div_OnOff(v,id){
                                         // 라디오 버튼 value 값 조건 비교
                                             if(v == "1"){
-                                            document.getElementById(id).style.display = ""; // 보여줌
+                                                document.getElementById(id).style.display = ""; // 보여줌
+                                                list = document.getElementsByClassName('con_input');
+                                                for (var i = 0; i < list.length; i++){
+                                                    list[i].setAttribute("required", "");// 점주용 필드값 required 로 변경
+                                                }
                                             }else{
-                                            document.getElementById(id).style.display = "none"; // 숨김
+                                                document.getElementById(id).style.display = "none"; // 숨김
+                                                list = document.getElementsByClassName('con_input');
+                                                for (var i = 0; i < list.length; i++){
+                                                    list[i].removeAttribute("required");// 점주용 필드값 required 제거
+                                                }
                                         }
                                     }
                                 </script>
                                 <div id="con" style="display:none">
                                     점주용 필드
                                     <div class="input-box">
-                                        <input id="reg_num" type="text" name="reg_num" placeholder="식당이름" autocomplete="off" minlength="10" maxlength="10">
+                                        <input id="reg_num" class="con_input" type="text" name="reg_num" placeholder="식당이름" autocomplete="off" minlength="10" maxlength="10">
                                         <label for="reg_num">사업자등록번호</label>
                                     </div>
                                     <div class="input-box">
-                                        <input id="rest_name" type="text" name="rest_name" placeholder="식당이름" autocomplete="off">
+                                        <input id="rest_name" class="con_input" type="text" name="rest_name" placeholder="식당이름" autocomplete="off">
                                         <label for="rest_name">식당이름</label>
                                     </div>
                                     <div class="input-box">
-                                        <input id="host_name" type="text" name="host_name" placeholder="점주이름" autocomplete="off">
+                                        <input id="host_name" class="con_input" type="text" name="host_name" placeholder="점주이름" autocomplete="off">
                                         <label for="host_name">점주이름</label>
                                     </div>
                                     <div class="input-box">
                                         <div class="formfield m-1" id="hostaddr">
-                                            <input type="text" id="sample4_hpostcode" placeholder="우편번호">
+                                            <input type="text" id="sample4_hpostcode" class="con_input" placeholder="우편번호">
                                             <input type="button" onclick="sample4_hexecDaumPostcode()" value="주소 찾기" style="border:1px solid grey; border-radius:3px;">
                                             <br>
-                                            <input type="text" id="sample4_hroadAddress" name="address3" placeholder="도로명주소" style="width:40%">
-                                            <input type="text" id="sample4_hjibunAddress" placeholder="지번주소" style="width:40%">
+                                            <input type="text" id="sample4_hroadAddress" class="con_input" name="address3" placeholder="도로명주소" style="width:40%">
+                                            <input type="text" id="sample4_hjibunAddress" class="con_input" placeholder="지번주소" style="width:40%">
                                             <br>
                                             <span id="hguide" style="color:#999;display:none"></span>
                                             <span>상세주소</span>
-                                            <input type="text" id="sample4_hdetailAddress" name="address4" placeholder="상세주소" style="width:30%">
+                                            <input type="text" id="sample4_hdetailAddress" class="con_input" name="address4" placeholder="상세주소" style="width:30%">
 
-                                            <input type="text" id="sample4_hextraAddress" placeholder="참고항목" style="width:30%">
+                                            <input type="text" id="sample4_hextraAddress" class="con_input" placeholder="참고항목" style="width:30%">
                                         </div>
                                         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                                         <script>
@@ -325,14 +333,18 @@
                                     </div>
                                     <div class="input-box">
                                         <span>업종을선택하세요</span>
-                                        <select id="cate_id" name="cate_id">
-                                            <option value="1">1:한식</option>
-                                            <option value="2">2:중식</option>
-                                            <option value="3">3:일식</option>
-                                            <option value="4">4:양식</option>
-                                            <option value="5">5:베트남식</option>
-                                            <option value="6">6:태국식</option>
-                                            <option value="7">7:기타</option>
+                                        <select id="cate_id" name="cate_id" required>
+                                            <option value="">선택</option>
+                                            <option value="10">한식</option>
+                                            <option value="20">분식</option>
+                                            <option value="30">디저트</option>
+                                            <option value="40">일식</option>
+                                            <option value="50">치킨</option>
+                                            <option value="60">피자</option>
+                                            <option value="70">아시안</option>
+                                            <option value="80">양식</option>
+                                            <option value="90">중식</option>
+                                            <option value="100">패스트푸드</option>
                                         </select>
                                     </div>
 

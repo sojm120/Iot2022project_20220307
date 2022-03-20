@@ -88,7 +88,7 @@
             <form action="loginimpl" method="POST" style="text-align:center;">
                 {% csrf_token %}
                 <div class="input-box">
-                    <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off" required>
+                    <input id="custid" type="text" name="custid" placeholder="아이디" autocomplete="off" value="{{id}}" required>
                     <label for="custid">아이디</label>
                     <div class="p-1" style="text-align:right">
                         <button class="forgot" id="forgotid" style="text-align:right; width:85px;" type="button">아이디찾기</button>
@@ -101,7 +101,11 @@
                         <button class="forgot" id="forgotpw" style="text-align:right; width:85px;" type="button">비밀번호찾기</button>
                     </div>
                 </div>
-
+                {% if id != '' %}
+                <div class="input-box">
+                    <span style="color: red;">아이디 또는 비밀번호가 일치하지 않습니다.</span>
+                </div>
+                {% endif %}
                 <div class="p-2" style="position:absolute; left:50%; transform:translateX(-50%); width:100%;">
                     <input type="submit" value="로그인" style="width:80%">
                 </div>
